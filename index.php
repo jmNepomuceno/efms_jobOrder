@@ -60,6 +60,6 @@
     </div>
 
     <?php require "./links/script_links.php" ?>
-    <script type="text/javascript" src="./index.js"></script>
+    <script type="text/javascript" src="./index.js?v=<?php echo time(); ?>"></script>
 </body>
 </html>

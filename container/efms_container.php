@@ -3,6 +3,19 @@
     include('../assets/connection.php');
 
     $current_date = date('m/d/Y - h:i:s A');
+
+    $section;
+    try {
+        $sql = "SELECT sectionName FROM pgssection WHERE sectionID=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_SESSION['section']]);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $section = $data[0]['sectionName'];
+        $_SESSION["sectionName"] = $section;
+
+    } catch (PDOException $e) {
+        die("Database error: " . $e->getMessage());
+    }
 ?>
 
 <div class="efms-container">
@@ -12,7 +25,7 @@
 
         <div class="section-div">
             <span id="section-title-id">Section:</span>
-            <span id="section-val-id">Integrated Hospital Operations and Mangement Program</span>
+            <span id="section-val-id"><?php echo $section ?></span>
         </div>
 
         <div class="date-div">

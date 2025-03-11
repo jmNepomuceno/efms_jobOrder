@@ -26,164 +26,47 @@ body{
     align-items: center;
 }
 
-body .left-container{
-    width: 17%;
-    height: 100vh;
-    background-image: linear-gradient(to right, #704f43 , #8f6556);
-
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-body .left-container .home-name-div{
-    width: 90%;
-    height: 100px;
-    margin-top:20px;
-    background: #402d26;
-    border-radius: 10px;
-
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
-body .left-container .home-name-div img{
-    width:250%;
-    height: 250%;
-}
-
-body .left-container .home-name-div h1{
-    color:white;
-}
-
-body .left-container .side-bar-route{
-    width:100%;
-    height: 40%;
-    margin-top:-100px;
-}
-
-body .left-container .side-bar-route .side-bar-routes{
-    width: 100%;
-    height: 50px;
-    background: #604439;
-    cursor: pointer;
-
-    display:flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-
-    border-top:1px solid #402d26;
-    border-bottom:1px solid #402d26;
-}
-
-body .left-container .side-bar-route .side-bar-routes:nth-child(1){
-    background: #402d26;
-    opacity: 1;
-    border-left:5px solid white;
-    /* border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px; */
-}
-
-body .left-container .side-bar-route .side-bar-routes i,
-body .left-container .side-bar-route .side-bar-routes span{
-    color:white;
-    margin-left:20px;
-    font-size: 1rem;
-}
-
-body .left-container .side-bar-route .side-bar-routes span{
-    font-weight: 600;
-}
-
-body .left-container .user-acc-div{
-    width:100%;
-    height: 100px;
-    background: #604439;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-
-    display:flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-
-    position:relative;
-}
-
-body .left-container .user-acc-div #user-section-span{
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: white;
-    width:90%;
-    height: 50px;
-    text-align: center;
-    margin-top:10px;
-
-    /* border:1px solid white; */
-
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-body .left-container .user-acc-div .vl{
-    margin-top:5px;
-    height: 10px;
-    width:70%;
-    background:#805a4d;
-    border-radius: 2px;
-}
-
-body .left-container .user-acc-div #user-name-span{
-    width:80%;
-    height: 60px;
-
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-
-    font-size: 0.65rem;
-    color:white;
-    font-weight: 900;
-
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    /* border:1px solid white; */
-}
-
-body .left-container .user-acc-div i{
-    position:absolute;
-    right:10px;
-    bottom:10px;
-    color:white;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
 
 body .right-container{
-    width: 83%;
+    width: 85%;
     height: 100vh;
 
     background: #FFFEFE;
     
     display:flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
 
     position:relative;
 }
 
+body .right-container .title-div{
+    /* border:1px solid red; */
+    width: 80%;
+    height: 50%;
+    display:flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body .right-container .title-div h1{
+    font-size:3rem;
+}
+
+body .right-container .title-div h1 span{
+    font-weight: 900;
+    font-size: 4.5rem;
+    color:#402d26;
+}
+
+body .right-container .title-div h3{
+    color:#30211d;
+    font-weight: 600;
+    font-size: 2rem;
+}
 
 
 @media only screen and (max-height: 800px){

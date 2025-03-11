@@ -1,5 +1,10 @@
+<?php 
+    include('../session.php');
+    include('../assets/connection.php');
 
-
+    // echo '<pre>'; print_r($_SESSION); echo '</pre>';
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,11 +12,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EFMS-APP</title>
     <link rel="stylesheet" href="../css/job_order.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
 
     <?php require "../links/header_link.php" ?>
 
 </head>
 <body>
+
+    <?php if($_SESSION["role"] === 'admin'){?>
+        <i class="fa-solid fa-arrow-left" id="return-btn"></i>
+    <?php } ?>
+    
     <div class="sample-container"></div>
 
     <div class="nav-main-div">
@@ -26,10 +37,25 @@
         </div>
     </div>
     
-    <div class="main-container">
-        
-        
+    <div class="main-container"></div>
+
+    <div class="modal fade" id="modal-notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-top" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="modal-title-incoming" class="modal-title-incoming" id="exampleModalLabel">Successfully Submitted</h5>
+                </div>
+                <div id="modal-body-incoming" class="modal-body-incoming ml-2">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button id="close-modal-btn" type="button" type="button" data-bs-dismiss="modal">CLOSE</button>
+                    <!-- <button id="submit-modal-btn" type="button" type="button">SUBMIT</button> -->
+                </div>
+            </div>
+        </div>
     </div>
+
     
     <?php require "../links/script_links.php" ?>
     <script> 

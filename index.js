@@ -20,8 +20,8 @@ $(document).ready(function(){
                     $('#modal-notif .modal-content .modal-header .modal-title-incoming').text("Invalid Credentials")
                     modal_notif.show()
                 }else{
-                    console.log(response)
-                    // window.location.href = response;
+                    // console.log(response)
+                    window.location.href = response;
                 }
             }
         });

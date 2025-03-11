@@ -1,29 +1,31 @@
-$(document).ready(function(){
-    
+if (window.dateTimeInterval) {
+    clearInterval(window.dateTimeInterval);
+}
 
-    function updateDateTime() {
-        let now = new Date();
-        let formattedDate = now.toLocaleString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true
-        }).replace(',', ' -'); // Replace comma with a dash
+function updateDateTime() {
+    let now = new Date();
+    let formattedDate = now.toLocaleString('en-US', {
+        month: '2-digit',
+        day: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    }).replace(',', ' -'); 
 
-        document.getElementById("date-val-id").innerText = formattedDate;
+    let dateElement = document.getElementById("date-val-id");
+    if (dateElement) {
+        dateElement.innerText = formattedDate;
+    } else {
+        clearInterval(window.dateTimeInterval);
     }
+}
 
-    // Update every second (1000ms)
-    setInterval(updateDateTime, 1000);
+window.dateTimeInterval = setInterval(updateDateTime, 1000);
 
-    // Call it once to avoid delay
-    updateDateTime();
-
+$(document).ready(function(){
     window.selectedCategory = "";
-
     $("#predefined-concerns").select2({
         placeholder: "Search for a concern...",
         allowClear: true

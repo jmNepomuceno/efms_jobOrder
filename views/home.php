@@ -1,6 +1,8 @@
 <?php 
     include('../session.php');
     include('../assets/connection.php');
+
+    // echo '<pre>'; print_r($_SESSION); echo '</pre>';
 ?>
 
 <!DOCTYPE html>
@@ -10,6 +12,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EFMS-APP</title>
     <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/navbar.css">
 
     <?php require "../links/header_link.php" ?>
 
@@ -22,10 +26,19 @@
     ?>
 
     <div class="right-container">
-
-
+        <?php 
+            include("./navbar.php");
+        ?>
+        <div class="title-div">
+            <h1 class="title-h1">
+                <span>E</span>NGINEERING 
+                <span>F</span>ACILITIES 
+                <span>M</span>ANAGEMENT 
+                <span>S</span>ECTION
+            </h1>
+            <h3>TICKETING SYSTEM</h3>
+        </div>
     </div>
-
 
 
     <div class="modal fade" id="modal-notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -46,9 +59,9 @@
 
 
     <?php require "../links/script_links.php" ?>
-    <script> 
-        
-    </script>
+
+    <script> </script>
+    <script src="../js/sidebar_traverse.js?v=<?php echo time(); ?>"></script>
     <!-- <script src="../js/home_traverse.js?v=<?php echo time(); ?>"></script> -->
     <!-- <script src="../js/home_function.js?v=<?php echo time(); ?>"></script> -->
                 

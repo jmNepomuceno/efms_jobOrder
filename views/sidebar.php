@@ -1,17 +1,17 @@
 <?php 
 
-    // $section;
-    // try {
-    //     $sql = "SELECT sectionName FROM pgssection WHERE sectionID=?";
-    //     $stmt = $pdo->prepare($sql);
-    //     $stmt->execute([$_SESSION['section']]);
-    //     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    //     $section = $data[0]['sectionName'];
-    //     $_SESSION["sectionName"] = $section;
+    $section;
+    try {
+        $sql = "SELECT sectionName FROM pgssection WHERE sectionID=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_SESSION['section']]);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $section = $data[0]['sectionName'];
+        $_SESSION["sectionName"] = $section;
 
-    // } catch (PDOException $e) {
-    //     die("Database error: " . $e->getMessage());
-    // }
+    } catch (PDOException $e) {
+        die("Database error: " . $e->getMessage());
+    }
 
     // $sql = "SELECT permission FROM permission WHERE role=?";
     // $stmt = $pdo->prepare($sql);
@@ -19,22 +19,20 @@
     // $permission_account = $stmt->fetch(PDO::FETCH_ASSOC);
     // $permissions = json_decode($permission_account['permission'], true);
         
-    $section = "Integrated Management Information System Section";
     
 ?>
     <div class="left-container">
         <div class="home-name-div">
-            <!-- <img id="home-img" src="../source/landing_img/background.png" alt="logo-img" > -->
-             <h1>EFMS - APP</h1>
+             <h1>EFMS TICKETING SYSTEM</h1>
         </div>
 
         <div class="side-bar-route">
-            <div class="side-bar-routes" id="inventory-list-sub-div">
+            <div class="side-bar-routes" id="request-form-sub-div">
                 <i class="fa-solid fa-box"></i>
                 <span>Request Form</span>
             </div>
 
-            <div class="side-bar-routes" id="order-management-sub-div">
+            <div class="side-bar-routes" id="incoming-request-sub-div">
                 <i class="fa-solid fa-box"></i>
                 <span>Pending</span>
             </div>
@@ -63,10 +61,10 @@
         </div>
 
         <div class="user-acc-div">
-            <span id="user-section-span"><?php echo $section ?></span>
+            <span id="user-section-span">MET</span>
             <div class="vl"></div>
             <span id="user-name-span"><?php echo $_SESSION["name"] ?></span>
-            <i class="fa-solid fa-right-from-bracket" id="logout-btn"></i>
+            <!-- <i class="fa-solid fa-right-from-bracket" id="logout-btn"></i> -->
         </div>
     </div>
 
