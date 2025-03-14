@@ -27,10 +27,29 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && trim($_POST["usern
             $_SESSION["name"] = $account->FullName;
             $_SESSION["section"] = $account->Section;
             $_SESSION["sectionName"] = "";
+            $_SESSION["divisionName"] = "";
             $_SESSION["division"] = $account->Division; 
             $_SESSION["password"] = $password;     
             $_SESSION["Authorized"] = "Yes";
             $_SESSION["role"] = "";
+
+            try {
+                $sql = "SELECT sectionName FROM pgssection WHERE sectionID=?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$_SESSION['section']]);
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $_SESSION["sectionName"] = $data[0]['sectionName'];
+        
+                $sql = "SELECT PGSDivisionName FROM pgsdivision WHERE PGSDivisionID=?";
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute([$_SESSION['division']]);
+                $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $_SESSION["divisionName"] = $data[0]['PGSDivisionName'];
+        
+            } catch (PDOException $e) {
+                die("Database error: " . $e->getMessage());
+            }
+        
 
 
             if($_SESSION['section'] == 12 || $_SESSION['section'] == 23){

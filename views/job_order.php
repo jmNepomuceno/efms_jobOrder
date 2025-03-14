@@ -30,8 +30,9 @@
 
         <div class="nav-div">
             <button class="nav-sub-div" id="request-form-nav-btn">Request Form</button>
-            <button class="nav-sub-div" id="logs-nav-btn">Logs</button>
             <button class="nav-sub-div" id="pending-nav-btn">Pending</button>
+            <button class="nav-sub-div" id="process-nav-btn">On-Process</button>
+            <button class="nav-sub-div" id="correction-nav-btn">Correction</button>
             <button class="nav-sub-div" id="return-req-nav-btn">Returned Request</button>
             <button class="nav-sub-div" id="completed-nav-btn">Completed</button>
         </div>
@@ -43,10 +44,10 @@
         <div class="modal-dialog modal-dialog-top" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 id="modal-title-incoming" class="modal-title-incoming" id="exampleModalLabel">Successfully Submitted</h5>
+                    <h5 id="modal-title-incoming" class="modal-title-incoming" id="exampleModalLabel">NOTIFICATION</h5>
                 </div>
                 <div id="modal-body-incoming" class="modal-body-incoming ml-2">
-                    
+                    Successfully Submitted
                 </div>
                 <div class="modal-footer">
                     <button id="close-modal-btn" type="button" type="button" data-bs-dismiss="modal">CLOSE</button>
@@ -58,10 +59,6 @@
 
     
     <?php require "../links/script_links.php" ?>
-    <script> 
-        var user_name = "John Marvin Gomez Nepomuceno";
-    </script>
-
     <script src="../js/job_order.js?v=<?php echo time(); ?>"></script>
     
     <!-- <script src="../js/home_function.js?v=<?php echo time(); ?>"></script> -->

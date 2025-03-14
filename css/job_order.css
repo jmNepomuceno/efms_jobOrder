@@ -123,6 +123,14 @@ body{
 #modal-notif .modal-content #modal-body-incoming{
     width: 100%;
     height: 30px;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding:0 0 0 15px;
+    font-size: 1.3rem;
+    font-weight: normal;
 }
 
 #modal-notif .modal-content .modal-footer{

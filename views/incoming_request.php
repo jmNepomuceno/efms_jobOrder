@@ -3,6 +3,9 @@
     include('../assets/connection.php');
 
     // echo '<pre>'; print_r($_SESSION); echo '</pre>';
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy='', requestStartDate='' WHERE requestNo=2";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -71,6 +74,13 @@
         </div>
 
         <div class="table-div">
+            <div class="nav-request-div">
+                <button id="request-list-btn">Job Order List</button>
+                <button id="your-job-btn">
+                    Your Job
+                    <span id="your-job-notif-span">1</span>
+                </button>
+            </div>
             <div class="table-container">
                 <table id="incoming-req-table" class="display">
                     <thead>
@@ -89,6 +99,80 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade custom-modal-size" id="user-info-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered"> <!-- Smaller Modal Size -->
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="user-info-modal-label">User & Job Order Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <!-- User Information -->
+                    <div class="main-information">
+
+                        <div class="user-info">
+                             <i class="fa-solid fa-user"></i>
+                            <div class="user-details">
+                                <p><strong> <span id="user-what">Requester</span> Name:</strong> <span id="user-name">John Marvin Nepomuceno</span></p>
+                                <p><strong>BioID:</strong> <span id="user-bioid">4497</span></p>
+                                <p><strong>Division:</strong> <span id="user-division">Finance Division</span></p>
+                                <p><strong>Section:</strong> <span id="user-section">Accounting Section</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Job Order Information -->
+                        <div class="job-order-info">
+                            <h5 class="info-heading">Job Order Request Information</h5>
+                            <p><strong>Job Order ID:</strong> <span id="job-order-id">JO-2025-001</span></p>
+                            <p><strong>Date Requested:</strong> <span id="date-requested">March 11, 2025</span></p>
+                            <p><strong>Request Type:</strong> <span id="request-type">IT Support</span></p>
+                        </div>
+                    </div>
+
+                    <div class="request-description">
+                        <h5 class="info-heading">Request Description</h5>
+                        <p id="request-description">
+                            The workstation in the accounting office has encountered a persistent issue where the system fails to load critical accounting software.
+                        </p>
+                    </div>
+
+                    <div class="assessment-section">
+                        <div class="tech-btns">
+                            <button id="diagnosis-btn">Diagnosis</button>
+                            <button id="correction-btn">Correction</button>
+                        </div>
+                        <textarea class="assessment-textarea" placeholder="Enter Diagnosis details..."></textarea>
+                    </div>
+
+                    <div class="tech-assessment-section">
+                        <h5 class="info-heading">Technician Remarks Details</h5>
+                        <div class="tech-info-assessment">
+                            <span><b>Technician Name:</b> Dell Waje</span>
+                            <span><b>Reception Date:</b> 03/12/2025 - 11:11:40 AM</span>
+                        </div>
+                        <textarea class="tech-remarks-textarea" placeholder="Enter remarks details..."></textarea>
+                    </div>
+                    
+
+                    <button id="start-assess-btn" class="btn btn-success">Start Job</button>
+                </div>
+
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
     <div class="modal fade" id="modal-notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
@@ -113,6 +197,7 @@
     <script> </script>
     <script src="../js/sidebar_traverse.js?v=<?php echo time(); ?>"></script>
     <script src="../js/incoming_request_js/incoming_request.js?php echo time(); ?>"></script>
+    <script src="../js/incoming_request_js/incoming_request_traverse.js?php echo time(); ?>"></script>
     <!-- <script src="../js/home_traverse.js?v=<?php echo time(); ?>"></script> -->
     <!-- <script src="../js/home_function.js?v=<?php echo time(); ?>"></script> -->
                 

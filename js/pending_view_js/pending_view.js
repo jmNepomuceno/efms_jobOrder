@@ -12,14 +12,13 @@ var fetch_dataTable = () =>{
         dataType: "json",
         success: function (response) {
             console.log(response);
-
             try {
                 let dataSet = [];
                 for (let i = 0; i < response.length; i++) {
                     dataSet.push([
-                        `<span class="requestID-span">${response[i].requestID}</span>`,
+                        `<span class="requestNo-span">${response[i].requestNo}</span>`,
                         `<span>${response[i].requestDate}</span>`,
-                        `<span>${response[i].requestBy}</span>`,
+                        `<span>${response[i].requestBy.name}</span>`,
                         `<span>${response[i].requestDescription}</span>`,
                         `<span class="pending-status-span">${response[i].requestStatus}</span>`,
                         `<div class="action-pending-div">
@@ -77,8 +76,8 @@ $(document).ready(function(){
     
     $(document).off('click', '.cancel-request-btn').on('click', '.cancel-request-btn', function() {        
         const index = $('.cancel-request-btn').index(this);
-        const requestID = $('.requestID-span').eq(index).text()
-        clicked_requestID = requestID
+        const requestNo = $('.requestNo-span').eq(index).text()
+        clicked_requestNo = requestNo
         modal_cancel_form.show()
     });
 
@@ -87,7 +86,7 @@ $(document).ready(function(){
             $.ajax({
                 url: '../../php/pending_view_php/cancel_request.php',
                 data : { 
-                    requestID: clicked_requestID, 
+                    requestNo: clicked_requestNo, 
                     cancelRequest : $('#cancel-input-id').val() 
                 },
                 method: "POST",

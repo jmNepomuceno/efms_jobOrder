@@ -3,7 +3,7 @@ include ('../../session.php');
 include('../../assets/connection.php');
 
 try {
-    $sql = "SELECT requestID, requestDate, requestBy, requestDescription, requestStatus, requestCategory FROM job_order_request WHERE requestStatus='Pending'";
+    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory FROM job_order_request WHERE requestStatus='Pending'";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);

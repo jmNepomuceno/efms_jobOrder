@@ -1,4 +1,5 @@
 let modal_notif = new bootstrap.Modal(document.getElementById('modal-notif'));
+// modal_notif.show()
 
 const onLoad = () =>{
     $('.main-container').load('../container/efms_container.php', function(response, status, xhr) {
@@ -63,9 +64,23 @@ $(document).ready(function(){
         });
     });
 
-    $('#logs-nav-btn').click(function() {
+    $('#process-nav-btn').click(function() {
         refreshNavBtnStyle();
-        $('#logs-nav-btn').css('background-color', '#f2f2f2');  
+        $('#process-nav-btn').css('background-color', '#f2f2f2');  
+
+        $('.main-container').empty();
+        $('.main-container').load('../container/onProcess_view.php', function(response, status, xhr) {
+            if (status === "success") {
+                removeAllJS()
+                removeAllCSS()
+
+                let version = new Date().getTime(); // Generates a unique timestamp
+                $('head').append(`<link rel="stylesheet" href="../css/onProcess_view.css?v=${version}">`);
+                $('body').append(`<script src="../js/onProcess_view_js/onProcess_view.js?v=${version}"><\/script>`);
+            } else {
+                console.error("Failed to load EFMS container:", xhr.statusText);
+            }
+        });
     });
 
     $('#pending-nav-btn').click(function() {
