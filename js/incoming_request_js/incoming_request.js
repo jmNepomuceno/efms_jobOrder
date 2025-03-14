@@ -3,6 +3,7 @@ let request_modal = new bootstrap.Modal(document.getElementById('user-info-modal
 
 let fetch_requestData, fetch_techMyJob;
 let clicked_requestNo = 0, clicked_requestNo_myJob = 0;
+let clicked_tech_assess_textarea = ""
 
 const dateFormatter = (originalDate) =>{
     const dateParts = originalDate.split(" - ");
@@ -126,6 +127,7 @@ const dataTable_incoming_request = () =>{
                 console.log(response)
                 try { 
                     if(parseInt(response.length) >= 1){
+                        $('#your-job-notif-span').text(parseInt(response.length))
                         $('#your-job-notif-span').css('display' , 'block')
                     }
                 } catch (innerError) {
@@ -142,7 +144,7 @@ const dataTable_incoming_request = () =>{
    
 }
 
-const dataTable_my_jobs = () =>{
+const dataTable_my_jobs = () =>{ 
     try {
         $.ajax({
             url: '../../php/incoming_request_php/fetch_myJobs.php',
@@ -161,14 +163,14 @@ const dataTable_my_jobs = () =>{
                         dataSet.push([
                             `<div><span>${response[i].requestNo}</span></div>`,
                             `<div class="request-by-td-div">
-                                <span class="request-by-name-td-div">${response[i].access_by.name}</span>
-                                <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].access_by.bioID}</span>
-                                <span class="request-by-division-td-div"><b>Division:</b> ${response[i].access_by.divisionName}</span>
-                                <span class="request-by-section-td-div"><b>Section:</b> ${response[i].access_by.sectionName}</span>
+                                <span class="request-by-name-td-div">${response[i].requestBy.name}</span>
+                                <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
+                                <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
+                                <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
                             </div>`,
                             `<div class="request-date-td-div">
-                                <span><b>Requested:</b> ${response[i].requestDate}</span>
-                                <span><b>Accessed:</b> ${response[i].requestStartDate}</span>
+                                <span><b>Requested Date:</b> ${response[i].requestDate}</span>
+                                <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
                             </div>`,
                             `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
                         ])
@@ -228,7 +230,7 @@ $(document).ready(function(){
         const index = $('.incoming-req-row-class').index(this);
         const data = fetch_requestData[index];
         clicked_requestNo = data.requestNo
-
+        
         $('#user-name').text(data.requestBy.name);
         $('#user-bioid').text(data.requestBy.bioID);
         $('#user-division').text(data.requestBy.division);
@@ -252,11 +254,12 @@ $(document).ready(function(){
         const index = $('.my-job-row-class').index(this);
         const data = fetch_techMyJob[index];
         clicked_requestNo_myJob = data.requestNo
+        console.log(fetch_techMyJob) 
  
-        $('#user-name').text(data.access_by.name);
-        $('#user-bioid').text(data.access_by.bioID);
-        $('#user-division').text(data.access_by.divisionName);
-        $('#user-section').text(data.access_by.sectionName);
+        $('#user-name').text(data.requestBy.name);
+        $('#user-bioid').text(data.requestBy.bioID);
+        $('#user-division').text(data.requestBy.division);
+        $('#user-section').text(data.requestBy.section);
     
         $('#job-order-id').text(`JO-${data.requestNo}`);
         $('#date-requested').text(data.requestDate);
@@ -269,37 +272,74 @@ $(document).ready(function(){
         $('.assessment-section').css('display' , 'none')
         $('.tech-assessment-section').css('display' , 'flex')
         $('#start-assess-btn').text("Finish Job")
+
+        $('#tech-name-i').text(data.processedBy)
+        $('#reception-date-i').text(data.requestStartDate)
         request_modal.show();
     });
 
-    // 
+    // requestCompletedDate
     $(document).off('click', '#start-assess-btn').on('click', '#start-assess-btn', function() {     
-        console.log(clicked_requestNo)
-
-        try {
-            $.ajax({
-                url: '../php/incoming_request_php/edit_toOnProcess_req.php',
-                method: "POST",
-                data: {requestNo : clicked_requestNo},
-                success: function(response) {
-                    try { 
-                        dataTable_incoming_request()
-                        request_modal.hide()
-                        if(parseInt(response) >= 1){
-                            $('#your-job-notif-span').css('display' , 'block')
-                        }
-                    } catch (innerError) {
-                        console.error("Error processing response:", innerError);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX request failed:", error);
-                }
-            });
-        } catch (ajaxError) {
-            console.error("Unexpected error occurred:", ajaxError);
-        }
         
+        if($('#start-assess-btn').text() === 'Start Job'){
+            try {
+                $.ajax({
+                    url: '../php/incoming_request_php/edit_toOnProcess_req.php',
+                    method: "POST",
+                    data: {requestNo : clicked_requestNo},
+                    success: function(response) {
+                        try { 
+                            dataTable_incoming_request()
+                            request_modal.hide()
+                            if(parseInt(response) >= 1){
+                                $('#your-job-notif-span').text(response)
+                                $('#your-job-notif-span').css('display' , 'block')
+                            }
+                        } catch (innerError) {
+                            console.error("Error processing response:", innerError);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed:", error);
+                    }
+                });
+            } catch (ajaxError) {
+                console.error("Unexpected error occurred:", ajaxError);
+            }
+        }
+        else  if($('#start-assess-btn').text() === 'Finish Job'){
+            try {
+                $.ajax({
+                    url: '../php/incoming_request_php/edit_toEvaluation_req.php',
+                    method: "POST",
+                    data: {
+                        requestNo : clicked_requestNo_myJob,
+                        requestJobRemarks : $('.tech-remarks-textarea').val()
+                    },
+                    success: function(response) {
+                        try { 
+                            dataTable_my_jobs()
+                            request_modal.hide()
+                            
+                            if(response > 0){
+                                $('#your-job-notif-span').text(response)
+                                $('#your-job-notif-span').css('display' , 'block')
+                            }else{
+                                $('#your-job-notif-span').text(0)
+                                $('#your-job-notif-span').css('display' , 'none')
+                            }
+                        } catch (innerError) {
+                            console.error("Error processing response:", innerError);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed:", error);
+                    }
+                });
+            } catch (ajaxError) {
+                console.error("Unexpected error occurred:", ajaxError);
+            }
+        }
     })   
 
     $(document).off('click', '#your-job-btn').on('click', '#your-job-btn', function() {
@@ -315,4 +355,6 @@ $(document).ready(function(){
         $('#your-job-btn').css('opacity' , '0.5')
         $('#request-list-btn').css('opacity' , '1')
     })  
+
+    
 })

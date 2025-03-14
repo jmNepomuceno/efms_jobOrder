@@ -54,8 +54,8 @@
                 <div class="tech-assessment-section">
                     <h5 class="info-heading">Technician Remarks Details</h5>
                     <div class="tech-info-assessment">
-                        <span><b>Technician Name:</b> Dell Waje</span>
-                        <span><b>Reception Date:</b> 03/12/2025 - 11:11:40 AM</span>
+                        <span><b>Technician Name:</b> <i id="tech-name-i">Dell Waje</i></span>
+                        <span><b>Reception Date:</b> <i id="reception-date-i">03030303030303</i></span>
                     </div>
                     <textarea class="tech-remarks-textarea" placeholder="Currently assessing..."></textarea>
                 </div>

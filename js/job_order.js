@@ -64,25 +64,6 @@ $(document).ready(function(){
         });
     });
 
-    $('#process-nav-btn').click(function() {
-        refreshNavBtnStyle();
-        $('#process-nav-btn').css('background-color', '#f2f2f2');  
-
-        $('.main-container').empty();
-        $('.main-container').load('../container/onProcess_view.php', function(response, status, xhr) {
-            if (status === "success") {
-                removeAllJS()
-                removeAllCSS()
-
-                let version = new Date().getTime(); // Generates a unique timestamp
-                $('head').append(`<link rel="stylesheet" href="../css/onProcess_view.css?v=${version}">`);
-                $('body').append(`<script src="../js/onProcess_view_js/onProcess_view.js?v=${version}"><\/script>`);
-            } else {
-                console.error("Failed to load EFMS container:", xhr.statusText);
-            }
-        });
-    });
-
     $('#pending-nav-btn').click(function() {
         refreshNavBtnStyle();
         $('#pending-nav-btn').css('background-color', '#f2f2f2');  
@@ -102,9 +83,47 @@ $(document).ready(function(){
         });
     });
 
+    $('#process-nav-btn').click(function() {
+        refreshNavBtnStyle();
+        $('#process-nav-btn').css('background-color', '#f2f2f2');  
+
+        $('.main-container').empty();
+        $('.main-container').load('../container/onProcess_view.php', function(response, status, xhr) {
+            if (status === "success") {
+                removeAllJS()
+                removeAllCSS()
+
+                let version = new Date().getTime(); // Generates a unique timestamp
+                $('head').append(`<link rel="stylesheet" href="../css/onProcess_view.css?v=${version}">`);
+                $('body').append(`<script src="../js/onProcess_view_js/onProcess_view.js?v=${version}"><\/script>`);
+            } else {
+                console.error("Failed to load EFMS container:", xhr.statusText);
+            }
+        });
+    });
+
     $('#return-req-nav-btn').click(function() {
         refreshNavBtnStyle();
         $('#return-req-nav-btn').css('background-color', '#f2f2f2');  
+    });
+
+    $('#evaluation-req-nav-btn').click(function() {
+        refreshNavBtnStyle();
+        $('#evaluation-nav-btn').css('background-color', '#f2f2f2');  
+
+        $('.main-container').empty();
+        $('.main-container').load('../container/evaluation_view.php', function(response, status, xhr) {
+            if (status === "success") {
+                removeAllJS()
+                removeAllCSS()
+
+                let version = new Date().getTime(); // Generates a unique timestamp
+                $('head').append(`<link rel="stylesheet" href="../css/evaluation_view.css?v=${version}">`);
+                $('body').append(`<script src="../js/evaluation_view_js/evaluation_view.js?v=${version}"><\/script>`);
+            } else {
+                console.error("Failed to load EFMS container:", xhr.statusText);
+            }
+        });
     });
 
     $('#completed-nav-btn').click(function() {

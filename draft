@@ -1,0 +1,18 @@
+EFMS SIDE
+View Incoming Request
+Diagnosis -> Start Job
+Correction -> Send Back
+
+#1
+Diagnosis - Start Job
+Refresh incoming Request
+Add to Your Job On Process Data table
+Input remarks
+Finish Job
+
+#1-USER
+Request Problem
+Display in Pending
+Cannot request until pending is active
+Display On Process - Viewable Technician assessor
+Display on For Evaluation

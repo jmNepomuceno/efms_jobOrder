@@ -3,9 +3,15 @@
     include('../assets/connection.php');
 
     // echo '<pre>'; print_r($_SESSION); echo '</pre>';
-    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy='', requestStartDate='' WHERE requestNo=2";
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestCompletedDate=null, requestJobRemarks=null WHERE requestNo=2";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
+
+    $sql = "SELECT * FROM job_order_request";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    echo "<pre>"; print_r($data); "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +84,7 @@
                 <button id="request-list-btn">Job Order List</button>
                 <button id="your-job-btn">
                     Your Job
-                    <span id="your-job-notif-span">1</span>
+                    <span id="your-job-notif-span"></span>
                 </button>
             </div>
             <div class="table-container">
@@ -152,8 +158,8 @@
                     <div class="tech-assessment-section">
                         <h5 class="info-heading">Technician Remarks Details</h5>
                         <div class="tech-info-assessment">
-                            <span><b>Technician Name:</b> Dell Waje</span>
-                            <span><b>Reception Date:</b> 03/12/2025 - 11:11:40 AM</span>
+                            <span><b>Technician Name:</b> <i id="tech-name-i"></i></span>
+                            <span><b>Reception Date:</b> <i id="reception-date-i"></i></span>
                         </div>
                         <textarea class="tech-remarks-textarea" placeholder="Enter remarks details..."></textarea>
                     </div>

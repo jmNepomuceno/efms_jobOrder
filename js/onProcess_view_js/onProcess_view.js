@@ -5,7 +5,7 @@ if (!modal_view_form) {
     modal_view_form = new bootstrap.Modal(document.getElementById('modal-view-form'));
 }
 
-modal_view_form.show()
+// modal_view_form.show()
 var fetch_dataTable = () =>{
     $.ajax({
         url: '../php/onProcess_view_php/fetch_onProcess.php',
@@ -22,7 +22,7 @@ var fetch_dataTable = () =>{
                         `<span>${response[i].requestBy.name}</span>`,
                         `<div class="date-onProcess-div-td"> 
                             <span><b>Requested Date:</b> ${response[i].requestDate}</span>
-                            <span><b>Requested Date:</b> ${response[i].requestStartDate}</span>
+                            <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
                         </div>`,
                         `<span>${response[i].requestCategory}</span>`,
                         `<div class="action-pending-div">
@@ -79,23 +79,20 @@ $(document).ready(function(){
         const data = fetch_viewRequestData[index]
         console.log(data)
         
-        // $('#user-name').text(data.requestBy.name);
-        // $('#user-bioid').text(data.requestBy.bioID);
-        // $('#user-division').text(data.requestBy.division);
-        // $('#user-section').text(data.requestBy.section);
+        $('#user-name').text(data.requestBy.name);
+        $('#user-bioid').text(data.requestBy.bioID);
+        $('#user-division').text(data.requestBy.division);
+        $('#user-section').text(data.requestBy.section);
     
-        // $('#job-order-id').text(`JO-${data.requestNo}`);
-        // $('#date-requested').text(data.requestDate);
-        // $('#request-type').text(data.requestCategory);
+        $('#job-order-id').text(`JO-${data.requestNo}`);
+        $('#date-requested').text(data.requestDate);
+        $('#request-type').text(data.requestCategory);
     
-        // $('#request-description').text(data.requestDescription);
+        $('#request-description').text(data.requestDescription);
 
-        // $('.modal-title').text("User & Job Order Details")
-        // $('#user-what').text("Requester")
-        // $('.assessment-section').css('display' , 'flex')
-        // $('.tech-assessment-section').css('display' , 'none')
-        // $('#start-assess-btn').text("Start Job")
-
+        $('#tech-name-i').text(data.processedBy)
+        $('#reception-date-i').text(data.requestStartDate)
+        
         modal_view_form.show()
     })
 })

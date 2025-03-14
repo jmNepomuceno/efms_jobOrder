@@ -34,6 +34,7 @@
             <button class="nav-sub-div" id="process-nav-btn">On-Process</button>
             <button class="nav-sub-div" id="correction-nav-btn">Correction</button>
             <button class="nav-sub-div" id="return-req-nav-btn">Returned Request</button>
+            <button class="nav-sub-div" id="evaluation-req-nav-btn">For Evaluation</button>
             <button class="nav-sub-div" id="completed-nav-btn">Completed</button>
         </div>
     </div>
