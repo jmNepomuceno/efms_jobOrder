@@ -4,6 +4,7 @@ let request_modal = new bootstrap.Modal(document.getElementById('user-info-modal
 let fetch_requestData, fetch_techMyJob;
 let clicked_requestNo = 0, clicked_requestNo_myJob = 0;
 let clicked_tech_assess_textarea = ""
+let clicked_sub_nav = "On-Process"
 
 const dateFormatter = (originalDate) =>{
     const dateParts = originalDate.split(" - ");
@@ -121,13 +122,39 @@ const dataTable_incoming_request = () =>{
         //fetch is theres on proncess on your job
         $.ajax({
             url: '../php/incoming_request_php/fetch_myJobs.php',
-            method: "GET",
+            method: "POST",
+            data : {what : "On-Process"},
             dataType : 'json',
             success: function(response) {
                 console.log(response)
                 try { 
                     if(parseInt(response.length) >= 1){
-                        $('#your-job-notif-span').text(parseInt(response.length))
+                        $('#on-process-notif-span').text(response.length)
+                        $('#on-process-notif-span').css('display' , 'flex')
+                    }
+                } catch (innerError) {
+                    console.error("Error processing response:", innerError);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX request failed:", error);
+            }
+        });
+
+         //fetch is theres evaluation on your job
+         $.ajax({
+            url: '../php/incoming_request_php/fetch_for_evaluation.php',
+            method: "POST",
+            data : {what : "both"},
+            dataType : 'json',
+            success: function(response) {
+                console.log(response)
+                try { 
+                    if(response >= 1){
+                        $('#for-evaluation-notif-span').text(response)
+                        $('#for-evaluation-notif-span').css('display' , 'block')
+                        
+                        $('#your-job-notif-span').text(parseInt($('#for-evaluation-notif-span').text()) + parseInt($('#on-process-notif-span').text()))
                         $('#your-job-notif-span').css('display' , 'block')
                     }
                 } catch (innerError) {
@@ -138,17 +165,21 @@ const dataTable_incoming_request = () =>{
                 console.error("AJAX request failed:", error);
             }
         });
+
+        
+
     } catch (ajaxError) {
         console.error("Unexpected error occurred:", ajaxError);
     }
    
 }
 
-const dataTable_my_jobs = () =>{ 
+const dataTable_my_jobs = (what) =>{ 
     try {
         $.ajax({
             url: '../../php/incoming_request_php/fetch_myJobs.php',
             method: "POST",
+            data : {what},
             dataType : "json",
             success: function(response) {
                 console.log(response)
@@ -159,21 +190,65 @@ const dataTable_my_jobs = () =>{
                     for(let i = 0; i < response.length; i++){
                         response[i].requestDate = dateFormatter(response[i].requestDate)
                         response[i].requestStartDate = dateFormatter(response[i].requestStartDate)
+                        fetch_techMyJob[i]['what'] = what
 
-                        dataSet.push([
-                            `<div><span>${response[i].requestNo}</span></div>`,
-                            `<div class="request-by-td-div">
-                                <span class="request-by-name-td-div">${response[i].requestBy.name}</span>
-                                <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
-                                <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
-                                <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
-                            </div>`,
-                            `<div class="request-date-td-div">
-                                <span><b>Requested Date:</b> ${response[i].requestDate}</span>
-                                <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
-                            </div>`,
-                            `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
-                        ])
+                        if(clicked_sub_nav === 'On-Process'){
+                            dataSet.push([
+                                `<div><span>${response[i].requestNo}</span></div>`,
+                                `<div class="request-by-td-div">
+                                    <span class="request-by-name-td-div">${response[i].requestBy.name}</span>
+                                    <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
+                                    <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
+                                    <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
+                                </div>`,
+                                `<div class="request-date-td-div">
+                                    <span><b>Requested Date:</b> ${response[i].requestDate}</span>
+                                    <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
+                                </div>`,
+                                `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
+                            ])
+                        }
+
+                        if(clicked_sub_nav === 'Evaluation'){
+                            response[i].requestEvaluationDate = dateFormatter(response[i].requestEvaluationDate)
+                            dataSet.push([
+                                `<div><span>${response[i].requestNo}</span></div>`,
+                                `<div class="request-by-td-div">
+                                    <span class="request-by-name-td-div">${response[i].requestBy.name}</span>
+                                    <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
+                                    <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
+                                    <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
+                                </div>`,
+                                `<div class="request-date-td-div">
+                                    <span><b>Requested Date:</b> ${response[i].requestDate}</span>
+                                    <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
+                                    <span><b>For Evaluation Date:</b> ${response[i].requestEvaluationDate}</span>
+                                </div>`,
+                                `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
+                            ])
+                        }
+
+                        if(clicked_sub_nav === 'Completed'){
+                            response[i].requestEvaluationDate = dateFormatter(response[i].requestEvaluationDate)
+                            response[i].requestCompletedDate = dateFormatter(response[i].requestCompletedDate)
+                            dataSet.push([
+                                `<div><span>${response[i].requestNo}</span></div>`,
+                                `<div class="request-by-td-div">
+                                    <span class="request-by-name-td-div">${response[i].requestBy.name}</span>
+                                    <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
+                                    <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
+                                    <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
+                                </div>`,
+                                `<div class="request-date-td-div">
+                                    <span><b>Requested Date:</b> ${response[i].requestDate}</span>
+                                    <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
+                                    <span><b>For Evaluation Date:</b> ${response[i].requestEvaluationDate}</span>
+                                    <span><b>Completed Date:</b> ${response[i].requestCompletedDate}</span>
+                                </div>`,
+                                `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
+                            ])
+                        }
+                       
                     }  
 
                     if ($.fn.DataTable.isDataTable('#incoming-req-table')) {
@@ -267,7 +342,7 @@ $(document).ready(function(){
     
         $('#request-description').text(data.requestDescription);
 
-        $('.modal-title').text("Job Order Technician Assessment Details")
+        $('.modal-title').text("Job Order Technician Assessment Details || " + clicked_sub_nav)
         $('#user-what').text("Technician")
         $('.assessment-section').css('display' , 'none')
         $('.tech-assessment-section').css('display' , 'flex')
@@ -275,7 +350,24 @@ $(document).ready(function(){
 
         $('#tech-name-i').text(data.processedBy)
         $('#reception-date-i').text(data.requestStartDate)
+
+        if(clicked_sub_nav === "Evaluation"){
+            $('.tech-remarks-textarea').val(data.requestJobRemarks)
+            $('.tech-remarks-textarea').css('pointer-events' , 'none')
+            $('#start-assess-btn').css('opacity' , '0.7')
+            $('#start-assess-btn').css('pointer-events' , 'none')
+            $('#start-assess-btn').text("Waiting for User's Evaluation...")
+        }
+
+        else if(clicked_sub_nav === "Completed"){
+            $('.tech-remarks-textarea').val(data.requestJobRemarks)
+            $('.tech-remarks-textarea').css('pointer-events' , 'none')
+            $('#start-assess-btn').css('display' , 'none')
+        }
+
         request_modal.show();
+
+
     });
 
     // requestCompletedDate
@@ -287,13 +379,25 @@ $(document).ready(function(){
                     url: '../php/incoming_request_php/edit_toOnProcess_req.php',
                     method: "POST",
                     data: {requestNo : clicked_requestNo},
+                    dataType : 'json',
                     success: function(response) {
                         try { 
+                            console.log(response)
                             dataTable_incoming_request()
                             request_modal.hide()
-                            if(parseInt(response) >= 1){
-                                $('#your-job-notif-span').text(response)
+                            if(parseInt(response.count_yourJob) >= 1){
+                                $('#your-job-notif-span').text(response.count_yourJob)
                                 $('#your-job-notif-span').css('display' , 'block')
+                            }else{
+                                $('#your-job-notif-span').text(0)
+                                $('#your-job-notif-span').css('display' , 'none')
+                            }
+                            if(parseInt(response.count_onProcess) >= 1){
+                                $('#on-process-notif-span').text(response.count_onProcess)
+                                $('#on-process-notif-span').css('display' , 'block')
+                            }else{
+                                $('#on-process-notif-span').text(0)
+                                $('#on-process-notif-span').css('display' , 'none')
                             }
                         } catch (innerError) {
                             console.error("Error processing response:", innerError);
@@ -316,18 +420,38 @@ $(document).ready(function(){
                         requestNo : clicked_requestNo_myJob,
                         requestJobRemarks : $('.tech-remarks-textarea').val()
                     },
+                    dataType : "json",
                     success: function(response) {
                         try { 
-                            dataTable_my_jobs()
+                            dataTable_my_jobs("On-Process")
                             request_modal.hide()
                             
-                            if(response > 0){
-                                $('#your-job-notif-span').text(response)
+                            console.log(response)
+
+                            if(response.count_yourJob > 0){
+                                $('#your-job-notif-span').text(response.count_yourJob)
                                 $('#your-job-notif-span').css('display' , 'block')
                             }else{
                                 $('#your-job-notif-span').text(0)
                                 $('#your-job-notif-span').css('display' , 'none')
                             }
+
+                            if(response.count_onProcess > 0){
+                                $('#on-process-notif-span').text(response.count_onProcess)
+                                $('#on-process-notif-span').css('display' , 'block')
+                            }else{
+                                $('#on-process-notif-span').text(0)
+                                $('#on-process-notif-span').css('display' , 'none')
+                            }
+
+                            if(response.count_evaluation > 0){
+                                $('#for-evaluation-notif-span').text(response.count_evaluation)
+                                $('#for-evaluation-notif-span').css('display' , 'block')
+                            }else{
+                                $('#for-evaluation-notif-span').text(0)
+                                $('#for-evaluation-notif-span').css('display' , 'none')
+                            }
+
                         } catch (innerError) {
                             console.error("Error processing response:", innerError);
                         }
@@ -343,10 +467,12 @@ $(document).ready(function(){
     })   
 
     $(document).off('click', '#your-job-btn').on('click', '#your-job-btn', function() {
-        dataTable_my_jobs()
+        dataTable_my_jobs("On-Process")
 
         $('#your-job-btn').css('opacity' , '1')
         $('#request-list-btn').css('opacity' , '0.5')
+
+        $('.sub-table-nav').css('display' , 'flex')
     })     
     
     $(document).off('click', '#request-list-btn').on('click', '#request-list-btn', function() {
@@ -354,7 +480,34 @@ $(document).ready(function(){
 
         $('#your-job-btn').css('opacity' , '0.5')
         $('#request-list-btn').css('opacity' , '1')
+
+        $('.sub-table-nav').css('display' , 'none')
     })  
+
+    $(document).off("click", "#for-evaluation-sub-btn, #on-process-sub-btn, #completed-sub-btn").on("click", "#for-evaluation-sub-btn, #on-process-sub-btn, #completed-sub-btn", function () {
+        let status = {
+            "for-evaluation-sub-btn": "Evaluation",
+            "on-process-sub-btn": "On-Process",
+            "completed-sub-btn": "Completed"
+        }[this.id];
+    
+        dataTable_my_jobs(status);
+        clicked_sub_nav = status
+    
+        // Reset all buttons
+        $("#for-evaluation-sub-btn, #on-process-sub-btn, #completed-sub-btn").css({
+            "opacity": "0.5",
+            "background": "none",
+            "color": "white"
+        });
+    
+        // Highlight the clicked button
+        $(this).css({
+            "opacity": "1",
+            "background": "white",
+            "color": "black"
+        });
+    });
 
     
 })

@@ -1,8 +1,6 @@
 <?php 
     include('../session.php');
     include('../assets/connection.php');
-
-    // echo '<pre>'; print_r($_SESSION); echo '</pre>';
     
 ?>
 <!DOCTYPE html>
@@ -27,15 +25,14 @@
 
     <div class="nav-main-div">
         <h2>EFMS JOB ORDER REQUEST FORM</h2>
-
         <div class="nav-div">
             <button class="nav-sub-div" id="request-form-nav-btn">Request Form</button>
-            <button class="nav-sub-div" id="pending-nav-btn">Pending</button>
-            <button class="nav-sub-div" id="process-nav-btn">On-Process</button>
-            <button class="nav-sub-div" id="correction-nav-btn">Correction</button>
-            <button class="nav-sub-div" id="return-req-nav-btn">Returned Request</button>
-            <button class="nav-sub-div" id="evaluation-req-nav-btn">For Evaluation</button>
-            <button class="nav-sub-div" id="completed-nav-btn">Completed</button>
+            <button class="nav-sub-div" id="pending-nav-btn">Pending <span id="pending-notif-span"></button>
+            <button class="nav-sub-div" id="process-nav-btn">On-Process <span id="process-notif-span"></button>
+            <button class="nav-sub-div" id="correction-nav-btn">Correction <span id="correction-notif-span"></button>
+            <button class="nav-sub-div" id="return-req-nav-btn">Returned Request <span id="return-notif-span"></button>
+            <button class="nav-sub-div" id="evaluation-req-nav-btn">For Evaluation <span id="evaluation-notif-span">0</span></button>
+            <button class="nav-sub-div" id="completed-nav-btn">Completed <span id="completed-notif-span"></button>
         </div>
     </div>
     

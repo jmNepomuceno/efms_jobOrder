@@ -3,7 +3,7 @@ include ('../../session.php');
 include('../../assets/connection.php');
 
 try {
-    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestCategory, requestStatus, processedBy, requestStartDate, requestCompletedDate, requestJobRemarks FROM job_order_request WHERE CAST(JSON_EXTRACT(requestBy, '$.bioID') AS UNSIGNED) = ? AND requestStatus = 'Evaluation'";
+    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestCategory, requestStatus, processedBy, requestStartDate, requestEvaluationDate, requestJobRemarks FROM job_order_request WHERE CAST(JSON_EXTRACT(requestBy, '$.bioID') AS UNSIGNED) = ? AND requestStatus = 'Evaluation'";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_SESSION['user']]);
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);

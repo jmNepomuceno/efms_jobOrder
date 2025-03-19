@@ -99,6 +99,8 @@ body{
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     color:#3333ff;
+
+    position:relative;
 }
 
 .nav-main-div .nav-div button:nth-child(1){
@@ -107,6 +109,20 @@ body{
 
 .nav-main-div .nav-div button:hover{
     border:1px solid #f2f2f2;
+}
+
+.nav-main-div .nav-div button span{
+    background: red;
+    border-radius: 50%;
+    padding:1px 5px 1px 5px;
+    height: 20px;
+    width: 20px;
+    color:white;
+
+    top:-20%;
+    right:0;
+    position:absolute;
+    font-size: 0.75rem;
 }
 
 #modal-notif .modal-content .modal-header{

@@ -1,6 +1,47 @@
 let modal_notif = new bootstrap.Modal(document.getElementById('modal-notif'));
 // modal_notif.show()
 
+const fetchNotifValue = () => {
+    $.ajax({
+        url: "../../php/job_order_php/fetch_notifValue.php",
+        method: "GET",
+        dataType: "json",
+        success: function(response) {
+            console.log(response);
+
+            // Mapping status keys from response to their corresponding spans
+            const statusMap = {
+                count_pending: "#pending-notif-span",
+                count_onProcess: "#process-notif-span",
+                count_correction: "#correction-notif-span",
+                count_returned: "#return-notif-span",
+                count_evaluation: "#evaluation-notif-span",
+                count_completed: "#completed-notif-span"
+            };
+
+            // Iterate over the status map and update the respective spans
+            Object.keys(statusMap).forEach(key => {
+                let value = response[key] || 0; // Default to 0 if not found
+                let spanSelector = statusMap[key];
+
+                if (value > 0) {
+                    $(spanSelector).text(value).show();  // Show span and update value
+                } else {
+                    $(spanSelector).hide(); // Hide if value is 0
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching notification data:", error);
+        }
+    });
+};
+
+// $(document).ready(function () {
+//     fetchNotifValue();
+//     setInterval(fetchNotifValue, 30000); // Refresh every 30 seconds
+// });
+
 const onLoad = () =>{
     $('.main-container').load('../container/efms_container.php', function(response, status, xhr) {
         if (status === "success") {
@@ -38,7 +79,7 @@ function removeAllCSS(){
 
 $(document).ready(function(){
     onLoad();
-
+    fetchNotifValue()
     $('#login-btn').click(function() {
         handleLogin();
     });

@@ -1,6 +1,7 @@
 <?php 
     include('../../session.php');
     include('../../assets/connection.php');
+    $current_date = date('m/d/Y - h:i:s A');
 
     $requestNo = (int)$_POST['requestNo'];
     $evaluation = [
@@ -14,10 +15,11 @@
 
     $evaluationJSON = json_encode($evaluation);
     
-    $sql = "UPDATE job_order_request SET requestEvaluation=? WHERE requestNo=?";
+    $sql = "UPDATE job_order_request SET requestEvaluation=?, requestCompletedDate=?, requestStatus='Completed' WHERE requestNo=?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$evaluationJSON , $requestNo]);
+    $stmt->execute([$evaluationJSON , $current_date, $requestNo]);
 
-    echo json_encode($_POST);
+    // update the request status to be finl completed
+    // echo json_encode($_POST);
     
 ?>

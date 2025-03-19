@@ -106,31 +106,31 @@
 
 
 /* *************************************************** */
-#modal-view-form .modal-content,
+#modal-view-eval-form .modal-content,
 #modal-eval-form .modal-content{
     padding: 5px;
     border-radius: 12px;
 }
 
-#modal-view-form .modal-content .modal-header,
+#modal-view-eval-form .modal-content .modal-header,
 #modal-eval-form .modal-content .modal-header{
     width: 100%;
     height: 50px;
     background: #344c44;
 }
 
-#modal-view-form .modal-content .modal-header h5,
+#modal-view-eval-form .modal-content .modal-header h5,
 #modal-eval-form .modal-content .modal-header h5{
     color:white;
     font-weight: 600;
 }
 
-#modal-view-form .modal-content .modal-footer,
+#modal-view-eval-form .modal-content .modal-footer,
 #modal-eval-form .modal-content .modal-footer{
     padding:0;
 }
 
-#modal-view-form .modal-content .modal-footer button,
+#modal-view-eval-form .modal-content .modal-footer button,
 #modal-eval-form .modal-content .modal-footer button{
     background: #007bff;
     border:none;
@@ -141,7 +141,7 @@
     font-weight: bold;
 }
 
-#modal-view-form .modal-content #modal-body-incoming,
+#modal-view-eval-form .modal-content #modal-body-incoming,
 #modal-eval-form .modal-content #modal-body-incoming{
     display:flex;
     flex-direction: column;
@@ -150,7 +150,7 @@
     gap:30px;
 }
 
-#modal-view-form .modal-content #modal-body-incoming .main-information{
+#modal-view-eval-form .modal-content #modal-body-incoming .main-information{
     width: 100%;
     height: 150px;
 
@@ -161,7 +161,7 @@
 
 }
 
-#modal-view-form .modal-content #modal-body-incoming .main-information .user-info{
+#modal-view-eval-form .modal-content #modal-body-incoming .main-information .user-info{
     width: 50%;
     height: 100%;
 
@@ -173,7 +173,7 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
-#modal-view-form .modal-content #modal-body-incoming .main-information .user-info i{
+#modal-view-eval-form .modal-content #modal-body-incoming .main-information .user-info i{
     width: 25%;
     height: 75%;
     border-radius: 50%;
@@ -190,7 +190,7 @@
 
 }
 
-#modal-view-form .modal-content #modal-body-incoming .main-information .user-info .user-details{
+#modal-view-eval-form .modal-content #modal-body-incoming .main-information .user-info .user-details{
     /* border:1px solid orange; */
     width: 70%;
     height: 100%;
@@ -202,13 +202,13 @@
     
 }
 
-#modal-view-form .modal-content #modal-body-incoming .main-information .user-info .user-details p{
+#modal-view-eval-form .modal-content #modal-body-incoming .main-information .user-info .user-details p{
     font-size: 0.9rem;
     margin:0;
     padding:0;
 }
 
-#modal-view-form .modal-content #modal-body-incoming .main-information .job-order-info{
+#modal-view-eval-form .modal-content #modal-body-incoming .main-information .job-order-info{
     width: 45%;
     height: 100%;
 
@@ -224,9 +224,9 @@
     /* border:1px solid red; */
 }
 
-#modal-view-form .modal-content #modal-body-incoming .main-information .job-order-info .info-heading,
-#modal-view-form .modal-content #modal-body-incoming .request-description .info-heading,
-#modal-view-form .modal-content #modal-body-incoming .tech-assessment-section .info-heading{
+#modal-view-eval-form .modal-content #modal-body-incoming .main-information .job-order-info .info-heading,
+#modal-view-eval-form .modal-content #modal-body-incoming .request-description .info-heading,
+#modal-view-eval-form .modal-content #modal-body-incoming .tech-assessment-section .info-heading{
     width: 100%;
     border-radius: 5px;
     background: #5d897a;
@@ -238,15 +238,15 @@
     font-weight: 600;
 }
 
-#modal-view-form .modal-content #modal-body-incoming .main-information .job-order-info p{
+#modal-view-eval-form .modal-content #modal-body-incoming .main-information .job-order-info p{
     margin:0;
     padding:0;
     font-size: 0.9rem !important;
     margin:5px;
 }
 
-#modal-view-form .modal-content #modal-body-incoming .request-description,
-#modal-view-form .modal-content #modal-body-incoming .tech-assessment-section{
+#modal-view-eval-form .modal-content #modal-body-incoming .request-description,
+#modal-view-eval-form .modal-content #modal-body-incoming .tech-assessment-section{
     width: 100%;
     height: 200px;
 
@@ -255,14 +255,14 @@
 }
 
 
-#modal-view-form .modal-content #modal-body-incoming .tech-assessment-section{
+#modal-view-eval-form .modal-content #modal-body-incoming .tech-assessment-section{
     display:flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
 
-#modal-view-form .modal-content #modal-body-incoming .tech-assessment-section .tech-info-assessment{
+#modal-view-eval-form .modal-content #modal-body-incoming .tech-assessment-section .tech-info-assessment{
     width: 100%;
     height: 30px;
 
@@ -272,7 +272,7 @@
     align-items: center;
 }
 
-#modal-view-form .modal-content #modal-body-incoming .tech-assessment-section .tech-remarks-textarea{
+#modal-view-eval-form .modal-content #modal-body-incoming .tech-assessment-section .tech-remarks-textarea{
     width: 100%;
     height: 80%;
     resize: none;
@@ -286,7 +286,7 @@
     pointer-events: none;
 }
 
-#modal-view-form .modal-content #modal-body-incoming #start-assess-btn{
+#modal-view-eval-form .modal-content #modal-body-incoming #start-assess-btn{
     margin-top: -20px;
     background: #90afc5;
     color:black;

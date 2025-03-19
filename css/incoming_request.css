@@ -161,6 +161,65 @@ body .right-container .table-div .nav-request-div button span{
     display:none;
 }
 
+body .right-container .table-div .sub-table-nav{
+    width: 99.5%;
+    height: 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    gap:10px;
+
+    background: #503830;
+    border-bottom:1px solid #8f6456;
+
+    display:none;
+}
+
+body .right-container .table-div .sub-table-nav button{
+    margin-left:10px;
+    background: #4f372f;
+    padding:5px 10px 5px 10px;
+    border-radius: 5px;
+    color:white;
+    border:2px solid #8f6456;
+    border:none;
+    font-size: 0.8rem;
+    border:1px solid white;
+    opacity: 0.5;
+
+    position:relative;
+
+}
+
+body .right-container .table-div .sub-table-nav button span{
+    background: red;
+    border-radius: 50%;
+    padding:1px 5px 1px 5px;
+    height: 20px;
+    width: 20px;
+    color:white;
+
+    top:-20%;
+    right:-5%;
+    position:absolute;
+    font-size: 0.75rem;
+
+    display:none;
+}
+
+body .right-container .table-div .sub-table-nav button:nth-child(1){
+    background: white;
+    color:black;
+    opacity: 1;
+}
+
+body .right-container .table-div .sub-table-nav button:hover{
+    opacity: 1;
+}
+
 body .right-container .table-div .table-container{
     width: 100%;
     height: 550px;

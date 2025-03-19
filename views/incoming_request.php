@@ -3,15 +3,27 @@
     include('../assets/connection.php');
 
     // echo '<pre>'; print_r($_SESSION); echo '</pre>';
-    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestCompletedDate=null, requestJobRemarks=null WHERE requestNo=2";
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=2";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    $sql = "SELECT * FROM job_order_request";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo "<pre>"; print_r($data); "</pre>";
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=3";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=4";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=5";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+
+    // $sql = "SELECT * FROM job_order_request";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+    // $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // echo "<pre>"; print_r($data); "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -87,6 +99,22 @@
                     <span id="your-job-notif-span"></span>
                 </button>
             </div>
+
+            <div class="sub-table-nav">
+                <button id="on-process-sub-btn">
+                    On-Process 
+                    <span id="on-process-notif-span">0</span>
+                </button>
+                <button id="for-evaluation-sub-btn">
+                    For Evaluation
+                    <span id="for-evaluation-notif-span"></span>
+                </button>
+                <button id="completed-sub-btn">
+                    Completed
+                    <span id="completed-notif-span"></span>
+                </button>
+            </div>
+
             <div class="table-container">
                 <table id="incoming-req-table" class="display">
                     <thead>

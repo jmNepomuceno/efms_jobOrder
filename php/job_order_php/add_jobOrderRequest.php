@@ -4,7 +4,7 @@
 
     // check first if the current user has a pending request on the fucking system
     // $sql = "SELECT COUNT(*) AS pending_count FROM job_order_request WHERE requestStatus = 'On-Process' AND JSON_EXTRACT(requestBy, '$.bioID')=?";
-    $sql = "SELECT COUNT(*) AS pending_count FROM efms_joborder.job_order_request WHERE (requestStatus = 'Pending' OR requestStatus = 'On-Process') AND CAST(JSON_EXTRACT(requestBy, '$.bioID') AS UNSIGNED) = ?";
+    $sql = "SELECT COUNT(*) AS pending_count FROM efms_joborder.job_order_request WHERE (requestStatus = 'Pending' OR requestStatus = 'On-Process' OR requestStatus = 'Evaluation') AND CAST(JSON_EXTRACT(requestBy, '$.bioID') AS UNSIGNED) = ?";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_SESSION['user']]);  // Integer parameter

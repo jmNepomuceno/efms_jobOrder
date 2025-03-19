@@ -1,10 +1,13 @@
-var modal_view_form, modal_eval_form;
+var modal_view_eval_form, modal_eval_form
 var clicked_requestID;
 var fetch_viewRequestData;
-let clicked_requestNo = 0;
+var clicked_requestNo = 0;
+// $('#evaluation-notif-span')
+if (!modal_view_eval_form) {
+    modal_view_eval_form = new bootstrap.Modal(document.getElementById('modal-view-eval-form'));
+}
 
-if (!modal_view_form) {
-    modal_view_form = new bootstrap.Modal(document.getElementById('modal-view-form'));
+if (!modal_eval_form) {
     modal_eval_form = new bootstrap.Modal(document.getElementById('modal-eval-form'));
 }
 
@@ -17,6 +20,9 @@ var fetch_dataTable = () =>{
             console.log(response);
             fetch_viewRequestData = response
             try {
+
+                //enable notif div
+                
                 let dataSet = [];
                 for (let i = 0; i < response.length; i++) {
                     dataSet.push([
@@ -25,7 +31,7 @@ var fetch_dataTable = () =>{
                         `<div class="date-request-td"> 
                             <span><b>Requested Date:</b> ${response[i].requestDate}</span>
                             <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
-                            <span><b>Completion Date:</b> ${response[i].requestCompletedDate}</span>
+                            <span><b>Evaluation Date:</b> ${response[i].requestEvaluationDate}</span>
                         </div>`,
                         `<span>${response[i].requestCategory}</span>`,
                         `<div class="action-evaluation-div">
@@ -77,8 +83,7 @@ var fetch_dataTable = () =>{
 
 // modal_eval_form.show()
 $(document).ready(function(){
-    fetch_dataTable()
-    
+    fetch_dataTable() 
     $(document).off('click', '#submit-modal-btn').on('click', '#submit-modal-btn', function() {        
         try {
             $.ajax({
@@ -127,15 +132,34 @@ $(document).ready(function(){
         $('#tech-name-i').text(data.processedBy)
         $('#reception-date-i').text(data.requestStartDate)
         $('.tech-remarks-textarea').val(data.requestJobRemarks)
-        modal_view_form.show()
+        modal_view_eval_form.show()
     })
 
     $(document).off('click', '.view-eval-form-btn').on('click', '.view-eval-form-btn', function() {
         const index = $('.view-eval-form-btn').index(this);
         const data = fetch_viewRequestData[index]
         clicked_requestNo = data.requestNo
-
         console.log(data)
+
+        $('#user-name').text(data.requestBy.name);
+        $('#user-bioid').text(data.requestBy.bioID);
+        $('#user-division').text(data.requestBy.division);
+        $('#user-section').text(data.requestBy.section);
+    
+        $('#job-order-id').text(`JO-${data.requestNo}`);
+        $('#date-requested').text(data.requestDate);
+        $('#request-type').text(data.requestCategory);
+    
+        $('#request-description').text(data.requestDescription);
+
+        // $('.modal-title').text("Job Order Technician Assessment Details")
+        $('#user-what').text("Technician")
+        $('.assessment-section').css('display' , 'none')
+        $('.tech-assessment-section').css('display' , 'flex')
+        $('#start-assess-btn').text("Finish Job")
+
+        $('#tech-name-i').text(data.processedBy)
+        $('#reception-date-i').text(data.requestStartDate)
         
         modal_eval_form.show()
     })
@@ -153,9 +177,11 @@ $(document).ready(function(){
             data: formData,
             processData: false, // Important for FormData
             contentType: false, // Important for FormData
-            dataType : 'json',
             success: function(response) {
-                console.log(response)
+                $('#modal-body-incoming').text('Successfully Submitted.')
+                modal_notif.show()
+                modal_eval_form.hide()
+                fetch_dataTable()
             },
             error: function(xhr, status, error) {
                 console.error("Submission Error:", error);
