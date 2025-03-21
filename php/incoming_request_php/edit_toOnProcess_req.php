@@ -2,6 +2,9 @@
 include ('../../session.php');
 include('../../assets/connection.php');
 
+require "../../vendor/autoload.php";  // Ensure Composer's autoload is included
+use WebSocket\Client;
+
 $current_date = date('m/d/Y - h:i:s A');
 
 try {
@@ -25,6 +28,11 @@ try {
         "count_onProcess" => $count_onProcess,
         "count_yourJob" => $count_evaluation + $count_onProcess,
     ]);
+
+
+    // websocket server
+    $client = new Client("ws://192.168.42.222:8080");
+    $client->send(json_encode(["action" => "refreshOnProcessTableUser"]));
 
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());

@@ -2,6 +2,25 @@
     include('../session.php');
     include('../assets/connection.php');
     
+    // $sql = "SELECT * FROM job_order_request";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+    // $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // echo "<pre>"; print_r($data); "</pre>";
+
+    // $checkSql = "SHOW COLUMNS FROM job_order_request LIKE 'requestCorrectionDate'";
+    // $stmt = $pdo->query($checkSql);
+    // $columnExists = $stmt->fetch();
+
+    // if (!$columnExists) {
+    //     $sql = "ALTER TABLE job_order_request 
+    //             ADD COLUMN requestCorrectionDate VARCHAR(45) NULL, 
+    //             ADD COLUMN requestCorrection VARCHAR(200) NULL";
+    //     $pdo->exec($sql);
+    //     echo "Columns added successfully!";
+    // } else {
+    //     echo "Columns already exist!";
+    // }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +49,6 @@
             <button class="nav-sub-div" id="pending-nav-btn">Pending <span id="pending-notif-span"></button>
             <button class="nav-sub-div" id="process-nav-btn">On-Process <span id="process-notif-span"></button>
             <button class="nav-sub-div" id="correction-nav-btn">Correction <span id="correction-notif-span"></button>
-            <button class="nav-sub-div" id="return-req-nav-btn">Returned Request <span id="return-notif-span"></button>
             <button class="nav-sub-div" id="evaluation-req-nav-btn">For Evaluation <span id="evaluation-notif-span">0</span></button>
             <button class="nav-sub-div" id="completed-nav-btn">Completed <span id="completed-notif-span"></button>
         </div>
@@ -57,6 +75,7 @@
 
     
     <?php require "../links/script_links.php" ?>
+    <script src="../assets/script.js?v=<?php echo time(); ?>"></script>
     <script src="../js/job_order.js?v=<?php echo time(); ?>"></script>
     
     <!-- <script src="../js/home_function.js?v=<?php echo time(); ?>"></script> -->

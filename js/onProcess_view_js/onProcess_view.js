@@ -71,6 +71,14 @@ var fetch_dataTable = () =>{
     });
 }
 
+socket.onmessage = function(event) {
+    let data = JSON.parse(event.data);
+    console.log("Received from WebSocket:", data); // Debugging
+    if (data.action === "refreshOnProcessTableUser") {
+        fetch_dataTable();  // Refresh the table
+    }
+};
+
 $(document).ready(function(){
     fetch_dataTable()
     

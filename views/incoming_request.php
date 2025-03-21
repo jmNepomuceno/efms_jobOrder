@@ -11,13 +11,13 @@
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=4";
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=14";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=5";
-    // $stmt = $pdo->prepare($sql);
-    // $stmt->execute();
+    $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=13";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 
     // $sql = "SELECT * FROM job_order_request";
     // $stmt = $pdo->prepare($sql);
@@ -229,9 +229,12 @@
     <?php require "../links/script_links.php" ?>
 
     <script> </script>
+    <script src="../assets/script.js?v=<?php echo time(); ?>"></script>
+
     <script src="../js/sidebar_traverse.js?v=<?php echo time(); ?>"></script>
     <script src="../js/incoming_request_js/incoming_request.js?php echo time(); ?>"></script>
     <script src="../js/incoming_request_js/incoming_request_traverse.js?php echo time(); ?>"></script>
+
     <!-- <script src="../js/home_traverse.js?v=<?php echo time(); ?>"></script> -->
     <!-- <script src="../js/home_function.js?v=<?php echo time(); ?>"></script> -->
                 

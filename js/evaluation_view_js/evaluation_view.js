@@ -81,6 +81,14 @@ var fetch_dataTable = () =>{
     });
 }
 
+socket.onmessage = function(event) {
+    let data = JSON.parse(event.data);
+    console.log("Received from WebSocket:", data); // Debugging
+    if (data.action === "refreshEvaluationTableUser") {
+        fetch_dataTable();  // Refresh the table
+    }
+};
+
 // modal_eval_form.show()
 $(document).ready(function(){
     fetch_dataTable() 
@@ -182,6 +190,7 @@ $(document).ready(function(){
                 modal_notif.show()
                 modal_eval_form.hide()
                 fetch_dataTable()
+                fetchNotifValue()
             },
             error: function(xhr, status, error) {
                 console.error("Submission Error:", error);

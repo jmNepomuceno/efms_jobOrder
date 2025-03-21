@@ -37,10 +37,21 @@ const fetchNotifValue = () => {
     });
 };
 
-// $(document).ready(function () {
-//     fetchNotifValue();
-//     setInterval(fetchNotifValue, 30000); // Refresh every 30 seconds
-// });
+socket.onmessage = function(event) {
+    let data = JSON.parse(event.data);
+    console.log("Received from WebSocket:", data); // Debugging
+
+    // Check if the action matches any of the relevant events
+    if (
+        data.action === "refreshOnProcessTableUser" || 
+        data.action === "refreshEvaluationTableUser" || 
+        data.action === "refreshRejectionTableUser"
+    ) {
+        fetchNotifValue(); // Only fetch the notification value
+    } else {
+        console.log("Unknown action:", data.action);
+    }
+};
 
 const onLoad = () =>{
     $('.main-container').load('../container/efms_container.php', function(response, status, xhr) {
@@ -143,9 +154,23 @@ $(document).ready(function(){
         });
     });
 
-    $('#return-req-nav-btn').click(function() {
+    $('#correction-nav-btn').click(function() {
         refreshNavBtnStyle();
-        $('#return-req-nav-btn').css('background-color', '#f2f2f2');  
+        $('#correction-nav-btn').css('background-color', '#f2f2f2');  
+
+        $('.main-container').empty();
+        $('.main-container').load('../container/correction_view.php', function(response, status, xhr) {
+            if (status === "success") {
+                removeAllJS()
+                removeAllCSS()
+
+                let version = new Date().getTime(); // Generates a unique timestamp
+                $('head').append(`<link rel="stylesheet" href="../css/correction_view.css?v=${version}">`);
+                $('body').append(`<script src="../js/correction_view_js/correction_view.js?v=${version}"><\/script>`);
+            } else {
+                console.error("Failed to load EFMS container:", xhr.statusText);
+            }
+        });
     });
 
     $('#evaluation-req-nav-btn').click(function() {
@@ -170,6 +195,20 @@ $(document).ready(function(){
     $('#completed-nav-btn').click(function() {
         refreshNavBtnStyle();
         $('#completed-nav-btn').css('background-color', '#f2f2f2');  
+
+        $('.main-container').empty();
+        $('.main-container').load('../container/completed_view.php', function(response, status, xhr) {
+            if (status === "success") {
+                removeAllJS()
+                removeAllCSS()
+
+                let version = new Date().getTime(); // Generates a unique timestamp
+                $('head').append(`<link rel="stylesheet" href="../css/completed_view.css?v=${version}">`);
+                $('body').append(`<script src="../js/completed_view_js/completed_view.js?v=${version}"><\/script>`);
+            } else {
+                console.error("Failed to load EFMS container:", xhr.statusText);
+            }
+        });
     });
 
     $('#return-btn').click(function() {

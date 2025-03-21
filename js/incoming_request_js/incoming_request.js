@@ -192,6 +192,11 @@ const dataTable_my_jobs = (what) =>{
                         response[i].requestStartDate = dateFormatter(response[i].requestStartDate)
                         fetch_techMyJob[i]['what'] = what
 
+                        
+                        // update the number of the notif value
+                        // $('#your-job-notif-span').text(parseInt(response.length))
+                        // $('#your-job-notif-span').css('display' , 'block')
+
                         if(clicked_sub_nav === 'On-Process'){
                             dataSet.push([
                                 `<div><span>${response[i].requestNo}</span></div>`,
@@ -270,7 +275,7 @@ const dataTable_my_jobs = (what) =>{
                             { targets: 2, createdCell: function(td) { $(td).addClass('item-date-td'); } },
                             { targets: 3, createdCell: function(td) { $(td).addClass('item-req-type-td'); } },
                         ],
-                        "autoWidth": false, // Prevents auto column sizing
+                        "autoWidth": false, // Prevents auto column sizing 
                         "paging": false,
                         "info": false,
                         "ordering": false,
@@ -298,8 +303,41 @@ const dataTable_my_jobs = (what) =>{
    
 }
 
+
+
+// socket.onmessage = function(event) {
+//     let data = JSON.parse(event.data);
+//     console.log("Received from WebSocket:", data); // Debugging
+//     if (data.action === "refreshIncomingTable") {
+//         dataTable_incoming_request();  // Refresh the table
+//     }
+// };
+
+socket.onmessage = function(event) {
+    let data = JSON.parse(event.data);
+    console.log("Received from WebSocket:", data); // Debugging
+
+    // Call fetchNotifValue() on every process update
+    switch (data.action) {
+        case "refreshIncomingTable":
+            dataTable_incoming_request();  
+            break;
+        case "refreshDoneEvaluationTableUser":
+            dataTable_my_jobs("Evaluation");  
+            break;
+        default:
+            console.log("Unknown action:", data.action);
+    }
+};
+
+
 $(document).ready(function(){
     dataTable_incoming_request()
+
+    // Set interval to fetch data every 10 seconds
+    // setInterval(function() {
+    //     dataTable_incoming_request();
+    // }, 10000); // 10 seconds (10000ms)
 
     $(document).off('click', '.incoming-req-row-class').on('click', '.incoming-req-row-class', function() {        
         const index = $('.incoming-req-row-class').index(this);
@@ -372,7 +410,7 @@ $(document).ready(function(){
 
     // requestCompletedDate
     $(document).off('click', '#start-assess-btn').on('click', '#start-assess-btn', function() {     
-        
+        console.log()
         if($('#start-assess-btn').text() === 'Start Job'){
             try {
                 $.ajax({
@@ -451,6 +489,60 @@ $(document).ready(function(){
                                 $('#for-evaluation-notif-span').text(0)
                                 $('#for-evaluation-notif-span').css('display' , 'none')
                             }
+
+                        } catch (innerError) {
+                            console.error("Error processing response:", innerError);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed:", error);
+                    }
+                });
+            } catch (ajaxError) {
+                console.error("Unexpected error occurred:", ajaxError);
+            }
+        }
+        else  if($('#start-assess-btn').text() === 'Send'){
+            console.log('here')
+            try {
+                $.ajax({
+                    url: '../php/incoming_request_php/edit_toCorrection_req.php',
+                    method: "POST",
+                    data: {
+                        requestNo : clicked_requestNo,
+                        requestJobRemarks : $('.assessment-textarea').val()
+                    },
+                    dataType : "json",
+                    success: function(response) {
+                        try { 
+                            dataTable_incoming_request()
+                            request_modal.hide()
+                            
+                            console.log(response)
+
+                            // if(response.count_yourJob > 0){
+                            //     $('#your-job-notif-span').text(response.count_yourJob)
+                            //     $('#your-job-notif-span').css('display' , 'block')
+                            // }else{
+                            //     $('#your-job-notif-span').text(0)
+                            //     $('#your-job-notif-span').css('display' , 'none')
+                            // }
+
+                            // if(response.count_onProcess > 0){
+                            //     $('#on-process-notif-span').text(response.count_onProcess)
+                            //     $('#on-process-notif-span').css('display' , 'block')
+                            // }else{
+                            //     $('#on-process-notif-span').text(0)
+                            //     $('#on-process-notif-span').css('display' , 'none')
+                            // }
+
+                            // if(response.count_evaluation > 0){
+                            //     $('#for-evaluation-notif-span').text(response.count_evaluation)
+                            //     $('#for-evaluation-notif-span').css('display' , 'block')
+                            // }else{
+                            //     $('#for-evaluation-notif-span').text(0)
+                            //     $('#for-evaluation-notif-span').css('display' , 'none')
+                            // }
 
                         } catch (innerError) {
                             console.error("Error processing response:", innerError);
