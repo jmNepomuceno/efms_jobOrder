@@ -24,26 +24,11 @@
                 <span>Pending</span>
             </div>
 
-            <div class="side-bar-routes" id="incoming-order-sub-div">
+            <div class="side-bar-routes" id="admin-management-sub-div">
                 <i class="fa-solid fa-box"></i>
-                <span>For Corrections</span>
-                <!-- <i class="fa-solid fa-bell hidden" id="bell-notif"></i> -->
+                <span>Admin Management</span>
             </div>
             
-            <div class="side-bar-routes" id="imiss-inventory-sub-div">
-                <i class="fa-solid fa-box"></i>
-                <span>On Process</span>
-            </div>
-
-            <div class="side-bar-routes" id="imiss-ppmp-sub-div">
-                <i class="fa-solid fa-box"></i>
-                <span>For Evaluation</span>
-            </div>
-
-            <div class="side-bar-routes" id="item-distribution-sub-div">
-                <i class="fa-solid fa-box"></i>
-                <span>Accomplished</span>
-            </div>
 
         </div>
 

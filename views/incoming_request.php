@@ -15,15 +15,25 @@
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=13";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestStartDate=null, requestEvaluationDate=null, requestCompletedDate=null, requestCorrectionDate=null, requestCorrection=null, requestJobRemarks=null, requestEvaluation=null WHERE requestNo=13";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
 
     // $sql = "SELECT * FROM job_order_request";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
     // $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     // echo "<pre>"; print_r($data); "</pre>";
+
+    $sql = "SELECT PGSDivisionName, PGSDivisionID FROM pgsdivision";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $division_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql = "SELECT sectionName, division FROM pgssection";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $section_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +58,7 @@
 
     <div class="right-container">
         <?php 
+            $view = "Dashboard Incoming";
             include("./navbar.php");
         ?>
 
@@ -56,11 +67,18 @@
             <div class="top-div">
 
                 <input type="text" class="form-control" id="job-no-input" placeholder="Job Order No." autocomplete="off">
+
                 <select class="form-control" id="division-select">
                     <option value="" disabled selected>Select Division</option>
+                    <?php foreach ($division_data as $division): ?>
+                        <option value="<?= htmlspecialchars($division['PGSDivisionID']) ?>">
+                            <?= htmlspecialchars($division['PGSDivisionName']) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
+                
                 <select class="form-control" id="section-select">
-                    <option value="" disabled selected>Select Section\Department</option>
+                    <option value="" disabled selected>Select Section</option>
                 </select>
 
                 <input type="text" class="form-control" id="lastname-input" placeholder="Last Name" autocomplete="off">
@@ -73,6 +91,10 @@
 
                 <select class="form-control" id="status-select">
                     <option value="" disabled selected>Select Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="on-process">On-Process</option>
+                    <option value="evaluation">For Evaluation</option>
+                    <option value="completed">Completed</option>
                 </select>
 
                 <select class="form-control" id="technician-select">
@@ -81,6 +103,10 @@
 
                 <select class="form-control" id="requestType-select">
                     <option value="" disabled selected>Select Request Type</option>
+                    <option value="plumbing">Plumbing</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="carpentry">Carpentry</option>
+                    <option value="met">MET</option>
                 </select>
 
                 <input type="date" class="form-control" id="dateFrom-input">
@@ -93,7 +119,10 @@
 
         <div class="table-div">
             <div class="nav-request-div">
-                <button id="request-list-btn">Job Order List</button>
+                <button id="request-list-btn">
+                    Job Order List
+                    <span id="jobOrder-notif-span"></span>
+                </button>
                 <button id="your-job-btn">
                     Your Job
                     <span id="your-job-notif-span"></span>
@@ -206,9 +235,6 @@
     </div>
 
 
-
-
-
     <div class="modal fade" id="modal-notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-top" role="document">
             <div class="modal-content">
@@ -228,7 +254,8 @@
 
     <?php require "../links/script_links.php" ?>
 
-    <script> </script>
+    
+
     <script src="../assets/script.js?v=<?php echo time(); ?>"></script>
 
     <script src="../js/sidebar_traverse.js?v=<?php echo time(); ?>"></script>
@@ -238,6 +265,10 @@
     <!-- <script src="../js/home_traverse.js?v=<?php echo time(); ?>"></script> -->
     <!-- <script src="../js/home_function.js?v=<?php echo time(); ?>"></script> -->
                 
+    <script>
+        var section_data = <?php echo json_encode($section_data); ?>;
+        var division_data = <?php echo json_encode($division_data); ?>;
+    </script>
 </body>
 </html>
  

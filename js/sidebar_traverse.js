@@ -23,9 +23,9 @@ $(document).ready(function(){
         window.location.href = "../views/incoming_request.php";
     });
 
-    // $('#incoming-item-sub-div').click(function(){
-    //     window.location.href = "../views/incoming_item.php";
-    // });
+    $('#admin-management-sub-div').click(function(){
+        window.location.href = "../views/admin_management.php";
+    });
 
     // $('#imiss-inventory-sub-div').click(function(){
     //     // window.location.href = "../views/imiss_inventory.php";

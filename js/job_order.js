@@ -45,7 +45,7 @@ socket.onmessage = function(event) {
     if (
         data.action === "refreshOnProcessTableUser" || 
         data.action === "refreshEvaluationTableUser" || 
-        data.action === "refreshRejectionTableUser"
+        data.action === "refreshCorrectionTableUser"
     ) {
         fetchNotifValue(); // Only fetch the notification value
     } else {

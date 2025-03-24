@@ -16,4 +16,31 @@ $(document).ready(function(){
         $('#correction-btn').css('opacity' , '1')
         $('#diagnosis-btn').css('opacity' , '0.5')
     });
+
+    console.log(section_data)
+    console.log(division_data)
+
+    let divisionSelect = document.getElementById("division-select");
+    let sectionSelect = document.getElementById("section-select");
+
+    // Clear the section dropdown initially
+    sectionSelect.innerHTML = '<option value="" disabled selected>Select Section</option>';
+
+    // Listen for changes in the division select dropdown
+    divisionSelect.addEventListener("change", function () {
+        let selectedDivisionID = parseInt(this.value); // Get the selected PGSDivisionID
+        sectionSelect.innerHTML = '<option value="" disabled selected>Select Section</option>'; // Reset section dropdown
+
+        // Filter sections where the 'division' field (PGSDivisionID) matches
+        let filteredSections = section_data.filter(section => parseInt(section.division) === selectedDivisionID);
+
+        // Populate the section dropdown with matching sections
+        filteredSections.forEach(section => {
+            let option = document.createElement("option");
+            option.value = section.sectionName;
+            option.textContent = section.sectionName;
+            sectionSelect.appendChild(option);
+        });
+    });
 })
+
