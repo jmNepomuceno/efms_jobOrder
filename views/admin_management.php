@@ -3,32 +3,12 @@
     include('../assets/connection.php');
     include('../assets/mssql_connection.php');
 
-    // $sql = "SELECT bioID, LastName, FirstName, Middle, employmentStatus FROM dbo.tblEmployee WHERE sectionID = 23";
-    // $stmt = $pdo2->prepare($sql);
-    // $stmt->execute();
-    // $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-    // $insert_sql = "INSERT INTO efms_technicians (techBioID, firstName, lastName, middle, employmentStatus) 
-    //     VALUES (?, ?, ?, ?, ?)";
-    // $insert_stmt = $pdo->prepare($insert_sql);
-
-
-    // foreach ($data as $row) {
-    //     $success = $insert_stmt->execute([
-    //         $row['bioID'],
-    //         $row['FirstName'],
-    //         $row['LastName'],
-    //         $row['Middle'],  
-    //         $row['employmentStatus'],
-    //     ]);
-    // }
-
-    // Fetch all employees in one query
     $sql = "SELECT techBioID, firstName, lastName, middle, techCategory FROM efms_technicians";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // echo '<pre>'; print_r($employees);  echo '</pre>';
 
     // Categorize employees
     $categories = [
@@ -56,9 +36,12 @@
         }
         return $output;
     }
+
     // echo '<pre>'; print_r($sample_list);  echo '</pre>';
 
-
+    $sql = "DELETE FROM efms_technicians WHERE techBioID=4826";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -94,6 +77,14 @@
                 <div class="free-agents">
                     <?= generateDraggableSpans($categories['free_agents']) ? generateDraggableSpans($categories['free_agents']) : "No Data"; ?>
                 </div>
+
+                <div class="function-unassign-div">
+                    <button id="refresh-drag-btn">Refresh Employee List</button>
+                    <button id="multi-select-drag-btn">Multi Select</button>
+                </div>
+
+                <div class="loader"></div>
+
             </div>
 
             <div class="category-container">
@@ -129,6 +120,22 @@
 
     </div>
     
+    <div class="modal fade" id="modal-notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-top" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="modal-title-incoming" class="modal-title-incoming" id="exampleModalLabel">Successfully Updated</h5>
+                </div>
+                <div id="modal-body-incoming" class="modal-body-incoming ml-2">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button id="close-modal-btn-incoming" type="button" type="button" data-bs-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     
 
     <?php require "../links/script_links.php" ?>
