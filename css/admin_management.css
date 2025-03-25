@@ -46,35 +46,178 @@ body .right-container{
     height: 100%;
     display:flex;
     flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap:20px;
+}
+
+.manage-accts-div .draft-container-div{
+    width: 80%;
+    height: 20%;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    padding:10px;
+    border-radius: 5px;
+    margin-top:70px;
+}
+
+.manage-accts-div .draft-container-div h5{
+    margin:0;
+    padding:0;
+    background: #4c6444;
+    color:white;
+    width: auto;
+    height: auto;
+    padding:7px 10px 7px 10px;
+    border-radius: 10px;
+}
+
+.manage-accts-div .draft-container-div .free-agents{
+    width: 100%;
+    /* height: 75%; 300px */
+    height: auto;
+    max-height: 150px;
+    display:flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
     gap:5px;
 
-}
+    overflow-y: scroll;
 
-.manage-accts-div .container {
-    width: 300px;
-    height: 500px;
-    border: 2px solid #333;
-    margin: 10px;
-    padding: 10px;
-    vertical-align: top;
-    background-color: #f0f0f0;
+    /* display:none; */
 }
-
-.manage-accts-div .container.title {
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 10px;
-}
-.manage-accts-div .container .draggable {
+.manage-accts-div .draft-container-div .free-agents .draggable {
     display: block;
-    background-color: #3498db;
-    color: white;
-    padding: 8px;
+    background-color: #bac0c4;
+    color: #333333;
+    padding: 2px;
     margin: 5px 0;
     text-align: center;
     cursor: grab;
     border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    pointer-events: none;
+    width: 250px;
+}
+
+.manage-accts-div .draft-container-div .free-agents .draggable .selected {
+    background-color: lightblue;
+    border: 2px solid blue;
+}
+
+.manage-accts-div .category-container{
+    height: 50%;
+    width: 90%;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap:10px;
+    margin-top:80px;
+}
+
+.manage-accts-div .category-container .container {
+    width: 23%;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding:0;
+
+}
+
+.manage-accts-div .category-container .container .title {
+    font-weight: bold;
+    text-align: center;
+    color:white;
+
+    width: 100%;
+    height: 8%;
+    padding: 10px;
+    background: #4c6444;
+}
+
+.manage-accts-div .category-container .container .draggable-container{
+    width: 100%;
+    height: 92%;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap:5px;
+    overflow-y: scroll;
+}
+
+
+.manage-accts-div .category-container .container .draggable-container .draggable{
+    display: block;
+    background-color: #bac0c4;
+    color: #333333;
+    padding: 2px;
+    margin: 5px 0;
+    text-align: center;
+    cursor: grab;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    pointer-events: none;
+    width: 250px;
+}
+
+.manage-accts-div .category-container .container .draggable-container .draggable-done{
+    background: #abc1a4;
+}
+
+/* overflow-y: scroll; */
+
+.manage-accts-div .function-btn{
+    width: 100%;
+    height: auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+}
+
+/* 402d26 */
+.manage-accts-div .function-btn .function-sub-btn button{
+    background: #402d26;
+    border:none;
+    opacity: 0.5;
+}
+
+.manage-accts-div .function-btn .function-sub-btn button:hover{
+    opacity: 0.8;
+}
+.manage-accts-div .function-btn .confirmation-btn{
+    width: 100%;
+    height: 30px;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:10px;
+
+    display:none;
+}
+
+/* 112621 */
+.manage-accts-div .function-btn .confirmation-btn button{
+    background: #112621;
+    border:none;
 }

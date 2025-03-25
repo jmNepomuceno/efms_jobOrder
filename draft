@@ -16,3 +16,16 @@ Display in Pending
 Cannot request until pending is active
 Display On Process - Viewable Technician assessor
 Display on For Evaluation
+
+
+'name' => 'bghmc_unified',
+            'username' => 'sa',
+            'password' => 'Pr0f1l3R',
+            'connection' => 'sqlsrv:Server=192.168.42.10,1435',
+
+
+// dbo.tblEmployee
+// sectionID = 23
+// 
+
+bioID, LastName, FirstName, Middle, employmentStatus
