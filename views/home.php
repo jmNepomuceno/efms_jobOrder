@@ -27,6 +27,7 @@
 
     <div class="right-container">
         <?php 
+            $view = "home";
             include("./navbar.php");
         ?>
         <div class="title-div">

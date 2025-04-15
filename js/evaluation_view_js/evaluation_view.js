@@ -125,7 +125,9 @@ $(document).ready(function(){
         const index = $('.view-eval-req-btn').index(this);
         const data = fetch_viewRequestData[index]
         clicked_requestNo = data.requestNo
-        
+
+        console.log(129, data)
+
         $('#user-name').text(data.requestBy.name);
         $('#user-bioid').text(data.requestBy.bioID);
         $('#user-division').text(data.requestBy.division);

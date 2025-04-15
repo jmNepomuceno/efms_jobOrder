@@ -39,7 +39,11 @@
 
     // echo '<pre>'; print_r($sample_list);  echo '</pre>';
 
-    $sql = "DELETE FROM efms_technicians WHERE techBioID=4826";
+    // $sql = "DELETE FROM efms_technicians WHERE techBioID=4826";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+
+    $sql = "UPDATE efms_technicians SET techCategory=null";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 ?>

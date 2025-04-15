@@ -21,12 +21,43 @@ body .right-container{
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    position: relative;
+
 }
 
 body .right-container img{
-    width: 40%;
-    height: 40%;
+    width: 100%;
+    height: 100%;
     opacity: 0.3;
+}
+
+body .right-container .title-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 75%;
+    height: 300px;
+
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body .right-container .title-div h1{
+    width: 100%;
+    text-align: center;
+    font-weight: 900;
+    color:white;
+    font-size: 3.5rem;
+}
+
+body .right-container .title-div h2{
+    color:#b5b5b5;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 body .left-container{
@@ -131,4 +162,25 @@ body .left-container #login-btn{
     border-radius: 5px;
     font-size: 0.9rem;
     font-weight: bold;
+}
+
+@media only screen and (max-width: 480px){
+    body{
+        flex-direction: column;
+    }
+
+    body .left-container{
+        width: 100%;
+        height: 40vh;
+    }
+    
+    body .left-container img{
+        width: 100%;
+        height: 100%;
+    }
+    
+    body .right-container{
+        width: 100%;
+        height: 60vh;
+    }
 }

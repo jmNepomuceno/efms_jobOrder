@@ -21,6 +21,10 @@
     // } else {
     //     echo "Columns already exist!";
     // }
+
+    // $sql = "DELETE FROM job_order_request WHERE requestNo = 10";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -40,7 +40,12 @@
     </div>
 
     <div class="right-container">
-        <img src="./source/landing_img/background.png" alt="logo-img">
+        <img src="./source/landing_img/efms-bg_2.jpg" alt="logo-img">
+
+        <div class="title-div">
+            <h1>ENGINEERING FACILITIES MANAGEMENT SECTION</h1>
+            <h2>Job Order Request System</h2>
+        </div>
     </div>
 
     <div class="modal fade" id="modal-notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">

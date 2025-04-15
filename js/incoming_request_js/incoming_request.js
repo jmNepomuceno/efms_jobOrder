@@ -366,6 +366,7 @@ socket.onmessage = function(event) {
     // Call fetchNotifValue() on every process update
     switch (data.action) {
         case "refreshIncomingTable":
+            fetchNotifValue()
             dataTable_incoming_request();  
             break;
         case "refreshDoneEvaluationTableUser":

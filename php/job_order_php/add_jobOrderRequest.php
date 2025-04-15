@@ -50,12 +50,11 @@ if ($pending_count >= 1) {
     ]);
 
     if ($success) {
-        echo "success";
-
         try {
             $client = new Client("ws://192.168.42.222:8080");
             $client->send(json_encode(["action" => "refreshIncomingTable"]));
-            echo "WebSocket message sent successfully!";
+            $client->send(json_encode(["action" => "refreshPendingTableUser"]));
+            echo "success";
         } catch (Exception $e) {
             echo "WebSocket error: " . $e->getMessage();
         }

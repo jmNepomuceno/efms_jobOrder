@@ -1,6 +1,9 @@
 let modal_notif = new bootstrap.Modal(document.getElementById('modal-notif'));
 // modal_notif.show()
 
+// Global listeners map
+const socketEventHandlers = [];
+
 const fetchNotifValue = () => {
     $.ajax({
         url: "../../php/job_order_php/fetch_notifValue.php",
@@ -39,19 +42,32 @@ const fetchNotifValue = () => {
 
 socket.onmessage = function(event) {
     let data = JSON.parse(event.data);
-    console.log("Received from WebSocket:", data); // Debugging
+    console.log("📡 WebSocket received:", data);
 
-    // Check if the action matches any of the relevant events
+    socketEventHandlers.forEach(handler => {
+        try {
+            handler(data);
+        } catch (err) {
+            console.error("❌ Error in socket event handler:", err);
+        }
+    });
+};
+
+registerSocketHandler((data) => {
     if (
         data.action === "refreshOnProcessTableUser" || 
         data.action === "refreshEvaluationTableUser" || 
-        data.action === "refreshCorrectionTableUser"
+        data.action === "refreshCorrectionTableUser" || 
+        data.action === "refreshPendingTableUser"
     ) {
-        fetchNotifValue(); // Only fetch the notification value
-    } else {
-        console.log("Unknown action:", data.action);
+        fetchNotifValue();
     }
-};
+})
+
+// Function to register listeners
+function registerSocketHandler(callback) {
+    socketEventHandlers.push(callback);
+}
 
 const onLoad = () =>{
     $('.main-container').load('../container/efms_container.php', function(response, status, xhr) {

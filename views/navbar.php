@@ -1,7 +1,14 @@
 <div class="nav-div">
     <div class="content-name-div">
-        <i class="fa-solid fa-circle-dot"></i>
-        <span> <?php echo $view ?> </span>
+        <?php 
+            if($view != 'home'){
+        ?>
+                <i class="fa-solid fa-circle-dot"></i>
+                <span><?php echo $view; ?></span>
+        <?php 
+            }
+        ?>
+        
     </div>
-    <img src="../source/home_img/logout.png" alt="logout-img">
+    <img id="logout-btn" src="../source/home_img/logout.png" alt="logout-img">
 </div>

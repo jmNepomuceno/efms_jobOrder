@@ -34,6 +34,7 @@ try {
     // websocket server
     $client = new Client("ws://192.168.42.222:8080");
     $client->send(json_encode(["action" => "refreshEvaluationTableUser"]));
+    $client->send(json_encode(["action" => "refreshOnProcessTableUser"]));
 
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());

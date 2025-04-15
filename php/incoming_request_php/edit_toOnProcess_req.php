@@ -8,13 +8,14 @@ use WebSocket\Client;
 $current_date = date('m/d/Y - h:i:s A');
 
 try {
-    $sql = "UPDATE job_order_request SET requestStatus='On-Process', processedBy=?, processByID=?, requestStartDate=? WHERE requestNo=?";
+    $sql = "UPDATE job_order_request SET requestStatus='On-Process', processedBy=?, processedByID=?, requestStartDate=? WHERE requestNo=?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_SESSION['name'] , $_SESSION['user'] ,$current_date , (int)$_POST['requestNo']]);
 
     // websocket server
     $client = new Client("ws://192.168.42.222:8080");
-    $client->send(json_encode(["action" => "refreshOnProcessTableUser"]));
+    $client->send(json_encode(["action" => "refreshOnProcessTableUser"])); 
+    $client->send(json_encode(["action" => "refreshPendingTableUser"]));
 
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());

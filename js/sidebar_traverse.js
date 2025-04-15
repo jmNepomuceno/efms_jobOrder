@@ -1,3 +1,5 @@
+let modal_logout = new bootstrap.Modal(document.getElementById('modal-logout'));
+
 const side_bar_border_style = (view) =>{
     for(let i = 0; i < $('.side-bar-routes').length; i++){
         $('.side-bar-routes').eq(i).css('background', '#BA3912');
@@ -44,14 +46,18 @@ $(document).ready(function(){
     // });
 
     $('#logout-btn').click(function(){
-        $.ajax({
-            url: '../php/logout.php',
-            method: "GET",
-            
-            success: function(response) {
-                window.location.href = response;
-            }
-        });
+        modal_logout.show()
+
+        $(document).off('click', '#yes-modal-btn-logout').on('click', '#yes-modal-btn-logout', function() {
+            $.ajax({
+                url: '../php/logout.php',
+                method: "GET",
+                
+                success: function(response) {
+                    window.location.href = response;
+                }
+            });
+        })
     });
 
     $(document).off('click', '#burger-icon').on('click', '#burger-icon', function() {
@@ -63,5 +69,4 @@ $(document).ready(function(){
             $('#burger-icon').css('color', 'white');
         }
     });
-
 })
