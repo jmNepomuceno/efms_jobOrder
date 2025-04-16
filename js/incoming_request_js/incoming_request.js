@@ -39,29 +39,33 @@ const dataTable_incoming_request = () =>{
                 fetch_requestData = response
                 try {
                     let dataSet = [];
-
-                    // <span class="request-by-td-span">${response[i].requestBy.bioID}</span>
-                    //             <span class="request-by-td-span">${response[i].requestBy.division}</span>
-                    //             <span class="request-by-td-span">${response[i].requestBy.section}</span>
                     for(let i = 0; i < response.length; i++){
-                        const originalDate = response[i].requestDate
+                        const originalDate = response[i].requestDate;
                         const dateParts = originalDate.split(" - ");
                         const [month, day, year] = dateParts[0].split("/");
                         const timePart = dateParts[1];
 
                         const dateObj = new Date(`${year}-${month}-${day} ${timePart}`);
+                        const now = new Date();
 
-                        // Format the date
+                        // Check if more than 2 hours have passed
+                        const diffInMs = now - dateObj;
+                        const diffInHours = diffInMs / (1000 * 60 * 60);
+                        const isOverdue = diffInHours > 2;
+
                         const formattedDate = dateObj.toLocaleString('en-US', {
-                            weekday: 'short',    // Tue
-                            month: 'short',      // Mar
-                            day: '2-digit',      // 11
-                            year: 'numeric',     // 2025
-                            hour: '2-digit',     // 9
-                            minute: '2-digit',   // 04
-                            second: '2-digit',   // 08
-                            hour12: true         // AM/PM format
+                            weekday: 'short',
+                            month: 'short',
+                            day: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            second: '2-digit',
+                            hour12: true
                         });
+
+                        // Highlight in red if overdue
+                        const formattedDateHTML = `<span style="color: ${isOverdue ? 'red' : 'black'}">${formattedDate}</span>`;
 
                         dataSet.push([
                             `<div><span>${response[i].requestNo}</span></div>`,
@@ -71,9 +75,9 @@ const dataTable_incoming_request = () =>{
                                 <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
                                 <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
                             </div>`,
-                            `<div><span>${formattedDate}</span></div>`,
+                            `<div>${formattedDateHTML}</div>`,
                             `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
-                        ])
+                        ]);
                     }  
 
                     if ($.fn.DataTable.isDataTable('#incoming-req-table')) {
