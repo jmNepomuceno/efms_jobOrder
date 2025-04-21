@@ -1,22 +1,10 @@
 let modal_logout = new bootstrap.Modal(document.getElementById('modal-logout'));
 
-const side_bar_border_style = (view) =>{
-    for(let i = 0; i < $('.side-bar-routes').length; i++){
-        $('.side-bar-routes').eq(i).css('background', '#BA3912');
-        $('.side-bar-routes').eq(i).css('border-left', '0');
-    }
-
-    document.getElementById(view).style.background = "#A23210"
-    document.getElementById(view).style.borderLeft = "5px solid white"
-}
 
 $(document).ready(function(){
-    // side_bar_border_style(view)
-
-    // if(section.length <= 10){
-    //     $('#user-section-span').css('font-size', '1.5em');
-    // }
-
+    console.log(view)
+    $(`#${view}`).css('background','#5a4038')
+    $(`#${view}`).css('border-left','3px solid white')
     $('#request-form-sub-div').click(function(){
         window.location.href = "../views/job_order.php";
     });

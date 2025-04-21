@@ -28,15 +28,15 @@
                 <i class="fa-solid fa-box"></i>
                 <span>Admin Management</span>
             </div>
-            
-
         </div>
 
         <div class="user-acc-div">
-            <span id="user-section-span">MET</span>
-            <div class="vl"></div>
-            <span id="user-name-span"><?php echo $_SESSION["name"] ?></span>
-            <!-- <i class="fa-solid fa-right-from-bracket" id="logout-btn"></i> -->
+            <div class="user-info">
+                <img src="../source/home_img/user.png" alt="user-img"> 
+                <p><span>MET </span>| Juan Dela Cruz</p>
+            </div>
+            <button class="logout-btn" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+            
         </div>
     </div>
 

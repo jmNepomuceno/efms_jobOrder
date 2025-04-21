@@ -58,8 +58,8 @@
 
     <div class="right-container">
         <?php 
-            $view = "Dashboard Incoming";
-            include("./navbar.php");
+            // $view = "Incoming Request";
+            // include("./navbar.php");
         ?>
 
         <div class="search-div">

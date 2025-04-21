@@ -43,9 +43,9 @@
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    $sql = "UPDATE efms_technicians SET techCategory=null";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    // $sql = "UPDATE efms_technicians SET techCategory=null";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -71,22 +71,25 @@
 
     <div class="right-container">
         <?php 
-            $view = "Admin Management";
-            include("./navbar.php");
+            // $view = "Admin Management";
+            // include("./navbar.php");
         ?>
 
         <div class="manage-accts-div">
-            <div class="draft-container-div">
+            <div class="draft-function-div">
                 <h5>Unassign Employees</h5>
-                <div class="free-agents">
-                    <?= generateDraggableSpans($categories['free_agents']) ? generateDraggableSpans($categories['free_agents']) : "No Data"; ?>
-                </div>
-
                 <div class="function-unassign-div">
                     <button id="refresh-drag-btn">Refresh Employee List</button>
                     <button id="multi-select-drag-btn">Multi Select</button>
                 </div>
+            </div>
 
+            <div class="draft-container-div">
+                
+                <div class="free-agents">
+                    <?= generateDraggableSpans($categories['free_agents']) ? generateDraggableSpans($categories['free_agents']) : "No Data"; ?>
+                </div>
+                
                 <div class="loader"></div>
 
             </div>

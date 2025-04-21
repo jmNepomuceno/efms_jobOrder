@@ -13,6 +13,7 @@ const drag_function = () => {
 
     // Toggle Multi-Select Mode
     multiSelectBtn.addEventListener("click", () => {
+        $('#multi-select-drag-btn').css('opacity', '1')
         multiSelectEnabled = !multiSelectEnabled;
         multiSelectBtn.style.opacity = multiSelectEnabled ? "1" : "0.5";        
         // multiSelectBtn.textContent = multiSelectEnabled ? "Disable Multi-Select" : "Multi Select";
@@ -90,6 +91,17 @@ const drag_function = () => {
     });
 };
 
+const reset_styling = () =>{
+    $('#refresh-drag-btn').css('opacity', '0.5')
+    $('#multi-select-drag-btn').css('display', 'none')
+    $('#multi-select-drag-btn').css('opacity', '0.5')
+
+    $('#add-personel-btn').css('opacity', '0.5')
+    $('#move-personel-btn').css('opacity', '0.5')
+
+    $('.confirmation-btn').css('display', 'none')   
+}
+
 
 $(document).ready(function(){
     $(document).off('click', '#add-personel-btn').on('click', '#add-personel-btn', function() {  
@@ -100,6 +112,8 @@ $(document).ready(function(){
     })      
     
     $(document).off('click', '#move-personel-btn').on('click', '#move-personel-btn', function() {  
+        $('#multi-select-drag-btn').css('display', 'block')
+
         $('#add-personel-btn').css('opacity', '')
         $('#move-personel-btn').css('opacity', '1')
 
@@ -115,11 +129,11 @@ $(document).ready(function(){
         $('#move-personel-btn').css('opacity', '1')
         
         $('.confirmation-btn').css('display', 'none')
+        reset_styling()
+
     })
 
     $(document).off('click', '#save-btn').on('click', '#save-btn', function() {  
-        console.log(clicked_draggable)
-
         try {
             $.ajax({
                 url: '../php/admin_management_php/edit_tech_category.php',
@@ -128,6 +142,8 @@ $(document).ready(function(){
                 success: function(response) {
                     try { 
                         console.log("Update response:", response);
+                        reset_styling()
+
                         modal_notif.show();
                     } catch (innerError) {
                         console.error("Error processing response:", innerError);
@@ -143,24 +159,35 @@ $(document).ready(function(){
     })
 
     $(document).off('click', '#refresh-drag-btn').on('click', '#refresh-drag-btn', function() {  
-        // console.log(clicked_draggable)
-
         try {
             $.ajax({
                 url: '../php/admin_management_php/fetch_dataEmployees.php',
                 method: "POST",
                 success: function(response) {
                     try { 
-                        console.log(response)
-                        if (response != "error") {
+                        $('#refresh-drag-btn').css('opacity', '1')
+                        if (response == "No new entries") {
+                            $('.loader').css('display', 'block'); 
+                            $('.free-agents').css('display', 'none');
+                            setTimeout(() => {
+                                $('.loader').css('display', 'none'); 
+                                $('#modal-notif #modal-title-incoming').text("Notification")
+                                $('#modal-notif #modal-body-incoming').text("No new entries")
+                                $('.free-agents').css('display', 'flex');
+                                modal_notif.show()
+                                reset_styling()
+
+                            }, 2000); 
+                        }
+                        else if (response != "error") {
                             $('.loader').css('display', 'block'); // Show loader
                             document.querySelector('.free-agents').textContent = ""
                             setTimeout(() => {
                                 $('.loader').css('display', 'none'); // Hide loader after 2 seconds
                                 document.querySelector('.free-agents').innerHTML = response;
+                                $('#refresh-drag-btn').css('opacity', '0.5')
                             }, 2000); 
                         }
-                        // // modal_notif.show();
                     } catch (innerError) {
                         console.error("Error processing response:", innerError);
                     }

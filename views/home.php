@@ -27,8 +27,8 @@
 
     <div class="right-container">
         <?php 
-            $view = "home";
-            include("./navbar.php");
+            // $view = "home";
+            // include("./navbar.php");
         ?>
         <div class="title-div">
             <h1 class="title-h1">
