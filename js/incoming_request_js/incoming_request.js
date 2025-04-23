@@ -238,6 +238,32 @@ const dataTable_my_jobs = (what) =>{
                         }
 
                         if(clicked_sub_nav === 'Completed'){
+                            let rawStart = response[i].requestDate; // "Tue, Mar 11, 2025, 11:50:14 AM"
+                            let rawEnd = response[i].requestCompletedDate; // "03/18/2025 - 10:31:41 AM"
+
+                            // Format rawStart: remove weekday
+                            let formattedStart = rawStart.replace(/^.*?,\s*/, ''); // "Mar 11, 2025, 11:50:14 AM"
+                            let startDate = new Date(formattedStart); // JS can parse this
+
+                            // Format rawEnd: change to "MM/DD/YYYY HH:MM:SS AM/PM"
+                            let formattedEnd = rawEnd.replace(" - ", " "); // "03/18/2025 10:31:41 AM"
+                            let endDate = new Date(formattedEnd); // JS can parse this too
+
+                            // Calculate time difference
+                            const timeDiff = endDate - startDate;
+                            let hours = Math.floor(timeDiff / (1000 * 60 * 60));
+                            let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                            let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                            let formattedTimeDiff = `${hours}h ${minutes}m ${seconds}s`;
+
+                            const twoHours = 2 * 60 * 60 * 1000;
+                            
+                            let style = "";
+                            if (!isNaN(timeDiff) && timeDiff > twoHours) {
+                                style = "color: red; font-weight: bold;";
+                                
+                            }
+
                             response[i].requestEvaluationDate = dateFormatter(response[i].requestEvaluationDate)
                             response[i].requestCompletedDate = dateFormatter(response[i].requestCompletedDate)
                             dataSet.push([
@@ -252,7 +278,7 @@ const dataTable_my_jobs = (what) =>{
                                     <span><b>Requested Date:</b> ${response[i].requestDate}</span>
                                     <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
                                     <span><b>For Evaluation Date:</b> ${response[i].requestEvaluationDate}</span>
-                                    <span><b>Completed Date:</b> ${response[i].requestCompletedDate}</span>
+                                    <span><b>Completed Date:</b> ${response[i].requestCompletedDate} <i style='${style}'> (${formattedTimeDiff}) </i> </span>
                                 </div>`,
                                 `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
                             ])

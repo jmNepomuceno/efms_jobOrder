@@ -81,6 +81,10 @@
                 <div class="function-unassign-div">
                     <button id="refresh-drag-btn">Refresh Employee List</button>
                     <button id="multi-select-drag-btn">Multi Select</button>
+                    <div class="search-div">
+                        <input type="text" id="search-input" placeholder="Search Employee" autocomplete="off">
+                        <button id="search-btn">Search</button>
+                    </div>
                 </div>
             </div>
 
@@ -112,7 +116,7 @@
 
             <div class="function-btn">
                 <div class="function-sub-btn">
-                    <button type="button" class="btn btn-primary" id="add-personel-btn">Add Personnels</button>
+                    <!-- <button type="button" class="btn btn-primary" id="add-personel-btn">Add Personnels</button> -->
                     <button type="button" class="btn btn-primary" id="move-personel-btn">Move Personnels</button>
                 </div>
             

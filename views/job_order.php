@@ -22,9 +22,9 @@
     //     echo "Columns already exist!";
     // }
 
-    $sql = "DELETE FROM job_order_request WHERE requestNo = 11";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    // $sql = "DELETE FROM job_order_request WHERE requestNo = 11";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
 ?>
 <!DOCTYPE html>
 <html lang="en">

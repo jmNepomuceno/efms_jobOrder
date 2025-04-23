@@ -200,4 +200,18 @@ $(document).ready(function(){
             console.error("Unexpected error occurred:", ajaxError);
         }
     })
+
+    $(document).off('click', '#search-btn').on('click', '#search-btn', function() {
+        let searchValue = $('#search-input').val().toLowerCase();
+        let draggables = document.querySelectorAll(".draggable");
+
+        draggables.forEach(draggable => {
+            if (draggable.textContent.toLowerCase().includes(searchValue)) {
+                draggable.style.display = "block";
+            } else {
+                draggable.style.display = "none";
+            }
+        });
+    })
+
 })

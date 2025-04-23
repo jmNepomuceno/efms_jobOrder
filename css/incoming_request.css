@@ -251,7 +251,7 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr{
 }
 
 body .right-container .table-div .table-container #incoming-req-table tbody tr:nth-child(odd){
-    background: #d9c6bf;
+    background: #e6e6e6;
 }
 
 body .right-container .table-div .table-container #incoming-req-table tbody tr td{

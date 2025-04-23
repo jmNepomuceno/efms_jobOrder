@@ -28,6 +28,30 @@
                 <i class="fa-solid fa-box"></i>
                 <span>Admin Management</span>
             </div>
+
+            <div class="side-bar-routes" id="dashboard-sub-div">
+                <i class="fa-solid fa-box"></i>
+                <span>Request Dashboard</span>
+                <i id="dashboard-arrow" class="fa-solid fa-caret-down"></i>
+            </div>
+
+            <div class="sub-down-div" id="dashboard-sub-down-div">
+
+                <div class="sub-down-bar-routes" id="req-dashboard-sub-down-div">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Requests</span>
+                </div>
+
+                <div class="sub-down-bar-routes" id="tech-dashboard-sub-down-div">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Technicians</span>
+                </div>
+
+                <div class="sub-down-bar-routes" id="user-dashboard-sub-down-div">
+                    <i class="fa-solid fa-box"></i>
+                    <span>Users</span>
+                </div>
+            </div>
         </div>
 
         <div class="user-acc-div">

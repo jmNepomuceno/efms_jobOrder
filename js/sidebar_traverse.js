@@ -5,6 +5,22 @@ $(document).ready(function(){
     console.log(view)
     $(`#${view}`).css('background','#5a4038')
     $(`#${view}`).css('border-left','3px solid white')
+    
+    // dashboard-arrow
+    $('#dashboard-arrow').click(function(event) {
+        event.stopPropagation();
+        if($('#dashboard-arrow').attr('class') === 'fa-solid fa-caret-down'){
+            $('#dashboard-arrow').removeClass('fa-solid fa-caret-down')
+            $('#dashboard-arrow').addClass('fa-solid fa-caret-up')
+    
+            $('.sub-down-div').css('display' , 'flex')
+        }else{
+            $('#dashboard-arrow').removeClass('fa-solid fa-caret-up')
+            $('#dashboard-arrow').addClass('fa-solid fa-caret-down')
+            $('.sub-down-div').css('display' , 'none')
+        }
+    });
+
     $('#request-form-sub-div').click(function(){
         window.location.href = "../views/job_order.php";
     });
@@ -17,21 +33,17 @@ $(document).ready(function(){
         window.location.href = "../views/admin_management.php";
     });
 
-    // $('#imiss-inventory-sub-div').click(function(){
-    //     // window.location.href = "../views/imiss_inventory.php";
-    // });
+    $('#req-dashboard-sub-down-div').click(function(){
+        window.location.href = "../views/dashboard_request.php";
+    });
 
-    // $('#incoming-order-sub-div').click(function(){
-    //     window.location.href = "../views/incoming_order.php";
-    // });
+    $('#tech-dashboard-sub-down-div').click(function(){
+        window.location.href = "../views/dashboard.php";
+    });
 
-    // $('#imiss-ppmp-sub-div').click(function(){
-    //     window.location.href = "../views/imiss_ppmp.php";
-    // });
-
-    // $('#item-distribution-sub-div').click(function(){
-    //     window.location.href = "../views/item_distribution.php";
-    // });
+    $('#user-dashboard-sub-down-div').click(function(){
+        window.location.href = "../views/dashboard.php";
+    });
 
     $('#logout-btn').click(function(){
         modal_logout.show()
@@ -57,4 +69,6 @@ $(document).ready(function(){
             $('#burger-icon').css('color', 'white');
         }
     });
+
+
 })
