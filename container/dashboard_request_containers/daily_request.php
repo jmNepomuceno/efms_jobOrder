@@ -3,8 +3,8 @@
         <div class="start-date-div">
             <span id="start-date-span">Select Start Date: </span>
             <input id="start-date-input" type="date">
+            <button id="filter-date-search-btn" type="button" class="btn btn-secondary">Search</button>
         </div>
-        <button id="filter-date-search-btn" type="button" class="btn btn-secondary">Search</button>
     </div>
 
     <h1>Daily Requests Report</h1>
@@ -19,6 +19,10 @@
             <div class="total-request-ot-div">
                 <span>Total Overdue Request</span>
                 <span id="total-request-ot-value">0</span>
+            </div>
+            <div class="total-request-cancel-div">
+                <span>Total Cancelled Request</span>
+                <span id="total-request-cancel-value">0</span>
             </div>
         </div>
     </div>

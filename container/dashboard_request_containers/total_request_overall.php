@@ -1,17 +1,5 @@
 <div class="request-conent-div">
-    <div class="double-date-div">
-        <div class="start-date-div">
-            <span id="start-date-span">Select Start Date: </span>
-            <input id="start-date-input" type="date">
-        </div>
-        <div class="end-date-div">
-            <span id="end-date-span">Select End Date: </span>
-            <input id="end-date-input" type="date">
-        </div>
-        <button id="filter-date-search-btn" type="button" class="btn btn-secondary">Search</button>
-    </div>
-    
-    <h1>Weekly Requests Report</h1>
+    <h1>Total Overall Requests</h1>
     
     <div class="request-graph-div">
         <canvas id="requestsPerHourChart" ></canvas>

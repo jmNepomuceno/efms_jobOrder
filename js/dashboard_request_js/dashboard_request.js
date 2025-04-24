@@ -9,6 +9,60 @@ const moveIndicator = (element) => {
     indicator.style.left = `${navSpan.left - parent.left}px`;
 }
 
+const onLoadFetch_total_request = (startDate, endDate, from) => {
+    console.log("Start Date: ", startDate);
+    console.log("End Date: ", endDate);
+    console.log("From: ", from);
+    $.ajax({
+        url: '../../php/dashboard_request_php/fetch_dashboard_request.php',
+        method: 'POST',
+        data: {
+            startDate: startDate,
+            endDate: endDate,
+            from: from
+        },
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+
+            let totalRequests = 0;
+            let totalOT = 0;
+            let totalCancelled = 0;
+
+            // Prepare flat array for barGraph
+            const hourlyTotals = Array(24).fill(0);
+
+            Object.entries(response).forEach(([hour, statuses]) => {
+                Object.entries(statuses).forEach(([status, count]) => {
+                    totalRequests += count;
+
+                    // You can customize these status matches as needed
+                    if (status === 'For Overtime') {
+                        totalOT += count;
+                    }
+                    if (status === 'Cancelled') {
+                        totalCancelled += count;
+                    }
+
+                    // Add to hourly total regardless of status
+                    hourlyTotals[hour] += count;
+                });
+            });
+
+            // Display totals
+            $('#total-request-value').text(totalRequests);
+            $('#total-request-ot-value').text(totalOT);
+            $('#total-request-cancel-value').text(totalCancelled);
+
+            // Update graph
+            barGraph(hourlyTotals);
+        },
+        error: function (err) {
+            console.error("AJAX error: ", err);
+        }
+    });
+}
+
 const barGraph = (data = []) => {
     const ctx = document.getElementById('requestsPerHourChart').getContext('2d');
 
@@ -28,7 +82,7 @@ const barGraph = (data = []) => {
             datasets: [{
                 label: 'Requests per Hour',
                 data: data,
-                backgroundColor: 'white',
+                backgroundColor: '#5a4038',
                 borderRadius: 4
             }]
         },
@@ -37,7 +91,7 @@ const barGraph = (data = []) => {
             maintainAspectRatio: false, 
             scales: {
                 y: {
-                    ticks: { color: '#ffffff' },
+                    ticks: { color: 'black' },
                     beginAtZero: true,
                     title: {
                         display: true,
@@ -45,7 +99,7 @@ const barGraph = (data = []) => {
                     }
                 },
                 x: {
-                    ticks: { color: '#ffffff' },
+                    ticks: { color: 'black' },
                     title: {
                         display: true,
                         text: 'Hour of Day'
@@ -66,7 +120,7 @@ const barGraph = (data = []) => {
 $(document).ready(function () {
     const activeTab = document.querySelector('.dashboard-request-nav-span-class.active');
     if (activeTab) moveIndicator(activeTab);
-
+    onLoadFetch_total_request(null, null, "total_request_overall");
 
     $('.dashboard-request-nav-span-class').on('click', function () {
         $('.dashboard-request-nav-span-class').removeClass('active');
@@ -76,6 +130,12 @@ $(document).ready(function () {
         const index = $(this).index();
         console.log(index)
         switch (index){
+            case 0:
+                $('.dashboard-content-div').load('../../container/dashboard_request_containers/total_request_overall.php', function() {
+                    nav_clicked = "total_request_overall"
+                    onLoadFetch_total_request(null, null, "total_request_overall");
+                });
+                break;
             case 1:
                 $('.dashboard-content-div').load('../../container/dashboard_request_containers/daily_request.php', function() {
                     nav_clicked = "daily_request"
@@ -91,6 +151,12 @@ $(document).ready(function () {
             case 3:
                 $('.dashboard-content-div').load('../../container/dashboard_request_containers/monthly_request.php', function() {
                     nav_clicked = "monthly_request"
+                    barGraph();
+                });
+                break;
+            case 4:
+                $('.dashboard-content-div').load('../../container/dashboard_request_containers/by_category.php', function() {
+                    nav_clicked = "category_request"
                     barGraph();
                 });
                 break;
@@ -115,25 +181,7 @@ $(document).ready(function () {
         }
     
         // Proceed with AJAX
-        $.ajax({
-            url: '../../php/dashboard_request_php/fetch_dashboard_request.php',
-            method: 'POST',
-            data: {
-                startDate: startDate,
-                endDate: endDate,
-                from: from
-            },
-            dataType: 'json',
-            success: function (response) {
-                console.log(response);
-                const totalRequests = response.reduce((sum, val) => sum + val, 0);
-                $('#total-request-value').text(totalRequests);
-                barGraph(response);
-            },
-            error: function (err) {
-                console.error("AJAX error: ", err);
-            }
-        });
+        onLoadFetch_total_request(startDate, endDate, from);
     });
     
 

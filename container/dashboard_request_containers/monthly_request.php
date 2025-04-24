@@ -25,6 +25,10 @@
                 <span>Total Overdue Request</span>
                 <span id="total-request-ot-value">0</span>
             </div>
+            <div class="total-request-cancel-div">
+                <span>Total Cancelled Request</span>
+                <span id="total-request-cancel-value">0</span>
+            </div>
         </div>
     </div>
 </div>

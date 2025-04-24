@@ -8,10 +8,33 @@
             <span id="end-date-span">Select End Date: </span>
             <input id="end-date-input" type="date">
         </div>
+        <div class="category-div">
+            <select id="category-select">
+                <option value="" selected>Select the Category</option>
+                <option value="MET">MET</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Electrical">Electrical</option>
+                <option value="Carpentry">Carpentry</option>
+            </select>
+        </div>
+
+        <div class="sub-category-div">
+            <select id="sub-category-select">
+                <option value="" selected>Select the Sub Category</option>
+                <option value="MET">MET</option>
+                <option value="Plumbing">Plumbing</option>
+                <option value="Electrical">Electrical</option>
+                <option value="Carpentry">Carpentry</option>
+            </select>
+        </div>
+
         <button id="filter-date-search-btn" type="button" class="btn btn-secondary">Search</button>
+
     </div>
+
+   
     
-    <h1>Weekly Requests Report</h1>
+    <h1>Total Request By: </h1>
     
     <div class="request-graph-div">
         <canvas id="requestsPerHourChart" ></canvas>

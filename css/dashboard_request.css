@@ -94,7 +94,7 @@ body .right-container .dashboard-container .nav-div .nav-indicator {
 body .right-container .dashboard-container .dashboard-content-div{
     width: 100%;
     height: 80%;
-    background: #3a2620;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     border-radius: 20px;
 
     display: flex;
@@ -146,9 +146,11 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     align-items: center;
     /* gap:10px; */
 
-    background: #2e1d18;
+    /* background: #2e1d18; */
     border-radius: 10px;
     padding:15px;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div .start-date-div,
@@ -157,33 +159,35 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div h1{
-    color:white;
+    /* color:white; */
+    color:#2e1d18;
     padding:0;
     margin:0;
     margin-top:50px;
     width: 100%;
     /* border:1px solid white; */
     margin-left:20px;
+    font-weight: 600;
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div span,
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div span, .end-date-div span{
-    color:white;
+    color:#2e1d18;
     font-weight: 600;
     font-size: 1rem;
-    /* border:1px solid red; */
+    font-weight: 600;
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div input,
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div input, .end-date-div input{
     padding: 5px 10px 5px 10px;
     font-family: "Roboto Mono",monospace;
-    color: #ffffff;
+    color:#2e1d18;
     font-size: 1rem;
     border: none;
     outline: none;
     /* border-radius: 5px; */
-    font-weight: 300;
+    font-weight: 600;
     background: none;
     border-bottom:1px solid white;
     display:flex;
@@ -191,6 +195,11 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     justify-content: flex-end;
     align-items: flex-end;
     /* border:1px solid red; */
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div button,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div button, .end-date-div button{
+    background: #2e1d18;
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div{
@@ -208,7 +217,7 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     height: 95% !important;
     border-radius: 10px;
     padding:25px !important;
-    background: #2e1d18;
+    /* background: #2e1d18; */
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div{
@@ -221,24 +230,64 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-div,
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-ot-div{
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-ot-div,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-cancel-div{
     width: 100%;
-    height: 47%;
+    height: 30%;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    color:white;
+    color:#2e1d18;
     border-radius: 20px;
-    background: #2e1d18;
+    /* background: #2e1d18; */
     font-size: 1.3rem;
+    font-weight: 600;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-ot-div span:nth-child(1),
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-div span:nth-child(1),
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-cancel-div span:nth-child(1){
     font-weight: 600;
 }
 
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-ot-div span:nth-child(2),
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-div span:nth-child(2),
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-ot-div span:nth-child(2){
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .total-request-cancel-div span:nth-child(2){
     font-size: 3rem;
-    font-weight: 300;
+    font-weight: 600;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .category-div,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .sub-category-div{
+    width: auto;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    border-radius: 10px;
+    padding:5px 15px 5px 15px;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .category-div select,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .sub-category-div select{
+    width: auto;
+    height: 100%;
+    /* background: #2e1d18; */
+    color:#2e1d18;
+    font-size: 1rem;
+    font-weight: 600;
+    /* padding:5px; */
+    border:none;
+    outline:none;
+    cursor: pointer;
 }
 
 ::-webkit-calendar-picker-indicator{

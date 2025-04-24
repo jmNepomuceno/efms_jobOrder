@@ -17,29 +17,47 @@ try {
         $sql = "
             SELECT 
                 HOUR(STR_TO_DATE(requestDate, '%m/%d/%Y - %r')) AS hr, 
+                requestStatus,
                 COUNT(*) AS total 
             FROM job_order_request 
-            WHERE requestStatus = 'Pending' OR requestStatus = 'Completed'
-              AND requestDate LIKE CONCAT(:startDate, '%')
-            GROUP BY hr
+            WHERE requestDate LIKE CONCAT(:startDate, '%')
+            GROUP BY hr, requestStatus
             ORDER BY hr
         ";
+
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([':startDate' => $startDate]);
 
-    } else {
+    } 
+    else if ($from === 'total_request_overall'){
+        // get the overall request
+        $sql = "
+            SELECT 
+                HOUR(STR_TO_DATE(requestDate, '%m/%d/%Y - %r')) AS hr, 
+                requestStatus,
+                COUNT(*) AS total 
+            FROM job_order_request 
+            GROUP BY hr, requestStatus
+            ORDER BY hr
+        ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        
+    }
+    else {
         // Query for a range of dates (weekly or monthly)
         $sql = "
             SELECT 
                 HOUR(STR_TO_DATE(requestDate, '%m/%d/%Y - %r')) AS hr, 
+                requestStatus,
                 COUNT(*) AS total 
             FROM job_order_request 
-            WHERE requestStatus = 'Pending' OR requestStatus = 'Completed'
-            AND STR_TO_DATE(requestDate, '%m/%d/%Y - %r') 
+            WHERE STR_TO_DATE(requestDate, '%m/%d/%Y - %r') 
                 BETWEEN STR_TO_DATE(:startDate, '%m/%d/%Y') 
-                    AND STR_TO_DATE(CONCAT(:endDate, ' 11:59:59 PM'), '%m/%d/%Y %r')
-            GROUP BY hr
+                AND STR_TO_DATE(CONCAT(:endDate, ' 11:59:59 PM'), '%m/%d/%Y %r')
+            GROUP BY hr, requestStatus
             ORDER BY hr
         ";
 
@@ -53,14 +71,22 @@ try {
 
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Prepare hourly array
-    $requestsPerHour = array_fill(0, 24, 0);
+    // Initialize structured array
+    $requestsPerHourStatus = [];
+
     foreach ($results as $row) {
         $hour = (int)$row['hr'];
-        $requestsPerHour[$hour] = (int)$row['total'];
+        $status = $row['requestStatus'];
+        $total = (int)$row['total'];
+
+        if (!isset($requestsPerHourStatus[$hour])) {
+            $requestsPerHourStatus[$hour] = [];
+        }
+
+        $requestsPerHourStatus[$hour][$status] = $total;
     }
 
-    echo json_encode($requestsPerHour);
+    echo json_encode($requestsPerHourStatus);
 
 } catch (PDOException $e) {
     die(json_encode(["error" => $e->getMessage()]));
