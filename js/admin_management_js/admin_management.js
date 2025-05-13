@@ -201,17 +201,20 @@ $(document).ready(function(){
         }
     })
 
-    $(document).off('click', '#search-btn').on('click', '#search-btn', function() {
+    $(document).off('click', '#search-btn').on('click', '#search-btn', function () {
         let searchValue = $('#search-input').val().toLowerCase();
-        let draggables = document.querySelectorAll(".draggable");
-
+        let draggables = document.querySelectorAll(".free-agents span");
+    
         draggables.forEach(draggable => {
-            if (draggable.textContent.toLowerCase().includes(searchValue)) {
+            // Always show if selected
+            if (draggable.classList.contains('selected')) {
+                draggable.style.display = "block";
+            } else if (draggable.textContent.toLowerCase().includes(searchValue)) {
                 draggable.style.display = "block";
             } else {
                 draggable.style.display = "none";
             }
         });
-    })
+    });
 
 })

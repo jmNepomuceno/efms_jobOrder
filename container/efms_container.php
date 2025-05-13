@@ -36,10 +36,9 @@
         <div class="infra-div">
             <span id="infra-title-id">Select Category:</span>
             <div class="infra-sub-div">
-                <div id="infra-1-btn" class="infra-btn" data-category="Plumbing">Plumming</div>
-                <div id="infra-2-btn" class="infra-btn" data-category="MET">MET</div>
-                <div id="infra-3-btn" class="infra-btn" data-category="Carpentry">Carpentry</div>
-                <div id="infra-4-btn" class="infra-btn" data-category="Electrical">Electrical</div>
+                <div id="infra-1-btn" class="infra-btn" data-category="planning">INFRA/PLANNING UNIT</div>
+                <div id="infra-2-btn" class="infra-btn" data-category="electrical">ELECTRICAL UNIT</div>
+                <div id="infra-3-btn" class="infra-btn" data-category="mechanical">MECHANICAL UNIT</div>
             </div>
         </div>
 

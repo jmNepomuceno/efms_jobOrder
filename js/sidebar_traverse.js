@@ -5,19 +5,30 @@ $(document).ready(function(){
     console.log(view)
     $(`#${view}`).css('background','#5a4038')
     $(`#${view}`).css('border-left','3px solid white')
-    
+
+    if(view === "dashboard-sub-div"){
+        $('#dashboard-arrow')
+            .removeClass('fa-caret-down')
+            .addClass('fa-caret-up');
+        
+        $('.sub-down-div').css('display', 'flex');
+    }
     // dashboard-arrow
-    $('#dashboard-arrow').click(function(event) {
+    $('#dashboard-arrow, #dashboard-sub-div').click(function(event) {
         event.stopPropagation();
-        if($('#dashboard-arrow').attr('class') === 'fa-solid fa-caret-down'){
-            $('#dashboard-arrow').removeClass('fa-solid fa-caret-down')
-            $('#dashboard-arrow').addClass('fa-solid fa-caret-up')
-    
-            $('.sub-down-div').css('display' , 'flex')
-        }else{
-            $('#dashboard-arrow').removeClass('fa-solid fa-caret-up')
-            $('#dashboard-arrow').addClass('fa-solid fa-caret-down')
-            $('.sub-down-div').css('display' , 'none')
+        
+        if ($('#dashboard-arrow').hasClass('fa-caret-down')) {
+            $('#dashboard-arrow')
+                .removeClass('fa-caret-down')
+                .addClass('fa-caret-up');
+            
+            $('.sub-down-div').css('display', 'flex');
+        } else {
+            $('#dashboard-arrow')
+                .removeClass('fa-caret-up')
+                .addClass('fa-caret-down');
+            
+            $('.sub-down-div').css('display', 'none');
         }
     });
 
@@ -42,7 +53,7 @@ $(document).ready(function(){
     });
 
     $('#user-dashboard-sub-down-div').click(function(){
-        window.location.href = "../views/dashboard.php";
+        window.location.href = "../views/dashboard_user.php";
     });
 
     $('#logout-btn').click(function(){
