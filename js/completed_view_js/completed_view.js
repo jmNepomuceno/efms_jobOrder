@@ -35,6 +35,8 @@ var fetch_dataTable = () =>{
                         `<span>${response[i].requestBy.name}</span>`,
                         `<div class="date-request-td"> 
                             <span><b>Requested Date:</b> ${response[i].requestDate}</span>
+                            <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
+                            <span><b>Evaluation Date:</b> ${response[i].requestEvaluationDate}</span>
                             <span><b>Completed Date:</b> ${response[i].requestCompletedDate}</span>
                         </div>`,
                         `<span>${response[i].requestCategory}</span>`,
@@ -133,6 +135,10 @@ $(document).ready(function(){
                     $("#comment").val((value) ? value : "No Comment/Suggestion."); // Set the comment textarea value
                 }
             }
+
+            // Disable all radio buttons after setting values
+            $('input[type="radio"]').prop('disabled', true);
+            $('.custom-textarea').css('pointer-events' , 'none')
         }
     
         // Show the modal

@@ -10,7 +10,7 @@ $current_date = date('m/d/Y - h:i:s A');
 try {
     $sql = "UPDATE job_order_request SET requestStatus='Evaluation', requestEvaluationDate=?, requestJobRemarks = ? WHERE requestNo=?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$current_date, $_POST['requestJobRemarks'] , (int)$_POST['requestNo']]);
+    $stmt->execute([$current_date, $_POST['requestJobRemarks'] , $_POST['requestNo']]);
 
     // fetch all the start job or on process
     $sql = "SELECT COUNT(*) AS count FROM job_order_request WHERE requestStatus='On-Process' AND processedBy=?";

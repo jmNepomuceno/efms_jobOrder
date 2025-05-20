@@ -17,9 +17,6 @@ $(document).ready(function(){
         $('#diagnosis-btn').css('opacity' , '0.5')
     });
 
-    console.log(section_data)
-    console.log(division_data)
-
     let divisionSelect = document.getElementById("division-select");
     let sectionSelect = document.getElementById("section-select");
 

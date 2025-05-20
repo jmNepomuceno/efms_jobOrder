@@ -1,5 +1,14 @@
+<?php 
+    include('../session.php');
+    include('../assets/connection.php');
+
+    $current_date = date('m/d/Y - h:i:s A');
+
+    include('../php/get_section.php');
+?>
+
 <div class="onProcess-view">
-    <h1>Integrated Hospital Operations and Management Program</h1>
+    <h1><?php echo $section ?></h1>
     <div class="table-container">
         <table id="onProcess-dataTable">
             <thead>

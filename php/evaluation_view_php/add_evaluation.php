@@ -7,7 +7,7 @@
     use WebSocket\Client;
 
 
-    $requestNo = (int)$_POST['requestNo'];
+    $requestNo = $_POST['requestNo'];
     $evaluation = [
         "q1" => $_POST['q1'],
         "q2" => $_POST['q2'],

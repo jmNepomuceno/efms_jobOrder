@@ -102,7 +102,7 @@
                                     <td><input type="radio" name="q1" value="Poor"></td>
                                 </tr>
                                 <tr>
-                                    <td class="text-start">2. IMISS staff gives updates on the status of the job request.</td>
+                                    <td class="text-start">2. EFMS staff gives updates on the status of the job request.</td>
                                     <td><input type="radio" name="q2" value="Very Satisfactory" required></td>
                                     <td><input type="radio" name="q2" value="Satisfactory"></td>
                                     <td><input type="radio" name="q2" value="Unsatisfactory"></td>
@@ -116,14 +116,14 @@
                                     <td><input type="radio" name="q3" value="Poor"></td>
                                 </tr>
                                 <tr>
-                                    <td class="text-start">4. IMISS staff are courteous and helpful.</td>
+                                    <td class="text-start">4. EFMS staff are courteous and helpful.</td>
                                     <td><input type="radio" name="q4" value="Very Satisfactory" required></td>
                                     <td><input type="radio" name="q4" value="Satisfactory"></td>
                                     <td><input type="radio" name="q4" value="Unsatisfactory"></td>
                                     <td><input type="radio" name="q4" value="Poor"></td>
                                 </tr>
                                 <tr>
-                                    <td class="text-start">5. Timely response from IMISS staff was given.</td>
+                                    <td class="text-start">5. Timely response from EFMS staff was given.</td>
                                     <td><input type="radio" name="q5" value="Very Satisfactory" required></td>
                                     <td><input type="radio" name="q5" value="Satisfactory"></td>
                                     <td><input type="radio" name="q5" value="Unsatisfactory"></td>

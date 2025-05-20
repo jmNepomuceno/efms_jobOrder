@@ -19,6 +19,10 @@
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
+    // $sql = "DELETE FROM job_order_request";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+
     // $sql = "SELECT * FROM job_order_request";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
@@ -34,6 +38,8 @@
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $section_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // echo $_SESSION['name'];
 ?>
 
 <!DOCTYPE html>
@@ -151,7 +157,8 @@
                             <th>REQUEST NO.</th>
                             <th>NAME OF REQUESTER</th>
                             <th>DATE REQUESTED</th>
-                            <th>REQUEST TYPE</th>
+                            <th>UNIT</th>
+                            <th>CATEGORY</th>
                         </tr>
                     </thead>
 

@@ -2,7 +2,7 @@ let modal_logout = new bootstrap.Modal(document.getElementById('modal-logout'));
 
 
 $(document).ready(function(){
-    console.log(view)
+    // console.log(view)
     $(`#${view}`).css('background','#5a4038')
     $(`#${view}`).css('border-left','3px solid white')
 

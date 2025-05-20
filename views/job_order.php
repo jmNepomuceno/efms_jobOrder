@@ -1,7 +1,6 @@
 <?php 
     include('../session.php');
     include('../assets/connection.php');
-    
     // $sql = "SELECT * FROM job_order_request";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
@@ -25,6 +24,10 @@
     // $sql = "DELETE FROM job_order_request WHERE requestNo = 11";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
+
+    // get the tech category
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +43,7 @@
 </head>
 <body>
 
-    <?php if($_SESSION["role"] === 'admin'){?>
+    <?php if($_SESSION["role"] === 'tech'){?>
         <i class="fa-solid fa-arrow-left" id="return-btn"></i>
     <?php } ?>
     

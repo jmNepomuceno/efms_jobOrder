@@ -5,8 +5,24 @@
     // $stmt->execute([$_SESSION['role']]);
     // $permission_account = $stmt->fetch(PDO::FETCH_ASSOC);
     // $permissions = json_decode($permission_account['permission'], true);
-        
+
+    // echo json_encode($_SESSION);     
     
+
+    // echo  $_SESSION["role"];
+    // if()
+
+    $username_role = "";
+    if($_SESSION['role'] == 'admin'){
+        $username_role = "admin";
+    }else if($_SESSION['role'] == 'tech'){
+        $sql = "SELECT techCategory FROM efms_technicians WHERE techBioID=?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$_SESSION['user']]);
+        $tech_category = $stmt->fetch(PDO::FETCH_ASSOC);
+        $username_role = $tech_category['techCategory'];
+    }
+
 ?>
     <div class="left-container">
         <div class="home-name-div">
@@ -24,40 +40,45 @@
                 <span>Pending</span>
             </div>
 
-            <div class="side-bar-routes" id="admin-management-sub-div">
-                <i class="fa-solid fa-box"></i>
-                <span>Admin Management</span>
-            </div>
-
-            <div class="side-bar-routes" id="dashboard-sub-div">
-                <i class="fa-solid fa-box"></i>
-                <span>Request Dashboard</span>
-                <i id="dashboard-arrow" class="fa-solid fa-caret-down"></i>
-            </div>
-
-            <div class="sub-down-div" id="dashboard-sub-down-div">
-
-                <div class="sub-down-bar-routes" id="req-dashboard-sub-down-div">
+            <?php if ($_SESSION['role'] == 'admin') { ?>
+                <div class="side-bar-routes" id="admin-management-sub-div">
                     <i class="fa-solid fa-box"></i>
-                    <span>Requests</span>
+                    <span>Admin Management</span>
                 </div>
 
-                <div class="sub-down-bar-routes" id="tech-dashboard-sub-down-div">
+                <div class="side-bar-routes" id="dashboard-sub-div">
                     <i class="fa-solid fa-box"></i>
-                    <span>Technicians</span>
+                    <span>Request Dashboard</span>
+                    <i id="dashboard-arrow" class="fa-solid fa-caret-down"></i>
                 </div>
 
-                <div class="sub-down-bar-routes" id="user-dashboard-sub-down-div">
-                    <i class="fa-solid fa-box"></i>
-                    <span>Users</span>
+                <div class="sub-down-div" id="dashboard-sub-down-div">
+
+                    <div class="sub-down-bar-routes" id="req-dashboard-sub-down-div">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Requests</span>
+                    </div>
+
+                    <div class="sub-down-bar-routes" id="tech-dashboard-sub-down-div">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Technicians</span>
+                    </div>
+
+                    <div class="sub-down-bar-routes" id="user-dashboard-sub-down-div">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Users</span>
+                    </div>
                 </div>
-            </div>
+            <?php } ?>
+            
+
+            
         </div>
 
         <div class="user-acc-div">
             <div class="user-info">
                 <img src="../source/home_img/user.png" alt="user-img"> 
-                <p><span>MET </span>| Juan Dela Cruz</p>
+                <p><span><?php echo $username_role ?> </span>| <?php echo $_SESSION['name'] ?></p>
             </div>
             <button class="logout-btn" id="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
             

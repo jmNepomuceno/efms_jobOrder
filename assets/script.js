@@ -2,18 +2,18 @@ const socket = new WebSocket("ws://192.168.42.222:8080");
 
 // When the connection is open
 socket.onopen = function(event) {
-    console.log("Connected to WebSocket server.");
+    // console.log("Connected to WebSocket server.");
 };
 
 // When a message is received from the server
 socket.onmessage = function(event) {
-    console.log("Message from server:", event.data);
+    // console.log("Message from server:", event.data);
     // Handle the received message (e.g., update the UI)
 };
 
 // When the connection is closed
 socket.onclose = function(event) {
-    console.log("WebSocket connection closed.");
+    // console.log("WebSocket connection closed.");
 };
 
 // When there is an error
@@ -26,6 +26,6 @@ function sendMessageToServer(message) {
     if (socket.readyState === WebSocket.OPEN) {
         socket.send(message);
     } else {
-        console.log("WebSocket is not open.");
+        // console.log("WebSocket is not open.");
     }
 }

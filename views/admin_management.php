@@ -100,7 +100,7 @@
 
             <div class="category-container">
                 <?php
-                $category_names = ["MET", "CARPENTRY", "ELECTRICAL", "PLUMBER"];
+                $category_names = ["INFRA / PLANNING UNIT", "ELECTRICAL UNIT" , "MECHANICAL UNIT"];
                 foreach ($category_names as $category) {
                     $categoryID = strtolower($category);
                     echo '

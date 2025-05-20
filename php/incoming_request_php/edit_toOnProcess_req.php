@@ -10,7 +10,7 @@ $current_date = date('m/d/Y - h:i:s A');
 try {
     $sql = "UPDATE job_order_request SET requestStatus='On-Process', processedBy=?, processedByID=?, requestStartDate=? WHERE requestNo=?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['name'] , $_SESSION['user'] ,$current_date , (int)$_POST['requestNo']]);
+    $stmt->execute([$_SESSION['name'] , $_SESSION['user'] ,$current_date , $_POST['requestNo']]);
 
     // websocket server
     $client = new Client("ws://192.168.42.222:8080");

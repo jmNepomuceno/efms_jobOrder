@@ -3,13 +3,14 @@ $(document).ready(function(){
         let data = {
             requestDate : $('#date-val-id').text(),
             requestFrom : $('#section-val-id').text(),
-            // requestBy: user_name,
             requestCategory: window.selectedCategory,
+            requestSubCategory: window.selectedSubCategory,
             requestDescription: $('#description-val-id').val(),
             requestStatus: "Pending",
         }
 
         console.log(data)
+
         try {
             $.ajax({
                 url: '../php/job_order_php/add_jobOrderRequest.php',

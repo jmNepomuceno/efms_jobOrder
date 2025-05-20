@@ -35,7 +35,6 @@ const dataTable_incoming_request = () =>{
             method: "POST",
             dataType : "json",
             success: function(response) {
-                console.log(response)
                 fetch_requestData = response
                 try {
                     let dataSet = [];
@@ -76,7 +75,8 @@ const dataTable_incoming_request = () =>{
                                 <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
                             </div>`,
                             `<div>${formattedDateHTML}</div>`,
-                            `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
+                            `<div><span class="unit-td-span">${response[i].requestCategory}</span></div>`,
+                            `<div><span class="category-td-span">${response[i].requestSubCategory}</span></div>`,
                         ]);
                     }  
 
@@ -91,13 +91,15 @@ const dataTable_incoming_request = () =>{
                             { title: "REQUEST NO.", data:0 },
                             { title: "NAME OF REQUESTER", data:1 },
                             { title: "DATE REQUESTED", data:2 },
-                            { title: "REQUEST TYPE", data:3 },
+                            { title: "UNIT", data:3 },
+                            { title: "CATEGORY", data:4 },
                         ],
                         columnDefs: [
                             { targets: 0, createdCell: function(td) { $(td).addClass('item-req-no-td'); } },
                             { targets: 1, createdCell: function(td) { $(td).addClass('item-name-td'); } , width:"35%"},
                             { targets: 2, createdCell: function(td) { $(td).addClass('item-date-td'); } },
-                            { targets: 3, createdCell: function(td) { $(td).addClass('item-req-type-td'); } },
+                            { targets: 3, createdCell: function(td) { $(td).addClass('item-unit-td'); } },
+                            { targets: 4, createdCell: function(td) { $(td).addClass('item-category-td'); } },
                         ],
                         "autoWidth": false, // Prevents auto column sizing
                         "paging": false,
@@ -124,51 +126,51 @@ const dataTable_incoming_request = () =>{
 
 
         //fetch is theres on proncess on your job
-        $.ajax({
-            url: '../php/incoming_request_php/fetch_myJobs.php',
-            method: "POST",
-            data : {what : "On-Process"},
-            dataType : 'json',
-            success: function(response) {
-                console.log(response)
-                try { 
-                    if(parseInt(response.length) >= 1){
-                        $('#on-process-notif-span').text(response.length)
-                        $('#on-process-notif-span').css('display' , 'flex')
-                    }
-                } catch (innerError) {
-                    console.error("Error processing response:", innerError);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX request failed:", error);
-            }
-        });
+        // $.ajax({
+        //     url: '../php/incoming_request_php/fetch_myJobs.php',
+        //     method: "POST",
+        //     data : {what : "On-Process"},
+        //     dataType : 'json',
+        //     success: function(response) {
+        //         // console.log(response)
+        //         try { 
+        //             if(parseInt(response.length) >= 1){
+        //                 $('#on-process-notif-span').text(response.length)
+        //                 $('#on-process-notif-span').css('display' , 'flex')
+        //             }
+        //         } catch (innerError) {
+        //             console.error("Error processing response:", innerError);
+        //         }
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error("AJAX request failed:", error);
+        //     }
+        // });
 
-         //fetch is theres evaluation on your job
-         $.ajax({
-            url: '../php/incoming_request_php/fetch_for_evaluation.php',
-            method: "POST",
-            data : {what : "both"},
-            dataType : 'json',
-            success: function(response) {
-                console.log(response)
-                try { 
-                    if(response >= 1){
-                        $('#for-evaluation-notif-span').text(response)
-                        $('#for-evaluation-notif-span').css('display' , 'block')
+        //  //fetch is theres evaluation on your job
+        //  $.ajax({
+        //     url: '../php/incoming_request_php/fetch_for_evaluation.php',
+        //     method: "POST",
+        //     data : {what : "both"},
+        //     dataType : 'json',
+        //     success: function(response) {
+        //         console.log(response)
+        //         try { 
+        //             if(response >= 1){
+        //                 $('#for-evaluation-notif-span').text(response)
+        //                 $('#for-evaluation-notif-span').css('display' , 'block')
                         
-                        $('#your-job-notif-span').text(parseInt($('#for-evaluation-notif-span').text()) + parseInt($('#on-process-notif-span').text()))
-                        $('#your-job-notif-span').css('display' , 'block')
-                    }
-                } catch (innerError) {
-                    console.error("Error processing response:", innerError);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX request failed:", error);
-            }
-        });
+        //                 $('#your-job-notif-span').text(parseInt($('#for-evaluation-notif-span').text()) + parseInt($('#on-process-notif-span').text()))
+        //                 $('#your-job-notif-span').css('display' , 'block')
+        //             }
+        //         } catch (innerError) {
+        //             console.error("Error processing response:", innerError);
+        //         }
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error("AJAX request failed:", error);
+        //     }
+        // });
 
         
 
@@ -214,7 +216,8 @@ const dataTable_my_jobs = (what) =>{
                                     <span><b>Requested Date:</b> ${response[i].requestDate}</span>
                                     <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
                                 </div>`,
-                                `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
+                                `<div><span class="request-category-span">${response[i].requestCategory}</span></div>`,
+                                `<div><span class="request-subcategory-span">${response[i].requestSubCategory}</span></div>`,
                             ])
                         }
 
@@ -233,7 +236,8 @@ const dataTable_my_jobs = (what) =>{
                                     <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
                                     <span><b>For Evaluation Date:</b> ${response[i].requestEvaluationDate}</span>
                                 </div>`,
-                                `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
+                                `<div><span class="category-td-span">${response[i].requestCategory}</span></div>`,
+                                `<div><span class="sub-category-td-span">${response[i].requestSubCategory}</span></div>`,
                             ])
                         }
 
@@ -280,7 +284,8 @@ const dataTable_my_jobs = (what) =>{
                                     <span><b>For Evaluation Date:</b> ${response[i].requestEvaluationDate}</span>
                                     <span><b>Completed Date:</b> ${response[i].requestCompletedDate} <i style='${style}'> (${formattedTimeDiff}) </i> </span>
                                 </div>`,
-                                `<div><span class="request-type-td-span">${response[i].requestCategory}</span></div>`,
+                                `<div><span class="category-td-span">${response[i].requestCategory}</span></div>`,
+                                `<div><span class="sub-category-td-span">${response[i].requestSubCategory}</span></div>`,
                             ])
                         }
                        
@@ -297,13 +302,15 @@ const dataTable_my_jobs = (what) =>{
                             { title: "REQUEST NO.", data:0 },
                             { title: "NAME OF TECHNICIAN", data:1 },
                             { title: "DATE", data:2 },
-                            { title: "REQUEST TYPE", data:3 },
+                            { title: "UNIT", data:3 },
+                            { title: "CATEGORY", data:4 },
                         ],
                         columnDefs: [
                             { targets: 0, createdCell: function(td) { $(td).addClass('item-req-no-td'); } },
                             { targets: 1, createdCell: function(td) { $(td).addClass('item-name-td'); } , width:"35%"},
                             { targets: 2, createdCell: function(td) { $(td).addClass('item-date-td'); } },
-                            { targets: 3, createdCell: function(td) { $(td).addClass('item-req-type-td'); } },
+                            { targets: 3, createdCell: function(td) { $(td).addClass('item-unit-td'); } },
+                            { targets: 4, createdCell: function(td) { $(td).addClass('item-category-td'); } },
                         ],
                         "autoWidth": false, // Prevents auto column sizing 
                         "paging": false,
@@ -340,13 +347,13 @@ const fetchNotifValue = () =>{
         dataType : 'json',
         success: function(response) {
             try { 
-                console.log(response)
+                // console.log(response)
                 const pending_value = parseInt(response.count_pending)
                 const myJob_value = parseInt(response.count_evaluation) + parseInt(response.count_onProcess)
                 const onProcess_value = parseInt(response.count_onProcess)
                 const evaluation_value = parseInt(response.count_evaluation)
                 
-                console.log(pending_value)
+                // console.log(pending_value)
 
                 if(pending_value > 0){
                     $('#jobOrder-notif-span').text(pending_value)
@@ -490,6 +497,7 @@ $(document).ready(function(){
     $(document).off('click', '#start-assess-btn').on('click', '#start-assess-btn', function() {     
         console.log()
         if($('#start-assess-btn').text() === 'Start Job'){
+            console.log(clicked_requestNo)
             try {
                 $.ajax({
                     url: '../php/incoming_request_php/edit_toOnProcess_req.php',
@@ -514,6 +522,7 @@ $(document).ready(function(){
             }
         }
         else  if($('#start-assess-btn').text() === 'Finish Job'){
+            console.log(clicked_requestNo_myJob)
             try {
                 $.ajax({
                     url: '../php/incoming_request_php/edit_toEvaluation_req.php',

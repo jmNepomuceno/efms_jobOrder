@@ -24,63 +24,63 @@ function updateDateTime() {
 
 window.dateTimeInterval = setInterval(updateDateTime, 1000);
 
+
 $(document).ready(function(){
-    window.selectedCategory = "";
-    $("#predefined-concerns").select2({
-        placeholder: "Search for a concern...",
-        allowClear: true
-    });
-
-
-    // Handle predefined concerns selection
-    $("#predefined-concerns").on("change", function () {
-        let selectedConcernText = $(this).find("option:selected").text(); // Get the text, not the value
-        let selectedConcernValue = $(this).val(); // Get the category
     
-        if (selectedConcernText) {
-            $("#description-val-id").val(selectedConcernText).trigger("input"); // Set text & trigger event
-            selectCategory(selectedConcernValue); // Auto-select category
+    const allOptions = $('#sub-infra-select option').clone(); // Backup of all options
+
+    // Make selectedCategory and selectedSubCategory globally accessible
+    window.selectedCategory = '';
+    window.selectedSubCategory = '';
+
+    $('.infra-btn').on('click', function () {
+        // Reset all buttons
+        $('.infra-btn').removeClass('active').css('opacity', '0.6');
+        $(this).addClass('active').css('opacity', '1');
+
+        const selectedCategory = $(this).data('category');
+        window.selectedCategory = selectedCategory; // Store globally
+
+        let labelText = '';
+
+        switch (selectedCategory) {
+            case 'IU':
+                labelText = '-- Select Planning Category --';
+                break;
+            case 'EU':
+                labelText = '-- Select Electrical Category --';
+                break;
+            case 'MU':
+                labelText = '-- Select Mechanical Category --';
+                break;
+            default:
+                labelText = '-- Select Sub Category --';
         }
-    
-        checkIfCategorySelected();
-    });
 
-    // Handle category button clicks
-    $(".infra-btn").on("click", function () {
-        $("#predefined-concerns").val("").trigger("change");
-        selectedCategory = $(this).data("category");
-        highlightSelectedCategory($(this));
-        checkIfCategorySelected();
+        $('#sub-infra-select').prop('disabled', false);
+        $('#sub-infra-select').empty().append(`<option value="">${labelText}</option>`);
 
-        if($("#description-val-id").val() === "-- Select Concern --") {
-            $("#description-val-id").val("")
-        }
-    });
-
-    function selectCategory(category) {
-        $(".infra-btn").each(function () {
-            if ($(this).data("category") === category) {
-                highlightSelectedCategory($(this));
-                selectedCategory = category;
+        allOptions.each(function () {
+            const val = $(this).val();
+            if (val === selectedCategory) {
+                $('#sub-infra-select').append($(this));
             }
         });
-    }
+    });
 
-    function highlightSelectedCategory($selectedButton) {
-        $(".infra-btn").css("opacity", "0.5"); 
-        $selectedButton.css("opacity", "1"); 
-    }
+    // Listen for change in sub-category selection
+    $('#sub-infra-select').on('change', function () {
+        const selectedText = $('#sub-infra-select option:selected').text();
+        window.selectedSubCategory = selectedText; // Store globally for use in other scripts
+    });
 
-    function checkIfCategorySelected() {
-        if (selectedCategory) {
-            $("#submit-btn").prop("disabled", false);
-        } else {
-            $("#submit-btn").prop("disabled", true);
-        }
-    }
+    // Disable dropdown on page load
+    $('#sub-infra-select').prop('disabled', true);
+
+    
 
     function checkDescriptionLength() {
-        if ($("#description-val-id").val().length > 10) {
+        if ($("#description-val-id").val().length > 1) {
             $("#submit-btn").css("pointer-events", "auto"); 
             $("#submit-btn").css("opacity", "1"); 
         } else {

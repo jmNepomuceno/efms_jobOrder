@@ -1,8 +1,13 @@
-var modal_cancel_form;
+var modal_cancel_form, modal_view_form;
 var clicked_requestID;
+var fetch_viewRequestData;
 
 if (!modal_cancel_form) {
     modal_cancel_form = new bootstrap.Modal(document.getElementById('modal-cancel-form'));
+}
+
+if (!modal_view_form) {
+    modal_view_form = new bootstrap.Modal(document.getElementById('modal-view-form'));
 }
 
 var fetch_dataTable = () =>{
@@ -12,6 +17,7 @@ var fetch_dataTable = () =>{
         dataType: "json",
         success: function (response) {
             console.log(response);
+            fetch_viewRequestData = response
             try {
                 let dataSet = [];
                 for (let i = 0; i < response.length; i++) {
@@ -19,10 +25,8 @@ var fetch_dataTable = () =>{
                         `<span class="requestNo-span">${response[i].requestNo}</span>`,
                         `<span>${response[i].requestDate}</span>`,
                         `<span>${response[i].requestBy.name}</span>`,
-                        `<span>${response[i].requestDescription}</span>`,
-                        `<span class="pending-status-span">${response[i].requestStatus}</span>`,
                         `<div class="action-pending-div">
-                            <button type="button" class="btn btn-primary">View</button>
+                            <button type="button" class="btn btn-primary view-request-btn">View</button>
                             <button type="button" class="btn btn-danger cancel-request-btn">Cancel</button>
                         </div>`
                     ]);
@@ -39,9 +43,7 @@ var fetch_dataTable = () =>{
                     columns: [
                         { title: "JOB ORDER NO." },
                         { title: "REQUESTED DATE" },
-                        { title: "EMPLOYEE NAME" },
-                        { title: "DESCRIPTION" },
-                        { title: "STATUS" },
+                        { title: "REQUESTED BY" },
                         { title: "ACTION" }
                         
                     ],
@@ -49,9 +51,8 @@ var fetch_dataTable = () =>{
                         { targets: 0, createdCell: function(td) { $(td).addClass('request-id-td'); } },
                         { targets: 1, createdCell: function(td) { $(td).addClass('request-date-td'); } },
                         { targets: 2, createdCell: function(td) { $(td).addClass('request-name-td'); } },
-                        { targets: 3, createdCell: function(td) { $(td).addClass('request-description-td'); } },
-                        { targets: 4, createdCell: function(td) { $(td).addClass('request-status-td'); } },
-                        { targets: 5, createdCell: function(td) { $(td).addClass('request-action-td'); } },
+                        { targets: 3, createdCell: function(td) { $(td).addClass('request-action-td'); } },
+                        
                     ],
                     // "paging": false,
                     // "info": false,
@@ -115,4 +116,27 @@ $(document).ready(function(){
             console.error("Unexpected error occurred:", ajaxError);
         }
     });
+
+    $(document).off('click', '.view-request-btn').on('click', '.view-request-btn', function() {
+        const index = $('.view-request-btn').index(this);
+        const data = fetch_viewRequestData[index]
+        console.log(data)
+        
+        $('#user-name').text(data.requestBy.name);
+        $('#user-bioid').text(data.requestBy.bioID);
+        $('#user-division').text(data.requestBy.division);
+        $('#user-section').text(data.requestBy.section);
+    
+        $('#job-order-id').text(`${data.requestNo}`);
+        $('#date-requested').text(data.requestDate);
+        $('#request-type').text(data.requestCategory);
+    
+        $('#request-description').text(data.requestDescription);
+
+        $('#tech-name-i').text(data.processedBy ? data.processedBy : "No data yet.")
+        $('#reception-date-i').text(data.requestStartDate ? data.requestStartDate : "No data yet.")
+        $('.tech-remarks-textarea').attr('placeholder', 'No Data yet');
+
+        modal_view_form.show()
+    })
 })

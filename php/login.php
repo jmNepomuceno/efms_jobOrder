@@ -52,10 +52,15 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && trim($_POST["usern
         
 
 
-            if($_SESSION['section'] == 12 || $_SESSION['section'] == 23){
+            if($_SESSION['user'] == 3858 || $_SESSION['user'] == 3522){
                 $_SESSION["role"] = 'admin';
                 echo "/views/home.php";
-            }else{
+            }
+            else if($_SESSION['section'] == 23){
+                $_SESSION["role"] = 'tech';
+                echo "/views/home.php";
+            }
+            else{
                 $_SESSION["role"] = "user";
                 echo "/views/job_order.php";
             }

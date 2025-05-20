@@ -26,17 +26,42 @@ if ($pending_count >= 1) {
         "section" => $_SESSION['sectionName'],
     ];
 
-    // Get last request number
-    $sql = "SELECT requestNo FROM job_order_request ORDER BY requestNo DESC LIMIT 1";
+    $category = $object['requestCategory'];
+
+    // STEP 2: Get current year and month
+    $year = date('Y');   // e.g., 2025
+    $month = date('m');  // e.g., 05
+
+    // STEP 3: Pattern for current category and month
+    $likePattern = "$category-$year-$month-%";
+
+    // STEP 4: Get the latest requestNo for this category and month
+    $sql = "SELECT requestNo FROM job_order_request 
+            WHERE requestNo LIKE ? 
+            ORDER BY requestNo DESC 
+            LIMIT 1";
+
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([$likePattern]);
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
-    $requestNo = isset($data['requestNo']) ? intval($data['requestNo']) + 1 : 1;
+
+    // STEP 5: Compute next sequence number
+    if ($data && preg_match('/(\d+)$/', $data['requestNo'], $matches)) {
+        $lastSeqNum = intval($matches[1]);
+        $nextSeqNum = $lastSeqNum + 1;
+    } else {
+        $nextSeqNum = 1;
+    }
+
+    $formattedSeq = str_pad($nextSeqNum, 3, '0', STR_PAD_LEFT); // e.g. 001
+
+    // STEP 6: Final formatted request number
+    $requestNo = "$category-$year-$month-$formattedSeq";
 
     // Insert new record
     $sql = "INSERT INTO job_order_request 
-            (requestNo, requestDate, requestFrom, requestBy, requestCategory, requestDescription, requestStatus) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)";
+            (requestNo, requestDate, requestFrom, requestBy, requestCategory, requestSubCategory, requestDescription, requestStatus) 
+            VALUES (?, ?, ?, ?, ?, ?, ? ,?)";
 
     $stmt = $pdo->prepare($sql);
     $success = $stmt->execute([
@@ -45,6 +70,7 @@ if ($pending_count >= 1) {
         $object["requestFrom"],
         json_encode($object["requestBy"]),
         $object["requestCategory"],
+        $object["requestSubCategory"],
         $object["requestDescription"],
         $object["requestStatus"],
     ]);

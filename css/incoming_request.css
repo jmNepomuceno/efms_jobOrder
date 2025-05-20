@@ -277,7 +277,8 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr t
     font-size: 1rem;
 }
 
-body .right-container .table-div .table-container #incoming-req-table tbody tr td div .request-type-td-span{
+body .right-container .table-div .table-container #incoming-req-table tbody tr td div .unit-td-span,
+body .right-container .table-div .table-container #incoming-req-table tbody tr td div .category-td-span{
     font-weight: 600;
 }
 

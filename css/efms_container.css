@@ -70,7 +70,7 @@
 
 }
 
-.efms-container .request-form-div .pre-concern-div{
+.efms-container .request-form-div .sub-infra-div{
     width: 40%;
     height: 80;
     display:flex;
@@ -85,7 +85,7 @@
 .efms-container .request-form-div .date-div #date-title-id,
 .efms-container .request-form-div .description-div #description-title-id,
 .efms-container .request-form-div .infra-div #infra-title-id,
-.efms-container .request-form-div .pre-concern-div #concern-title-id{
+.efms-container .request-form-div .sub-infra-div #sub-infra-title-id{
     font-weight: 700;
     width: 100%;
     background: #87c6cc;
@@ -117,7 +117,7 @@
     border-radius: 5px;
 }
 
-.efms-container .request-form-div .pre-concern-div #predefined-concerns{
+.efms-container .request-form-div .sub-infra-div #sub-infra-select{
     width: 100%;
     height: 85%;
     padding:5px;
@@ -131,7 +131,7 @@
     border:none;
 }
 
-.efms-container .request-form-div .pre-concern-div #predefined-concerns option{
+.efms-container .request-form-div .sub-infra-div #sub-infra-select option{
     cursor: pointer;
 }
 
