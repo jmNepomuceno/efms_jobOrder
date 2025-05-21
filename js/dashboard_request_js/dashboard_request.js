@@ -9,17 +9,19 @@ const moveIndicator = (element) => {
     indicator.style.left = `${navSpan.left - parent.left}px`;
 }
 
-const onLoadFetch_total_request = (startDate, endDate, from) => {
+const onLoadFetch_total_request = (startDate, endDate, from, category) => {
     console.log("Start Date: ", startDate);
     console.log("End Date: ", endDate);
     console.log("From: ", from);
+    console.log("category: ", category);
     $.ajax({
         url: '../../php/dashboard_request_php/fetch_dashboard_request.php',
         method: 'POST',
         data: {
             startDate: startDate,
             endDate: endDate,
-            from: from
+            from: from,
+            category: category
         },
         dataType: 'json',
         success: function (response) {
@@ -120,7 +122,7 @@ const barGraph = (data = []) => {
 $(document).ready(function () {
     const activeTab = document.querySelector('.dashboard-request-nav-span-class.active');
     if (activeTab) moveIndicator(activeTab);
-    onLoadFetch_total_request(null, null, "total_request_overall");
+    onLoadFetch_total_request(null, null, "total_request_overall" , "ALL");
 
     $('.dashboard-request-nav-span-class').on('click', function () {
         $('.dashboard-request-nav-span-class').removeClass('active');
@@ -133,7 +135,7 @@ $(document).ready(function () {
             case 0:
                 $('.dashboard-content-div').load('../../container/dashboard_request_containers/total_request_overall.php', function() {
                     nav_clicked = "total_request_overall"
-                    onLoadFetch_total_request(null, null, "total_request_overall");
+                    onLoadFetch_total_request(null, null, "total_request_overall", "ALL");
                 });
                 break;
             case 1:
@@ -184,7 +186,16 @@ $(document).ready(function () {
         onLoadFetch_total_request(startDate, endDate, from);
     });
     
+    $('.filter-category-div button').on('click', function() {
+        // Remove the active class from all buttons
+        $('.filter-category-div button').removeClass('filter-category-active');
 
+        // Add the active class to the clicked button
+        $(this).addClass('filter-category-active');
+
+        const category = $(this).data('category');
+    
+        // load :))
+        onLoadFetch_total_request(null, null, "total_request_overall" , category);
+    });
 });
-
-

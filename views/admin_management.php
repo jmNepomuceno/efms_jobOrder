@@ -13,18 +13,19 @@
     // Categorize employees
     $categories = [
         "free_agents" => [],
-        "met" => [],
-        "carpentry" => [],
-        "electrical" => [],
-        "plumber" => []
+        "IU" => [],
+        "MU" => [],
+        "EU" => []
     ];
 
     foreach ($employees as $employee) {
-        $category = isset($employee['techCategory']) ? strtolower($employee['techCategory']) : "free_agents";
+        $category = isset($employee['techCategory']) ? $employee['techCategory'] : "free_agents";
         if (isset($categories[$category])) {
             $categories[$category][] = $employee;
         }
     }
+
+
 
     // Function to generate draggable span elements
     function generateDraggableSpans($employees, $extraClass = "") {
@@ -42,10 +43,10 @@
     // $sql = "DELETE FROM efms_technicians WHERE techBioID=4826";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
-
-    // $sql = "UPDATE efms_technicians SET techCategory=null";
-    // $stmt = $pdo->prepare($sql);
-    // $stmt->execute();
+    
+    $sql = "UPDATE efms_technicians SET techCategory = 'RESIGNED' WHERE techCategory IS NULL OR techCategory = ''";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -100,12 +101,22 @@
 
             <div class="category-container">
                 <?php
-                $category_names = ["INFRA / PLANNING UNIT", "ELECTRICAL UNIT" , "MECHANICAL UNIT"];
+                $category_names = ["IU", "EU" , "MU"];
                 foreach ($category_names as $category) {
-                    $categoryID = strtolower($category);
+                    $cat_name = "";
+                    if($category == 'IU'){
+                        $cat_name = "INFRA / PLANNING UNIT";
+                    }else if($category == 'MU'){
+                        $cat_name = "MECHANICAL UNIT";
+                    }
+                    else if($category == 'EU'){
+                        $cat_name = "ELECTRICAL UNIT";
+                    }
+
+                    $categoryID = $category;
                     echo '
                     <div class="container">
-                        <div class="title">' . $category . '</div>
+                        <div class="title">' . $cat_name . '</div>
                         <div class="draggable-container" id="' . $categoryID . '-category">
                             ' . (isset($categories[$categoryID]) ? generateDraggableSpans($categories[$categoryID], "draggable-done") : "") . '
                         </div>

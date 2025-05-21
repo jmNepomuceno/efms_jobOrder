@@ -40,8 +40,8 @@ body .right-container{
 }
 
 body .right-container .dashboard-container{
-    width: 90%;
-    height: 90%;
+    width: 95%;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
@@ -101,8 +101,6 @@ body .right-container .dashboard-container .dashboard-content-div{
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-
-    /* border:1px solid red; */
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div{
@@ -119,21 +117,14 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div{
     width: 100%;
     height: 50px;
-    /* border:1px solid white; */
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     gap:10px;
-    margin-top:30px;
+    margin-top:20px;
+
 }
-
-
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div button{
-    
-}
-
-
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div .start-date-div,
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div, .end-date-div{
@@ -155,7 +146,19 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div .start-date-div,
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div{
-    margin-left:20px;
+    margin-left:50px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .title-filter-div{
+    margin-top:50px;
+    height: auto;
+    width: 100%;
+    border:1px solid red;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div h1{
@@ -163,11 +166,88 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     color:#2e1d18;
     padding:0;
     margin:0;
-    margin-top:50px;
-    width: 100%;
-    /* border:1px solid white; */
-    margin-left:20px;
+    width: auto;
     font-weight: 600;
+    margin-left:50px;
+    margin-top:30px;
+    font-size: 3.5rem;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div{
+    width: auto;
+    height: auto;
+    margin-left:50px;
+    margin-top:20px;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap:10px;
+
+    border-radius: 10px;
+    padding:10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div .vl{
+    border: 2px solid #2e1d18;
+    height: 95%;
+    border-radius: 5px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div span{
+    color:#2e1d18;
+    padding:0;
+    margin:0;
+    font-weight: 600;
+    font-size: 1.1rem;
+    width: 100px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div button{
+    padding:5px 10px 5px 10px;
+    margin:0;
+    width: auto;
+
+    border-radius: 5px;
+    background: none;
+    border:2px solid #593f37;
+    cursor: pointer;
+
+    font-weight: 600;
+    opacity: 0.3;
+    font-size: 0.8rem;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div #iu-filter-btn{
+    width: 200px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div button:hover{
+    opacity: 1;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div select{
+    margin-left:5px;
+    padding:5px 10px 5px 10px;
+    margin:0;
+    width: auto;
+    border-radius: 5px;
+    background: none;
+    border:2px solid #593f37;
+    cursor: pointer;
+
+    font-weight: 600;
+    font-size: 0.9rem;
+
+    display:none;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div .filter-category-active{
+    color:white;
+    background: #593f37;
+    opacity: 1;
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div span,

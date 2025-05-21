@@ -48,7 +48,7 @@
 
                 <div class="side-bar-routes" id="dashboard-sub-div">
                     <i class="fa-solid fa-box"></i>
-                    <span>Request Dashboard</span>
+                    <span>EFMS Dashboard</span>
                     <i id="dashboard-arrow" class="fa-solid fa-caret-down"></i>
                 </div>
 

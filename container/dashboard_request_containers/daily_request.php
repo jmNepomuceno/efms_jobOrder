@@ -1,4 +1,15 @@
 <div class="request-conent-div">
+    
+    <h1>Daily Requests Report</h1>
+
+    <div class="filter-category-div">
+        <span>Filter Unit: </span>
+        <button class="filter-category-active" id="all-filter-btn" data-category="ALL">ALL</button>
+        <button id="iu-filter-btn" data-category="IU">INFRA / PLANNING</button>
+        <button id="eu-filter-btn" data-category="EU">ELECTRICAL</button>
+        <button id="mu-filter-btn" data-category="MU">MECHANICAL</button>
+    </div>
+
     <div class="single-date-div">
         <div class="start-date-div">
             <span id="start-date-span">Select Start Date: </span>
@@ -6,8 +17,6 @@
             <button id="filter-date-search-btn" type="button" class="btn btn-secondary">Search</button>
         </div>
     </div>
-
-    <h1>Daily Requests Report</h1>
     
     <div class="request-graph-div">
         <canvas id="requestsPerHourChart" ></canvas>

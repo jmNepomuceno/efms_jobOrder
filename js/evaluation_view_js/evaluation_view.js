@@ -188,7 +188,7 @@ $(document).ready(function(){
             processData: false, // Important for FormData
             contentType: false, // Important for FormData
             success: function(response) {
-                $('#modal-body-incoming').text('Successfully Submitted.')
+                $('.modal-body-incoming').text('Successfully Submitted.')
                 modal_notif.show()
                 modal_eval_form.hide()
                 fetch_dataTable()

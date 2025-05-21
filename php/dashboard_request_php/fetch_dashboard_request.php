@@ -6,6 +6,7 @@ include('../../assets/connection.php');
 $from = $_POST['from'] ?? 'daily_request';
 $startDate = $_POST['startDate'] ?? null;
 $endDate = $_POST['endDate'] ?? null;
+$category = $_POST['category'] ?? null;
 
 // Convert to MM/DD/YYYY
 $startDate = $startDate ? date('m/d/Y', strtotime($startDate)) : null;
@@ -31,20 +32,32 @@ try {
 
     } 
     else if ($from === 'total_request_overall'){
-        // get the overall request
-        $sql = "
-            SELECT 
-                HOUR(STR_TO_DATE(requestDate, '%m/%d/%Y - %r')) AS hr, 
-                requestStatus,
-                COUNT(*) AS total 
-            FROM job_order_request 
-            GROUP BY hr, requestStatus
-            ORDER BY hr
-        ";
-
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
-        
+        if ($category === 'ALL') {
+            $sql = "
+                SELECT 
+                    HOUR(STR_TO_DATE(requestDate, '%m/%d/%Y - %r')) AS hr, 
+                    requestStatus,
+                    COUNT(*) AS total 
+                FROM job_order_request 
+                GROUP BY hr, requestStatus
+                ORDER BY hr
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+        } else {
+            $sql = "
+                SELECT 
+                    HOUR(STR_TO_DATE(requestDate, '%m/%d/%Y - %r')) AS hr, 
+                    requestStatus,
+                    COUNT(*) AS total 
+                FROM job_order_request 
+                WHERE requestCategory = ?
+                GROUP BY hr, requestStatus
+                ORDER BY hr
+            ";
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute([$category]);
+        }
     }
     else {
         // Query for a range of dates (weekly or monthly)
