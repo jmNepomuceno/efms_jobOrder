@@ -49,7 +49,7 @@ $(document).ready(function(){
     });
 
     $('#tech-dashboard-sub-down-div').click(function(){
-        window.location.href = "../views/dashboard.php";
+        window.location.href = "../views/dashboard_technicians.php";
     });
 
     $('#user-dashboard-sub-down-div').click(function(){

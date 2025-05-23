@@ -229,7 +229,10 @@
                     </div>
                     
 
-                    <button id="start-assess-btn" class="btn btn-success">Start Job</button>
+                    <div class="function-btn">
+                        <button id="rtr-assess-btn" class="btn btn-success">Return to Requestor</button>
+                        <button id="start-assess-btn" class="btn btn-success">Start Job</button>
+                    </div>
                 </div>
 
 

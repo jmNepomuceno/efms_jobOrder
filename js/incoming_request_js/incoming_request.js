@@ -650,4 +650,8 @@ $(document).ready(function(){
     });
 
     
+    $(document).off('click', '#rtr-assess-btn').on('click', '#rtr-assess-btn', function() {
+       console.log(654)
+    })  
+
 })

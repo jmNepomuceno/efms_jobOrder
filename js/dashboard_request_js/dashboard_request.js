@@ -1,5 +1,6 @@
 let requestsPerHourChartInstance; // Declare globally
-let nav_clicked = ""
+let category_clicked = "ALL", sub_category_clicked = null
+
 const moveIndicator = (element) => {
     const indicator = document.querySelector(".nav-indicator");
     const navSpan = element.getBoundingClientRect();
@@ -9,28 +10,33 @@ const moveIndicator = (element) => {
     indicator.style.left = `${navSpan.left - parent.left}px`;
 }
 
-const onLoadFetch_total_request = (startDate, endDate, from, category) => {
+const onLoadFetch_total_request = (startDate, endDate, category, subCategory) => {
     console.log("Start Date: ", startDate);
     console.log("End Date: ", endDate);
-    console.log("From: ", from);
     console.log("category: ", category);
+    console.log("sub category: ", subCategory);
+    
     $.ajax({
         url: '../../php/dashboard_request_php/fetch_dashboard_request.php',
         method: 'POST',
         data: {
             startDate: startDate,
             endDate: endDate,
-            from: from,
-            category: category
+            category: category,
+            subCategory: subCategory,
         },
         dataType: 'json',
         success: function (response) {
             console.log(response);
 
             let totalRequests = 0;
-            let totalOT = 0;
-            let totalCancelled = 0;
-
+            let totalCorrection = 0;
+            let totalCompleted = 0;
+            let totalPending = 0;
+            let totalOnProcess = 0;
+            let totalUnattended = 0;
+            let totalRTR = 0;
+            let totalPercentage = 0;
             // Prepare flat array for barGraph
             const hourlyTotals = Array(24).fill(0);
 
@@ -39,11 +45,28 @@ const onLoadFetch_total_request = (startDate, endDate, from, category) => {
                     totalRequests += count;
 
                     // You can customize these status matches as needed
-                    if (status === 'For Overtime') {
-                        totalOT += count;
+                    if (status === 'Correction') {
+                        totalCorrection += count;
                     }
-                    if (status === 'Cancelled') {
-                        totalCancelled += count;
+                    if (status === 'Completed' || status === 'Evaluation') {
+                        totalCompleted += count;
+                    }
+                    if (status === 'Pending') {
+                        totalPending += count;
+                    }
+                    if (status === 'On-Process') {
+                        totalOnProcess += count;
+                    }
+                    if (status === 'Unattended') {
+                        totalUnattended += count;
+                    }
+                    if (status === 'RTR') {
+                        totalRTR += count;
+                    }
+
+                    if (totalRequests > 0) {
+                        totalPercentage = (totalCompleted / totalRequests) * 100;
+                        totalPercentage = totalPercentage.toFixed(2); // Round to 2 decimal places
                     }
 
                     // Add to hourly total regardless of status
@@ -53,8 +76,15 @@ const onLoadFetch_total_request = (startDate, endDate, from, category) => {
 
             // Display totals
             $('#total-request-value').text(totalRequests);
-            $('#total-request-ot-value').text(totalOT);
-            $('#total-request-cancel-value').text(totalCancelled);
+            $('#total-request-correction-value').text(totalCorrection);
+            $('#total-request-completed-value').text(totalCompleted);
+            $('#total-request-pending-value').text(totalPending);
+            $('#total-request-onProcess-value').text(totalOnProcess);
+            $('#total-request-unattended-value').text(totalUnattended);
+            $('#total-request-rtr-value').text(totalRTR);
+
+            $('#total-request-accomplished-value').text(totalPercentage+ "%");
+            // $('#total-request-cancel-value').text(totalCancelled);
 
             // Update graph
             barGraph(hourlyTotals);
@@ -120,70 +150,27 @@ const barGraph = (data = []) => {
 
 // Initial move to the first active tab on load
 $(document).ready(function () {
-    const activeTab = document.querySelector('.dashboard-request-nav-span-class.active');
-    if (activeTab) moveIndicator(activeTab);
-    onLoadFetch_total_request(null, null, "total_request_overall" , "ALL");
+    onLoadFetch_total_request(null, null, "ALL", null);
 
-    $('.dashboard-request-nav-span-class').on('click', function () {
-        $('.dashboard-request-nav-span-class').removeClass('active');
-        $(this).addClass('active');
-        moveIndicator(this);
+    const today = new Date().toISOString().split('T')[0]; // format: YYYY-MM-DD
 
-        const index = $(this).index();
-        console.log(index)
-        switch (index){
-            case 0:
-                $('.dashboard-content-div').load('../../container/dashboard_request_containers/total_request_overall.php', function() {
-                    nav_clicked = "total_request_overall"
-                    onLoadFetch_total_request(null, null, "total_request_overall", "ALL");
-                });
-                break;
-            case 1:
-                $('.dashboard-content-div').load('../../container/dashboard_request_containers/daily_request.php', function() {
-                    nav_clicked = "daily_request"
-                    barGraph();
-                });
-                break;
-            case 2:
-                $('.dashboard-content-div').load('../../container/dashboard_request_containers/weekly_request.php', function() {
-                    nav_clicked = "weekly_request"
-                    barGraph();
-                });
-                break;
-            case 3:
-                $('.dashboard-content-div').load('../../container/dashboard_request_containers/monthly_request.php', function() {
-                    nav_clicked = "monthly_request"
-                    barGraph();
-                });
-                break;
-            case 4:
-                $('.dashboard-content-div').load('../../container/dashboard_request_containers/by_category.php', function() {
-                    nav_clicked = "category_request"
-                    barGraph();
-                });
-                break;
-        }
-    });
+    document.getElementById("start-date-input").value = today;
+    document.getElementById("end-date-input").value = today;
 
     $(document).off('click', '#filter-date-search-btn').on('click', '#filter-date-search-btn', function () {
         const startDate = $('#start-date-input').val();
-        const endDate = $('#end-date-input').val(); // might be undefined in daily view
-        const from = nav_clicked;
-    
+        const endDate = $('#end-date-input').val();
+        const category = category_clicked
+        const sub_category = sub_category_clicked
+
         // Restriction checks
         if (!startDate) {
             alert('Please select a start date.');
             return;
         }
     
-        // If it's not a daily request, require endDate
-        if (from !== 'daily_request' && !endDate) {
-            alert('Please select an end date.');
-            return;
-        }
-    
         // Proceed with AJAX
-        onLoadFetch_total_request(startDate, endDate, from);
+        onLoadFetch_total_request(startDate, endDate, category, sub_category);
     });
     
     $('.filter-category-div button').on('click', function() {
@@ -194,8 +181,68 @@ $(document).ready(function () {
         $(this).addClass('filter-category-active');
 
         const category = $(this).data('category');
+
+        const startDate = $('#start-date-input').val();
+        const endDate = $('#end-date-input').val();
+        category_clicked = category
+        const sub_category = sub_category_clicked
+
+        // populate the sub category
+
+
+        onLoadFetch_total_request(startDate, endDate, category, sub_category);
+
+        $.ajax({
+            url: '../../php/dashboard_request_php/fetch_subCategoryFilter.php',
+            method: 'POST',
+            data: {category},
+            dataType: 'json',
+            success: function (response) {
+                console.log(response);
+
+                // First, clear all options
+                $('#filter-subCategory-select').css('pointer-events' , 'auto')
+                $('#filter-subCategory-select').css('opacity' , '1')
+
+                const select = document.getElementById("filter-subCategory-select");
+                select.innerHTML = ''; // remove all options
+
+                // Add default option
+                const defaultOption = document.createElement("option");
+                defaultOption.value = "";
+                defaultOption.textContent = "-- Select Sub Category --";
+                select.appendChild(defaultOption);
+
+                // Populate with new options from PHP response
+                response.forEach(function(item) {
+                    const option = document.createElement("option");
+                    option.value = "IU"; // You can change this depending on your logic
+                    option.textContent = item.sub_category_description;
+                    select.appendChild(option);
+                });
+            },
+            error: function (err) {
+                console.error("AJAX error: ", err);
+            }
+        });
+    });
+
+    $(document).on('change', '#filter-subCategory-select', function () {
+        const selectedValue = $(this).val();
+        const selectedText = $(this).find("option:selected").text();
     
-        // load :))
-        onLoadFetch_total_request(null, null, "total_request_overall" , category);
+        // Do something with the selected value/text
+        console.log("Selected Sub Category Value:", selectedValue);
+        console.log("Selected Sub Category Text:", selectedText);
+    
+        sub_category_clicked = selectedText
+        console.log(sub_category_clicked)
+
+        const startDate = $('#start-date-input').val();
+        const endDate = $('#end-date-input').val();
+        const category = category_clicked
+        const sub_category = sub_category_clicked
+
+        onLoadFetch_total_request(startDate, endDate, category, sub_category);
     });
 });
