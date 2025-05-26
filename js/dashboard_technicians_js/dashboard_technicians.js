@@ -24,46 +24,81 @@ const onLoadFetch_total_request = (startDate, endDate, category, subCategory, te
         dataType: 'json',
         success: function (response) {
             console.log(response)
-            response = [
-                { req_date: '2025-05-01', on_time: '13', exceeded: '1' },
-                { req_date: '2025-05-02', on_time: '15', exceeded: '0' },
-                { req_date: '2025-05-03', on_time: '12', exceeded: '2' },
-                { req_date: '2025-05-04', on_time: '14', exceeded: '1' },
-                { req_date: '2025-05-05', on_time: '11', exceeded: '2' },
-                { req_date: '2025-05-06', on_time: '10', exceeded: '1' },
-                { req_date: '2025-05-07', on_time: '13', exceeded: '0' },
-                { req_date: '2025-05-08', on_time: '14', exceeded: '2' },
-                { req_date: '2025-05-09', on_time: '12', exceeded: '1' },
-                { req_date: '2025-05-10', on_time: '13', exceeded: '0' },
-                { req_date: '2025-05-11', on_time: '15', exceeded: '1' },
-                { req_date: '2025-05-12', on_time: '14', exceeded: '2' },
-                { req_date: '2025-05-13', on_time: '11', exceeded: '1' },
-                { req_date: '2025-05-14', on_time: '13', exceeded: '2' },
-                { req_date: '2025-05-15', on_time: '14', exceeded: '1' },
-                { req_date: '2025-05-16', on_time: '10', exceeded: '2' },
-                { req_date: '2025-05-17', on_time: '11', exceeded: '0' },
-                { req_date: '2025-05-18', on_time: '15', exceeded: '1' },
-                { req_date: '2025-05-19', on_time: '13', exceeded: '2' },
-                { req_date: '2025-05-20', on_time: '12', exceeded: '0' },
-                { req_date: '2025-05-21', on_time: '14', exceeded: '1' },
-                { req_date: '2025-05-22', on_time: '13', exceeded: '1' },
-                { req_date: '2025-05-23', on_time: '11', exceeded: '2' },
-                { req_date: '2025-05-24', on_time: '12', exceeded: '1' },
-                { req_date: '2025-05-25', on_time: '15', exceeded: '0' },
-                { req_date: '2025-05-26', on_time: '14', exceeded: '1' },
-                { req_date: '2025-05-27', on_time: '13', exceeded: '1' },
-                { req_date: '2025-05-28', on_time: '15', exceeded: '2' },
-                { req_date: '2025-05-29', on_time: '12', exceeded: '1' },
-                { req_date: '2025-05-30', on_time: '13', exceeded: '0' }
-            ];
-            
-            
             
             barGraph(response)
+            kpiCard(startDate, endDate, category, subCategory, techBioID);
             techDataTable(startDate, endDate, category, subCategory, techBioID)
         },
         error: function (err) {
             console.error('AJAX error:', err);
+        }
+    });
+}
+
+
+const kpiCard = (startDate, endDate, category, subCategory, techBioID) => {
+    $.ajax({
+        url: '../../php/dashboard_technician_php/fetch_dashboard_tech_kpi.php',
+        method: 'POST',
+        data: {
+            startDate: startDate,
+            endDate: endDate,
+            category: category,
+            subCategory: subCategory,
+            techBioID: techBioID
+        },
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+
+            let totalRequests = 0;
+            let totalCompleted = 0;
+            let totalAverage = response.averageEvaluationMinutes ? response.averageEvaluationMinutes : 0; // Ensure it's a number
+            let totalCorrection = 0;
+            let totalUnattended = 0;
+            let totalRTR = 0;
+            let totalPercentage = 0;
+            // Prepare flat array for barGraph
+
+            Object.entries(response.counts).forEach(([hour, statuses]) => {
+                Object.entries(statuses).forEach(([status, count]) => {
+                    totalRequests += count;
+
+                    if (status === 'Completed' || status === 'Evaluation') {
+                        totalCompleted += count;
+                    }
+                    if (status === 'Unattended') {
+                        totalUnattended += count;
+                    }
+                    if (status === 'Correction') {
+                        totalCorrection += count;
+                    }
+                    if (status === 'RTR') {
+                        totalRTR += count;
+                    }
+                });
+            });
+
+            // Calculate percentage *after* the loop
+            if (totalRequests > 0) {
+                totalPercentage = ((totalCompleted / totalRequests) * 100).toFixed(2);
+            }
+
+            // Display totals
+            $('#total-assigned-value').text(totalRequests);
+            $('#total-request-completed-value').text(totalCompleted);
+            $('#total-request-average-value').text(totalAverage);
+            $('#total-request-correction-value').text(totalCorrection);
+            // $('#total-request-unattended-value').text(totalUnattended);
+            // $('#total-request-rtr-value').text(totalRTR);
+
+            $('#total-request-accomplished-value').text(totalPercentage+ "%");
+
+            // Update graph
+            // barGraph(hourlyTotals);
+        },
+        error: function (err) {
+            console.error("AJAX error: ", err);
         }
     });
 }

@@ -114,8 +114,13 @@
                             </div>
 
                             <div class="request-tally-sub-div">
+                                <span>Total For Correction Jobs</span>
+                                <span id="total-request-correction-value">0</span>
+                            </div>
+
+                            <div class="request-tally-sub-div">
                                 <span>Average Time to Completion</span>
-                                <span id="total-request-pending-value">0</span>
+                                <span id="total-request-average-value">0</span>
                             </div>
 
                             <div class="request-tally-sub-div">

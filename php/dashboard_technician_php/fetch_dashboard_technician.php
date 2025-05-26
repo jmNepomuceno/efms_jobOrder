@@ -12,6 +12,7 @@ if (!empty($_POST['endDate'])) {
     $endDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
 }
 
+
 $category = $_POST['category'] ?? "ALL";
 $subCategory = !empty($_POST['subCategory']) ? $_POST['subCategory'] : "none";
 
@@ -24,10 +25,10 @@ try {
     $baseQuery = "
         SELECT 
             DATE(STR_TO_DATE(requestDate, '%m/%d/%Y - %r')) AS req_date,
-            SUM(TIMESTAMPDIFF(MINUTE, STR_TO_DATE(requestDate, '%m/%d/%Y - %r'), STR_TO_DATE(requestCompletedDate, '%m/%d/%Y - %r')) <= 120) AS on_time,
-            SUM(TIMESTAMPDIFF(MINUTE, STR_TO_DATE(requestDate, '%m/%d/%Y - %r'), STR_TO_DATE(requestCompletedDate, '%m/%d/%Y - %r')) > 120) AS exceeded
+            SUM(TIMESTAMPDIFF(MINUTE, STR_TO_DATE(requestDate, '%m/%d/%Y - %r'), STR_TO_DATE(requestEvaluationDate, '%m/%d/%Y - %r')) <= 120) AS on_time,
+            SUM(TIMESTAMPDIFF(MINUTE, STR_TO_DATE(requestDate, '%m/%d/%Y - %r'), STR_TO_DATE(requestEvaluationDate, '%m/%d/%Y - %r')) > 120) AS exceeded
         FROM job_order_request
-        WHERE requestStatus = 'Completed'
+        WHERE (requestStatus = 'Completed' OR requestStatus = 'Evaluation')
           AND STR_TO_DATE(requestDate, '%m/%d/%Y - %r') 
               BETWEEN STR_TO_DATE(:startDate, '%m/%d/%Y') 
               AND STR_TO_DATE(CONCAT(:endDate, ' 11:59:59 PM'), '%m/%d/%Y %r')
@@ -62,12 +63,13 @@ try {
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode($result);
+    // echo json_encode([
+    //     'a' => $startDate,
+    //     'b' => $endDate,
+    // ]);
+
 
 } catch (PDOException $e) {
     echo json_encode(['error' => $e->getMessage()]);
 }
 
-// echo json_encode([
-//     'a' => $startDate,
-//     'b' => $endDate,
-// ]);
