@@ -305,6 +305,23 @@ body .right-container{
     width: 250px;
 }
 
+.manage-accts-div .category-container .container .draggable-container .tech-admin-span{
+    display: block;
+    background-color: #455b3e;
+    color: #333333;
+    padding: 2px;
+    margin: 5px 0;
+    text-align: center;
+    cursor: grab;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    pointer-events: none;
+    width: 250px;
+    color:white;
+}
+
 .manage-accts-div .category-container .container .draggable-container .draggable-done{
     background: #abc1a4;
 }

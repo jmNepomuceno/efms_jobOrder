@@ -58,6 +58,8 @@ const kpiCard = (startDate, endDate, category, subCategory, techBioID) => {
             let totalUnattended = 0;
             let totalRTR = 0;
             let totalPercentage = 0;
+            let totalOnProcess = 0;
+            let totalPending = 0;
             // Prepare flat array for barGraph
 
             Object.entries(response.counts).forEach(([hour, statuses]) => {
@@ -76,12 +78,18 @@ const kpiCard = (startDate, endDate, category, subCategory, techBioID) => {
                     if (status === 'RTR') {
                         totalRTR += count;
                     }
+                    if (status === 'Pending') {
+                        totalPending += count;
+                    }
+                    if (status === 'On-Process') {
+                        totalOnProcess += count;
+                    }
                 });
             });
 
             // Calculate percentage *after* the loop
             if (totalRequests > 0) {
-                totalPercentage = ((totalCompleted / totalRequests) * 100).toFixed(2);
+                totalPercentage = ((totalCompleted / (totalRequests - totalCorrection)) * 100).toFixed(2);
             }
 
             // Display totals
@@ -89,6 +97,8 @@ const kpiCard = (startDate, endDate, category, subCategory, techBioID) => {
             $('#total-request-completed-value').text(totalCompleted);
             $('#total-request-average-value').text(totalAverage);
             $('#total-request-correction-value').text(totalCorrection);
+            $('#total-request-onProcess-value').text(totalOnProcess);
+            $('#total-request-pending-value').text(totalPending);
             // $('#total-request-unattended-value').text(totalUnattended);
             // $('#total-request-rtr-value').text(totalRTR);
 

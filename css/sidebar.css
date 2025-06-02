@@ -87,6 +87,16 @@ body .left-container .side-bar-route .side-bar-routes span{
     font-weight: 600;
 }
 
+body .left-container .side-bar-route .side-bar-routes #notif-value{
+    margin-left:20px;
+    border-radius: 50%;
+    color:red;
+    background: #ffff;
+    padding:3px 10px 3px 10px;
+    font-weight: 600;
+    display:none;
+}
+
 body .left-container .user-acc-div{
     width:100%;
     height: 150px;

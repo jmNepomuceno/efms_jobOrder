@@ -3,11 +3,13 @@ include ('../../session.php');
 include('../../assets/connection.php');
 
 try {
-    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
+$sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
         FROM job_order_request 
-        WHERE requestFrom = ? AND requestStatus = 'Pending'";
+        WHERE requestFrom = ? 
+        AND requestStatus = 'Pending' 
+        AND JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.bioID')) = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['sectionName']]);
+    $stmt->execute([$_SESSION['sectionName'] , $_SESSION['user']]);
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // 1. Get unique category codes

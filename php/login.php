@@ -51,8 +51,8 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && trim($_POST["usern
             }
         
 
-
-            if($_SESSION['user'] == 3858 || $_SESSION['user'] == 3522){
+            $admin_users = [3858, 3522, 1842, 2462, 1525]; // List of admin user IDs
+            if(in_array($_SESSION["user"], $admin_users)) {
                 $_SESSION["role"] = 'admin';
                 echo "/views/home.php";
             }

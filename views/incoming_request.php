@@ -40,6 +40,14 @@
     $section_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // echo $_SESSION['name'];
+
+    // $sql = "DELETE FROM job_order_request WHERE requestNo='EU-2025-06-002'";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+
+    // $sql = "DELETE FROM job_order_request WHERE requestNo='EU-2025-06-001'";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
 ?>
 
 <!DOCTYPE html>

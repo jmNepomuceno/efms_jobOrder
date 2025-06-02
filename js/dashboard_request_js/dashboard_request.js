@@ -65,7 +65,7 @@ const onLoadFetch_total_request = (startDate, endDate, category, subCategory) =>
                     }
 
                     if (totalRequests > 0) {
-                        totalPercentage = (totalCompleted / totalRequests) * 100;
+                        totalPercentage = (totalCompleted / (totalRequests - totalCorrection)) * 100;
                         totalPercentage = totalPercentage.toFixed(2); // Round to 2 decimal places
                     }
 

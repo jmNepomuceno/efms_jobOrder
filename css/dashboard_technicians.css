@@ -350,6 +350,11 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     height: 95%;
 }
 
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .request-tally-sub-div #total-request-average-value{
+    font-size: 2rem;
+    color:red;
+}
+
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .table-container #tech-request-dataTable{
     width: 100%;
     height: 100%;

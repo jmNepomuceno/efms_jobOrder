@@ -353,14 +353,20 @@ const fetchNotifValue = () =>{
                 const onProcess_value = parseInt(response.count_onProcess)
                 const evaluation_value = parseInt(response.count_evaluation)
                 
-                // console.log(pending_value)
+                console.log(356, pending_value)
 
                 if(pending_value > 0){
                     $('#jobOrder-notif-span').text(pending_value)
                     $('#jobOrder-notif-span').css('display' , 'block')
 
+                    $('#notif-value').text(pending_value);
+                    $('#notif-value').css('display', 'flex');
+
                 }else{
                     $('#jobOrder-notif-span').css('display' , 'none')
+                    
+                    $('#notif-value').text(pending_value);
+                    $('#notif-value').css('display', 'none');
                 }
                 
                 if(myJob_value > 0){
@@ -419,6 +425,7 @@ socket.onmessage = function(event) {
 $(document).ready(function(){
     dataTable_incoming_request()
     fetchNotifValue()
+
     // Set interval to fetch data every 10 seconds
     // setInterval(function() {
     //     dataTable_incoming_request();
@@ -434,7 +441,7 @@ $(document).ready(function(){
         $('#user-division').text(data.requestBy.division);
         $('#user-section').text(data.requestBy.section);
     
-        $('#job-order-id').text(`JO-${data.requestNo}`);
+        $('#job-order-id').text(`${data.requestNo}`);
         $('#date-requested').text(data.requestDate);
         $('#request-type').text(data.requestCategory);
     
@@ -445,6 +452,9 @@ $(document).ready(function(){
         $('.assessment-section').css('display' , 'flex')
         $('.tech-assessment-section').css('display' , 'none')
         $('#start-assess-btn').text("Start Job")
+        $('#start-assess-btn').css('display' , 'flex')
+        $('#rtr-assess-btn').css('display' , 'flex')
+
         request_modal.show();
     });
 
@@ -459,7 +469,7 @@ $(document).ready(function(){
         $('#user-division').text(data.requestBy.division);
         $('#user-section').text(data.requestBy.section);
     
-        $('#job-order-id').text(`JO-${data.requestNo}`);
+        $('#job-order-id').text(`${data.requestNo}`);
         $('#date-requested').text(data.requestDate);
         $('#request-type').text(data.requestCategory);
     
@@ -469,10 +479,21 @@ $(document).ready(function(){
         $('#user-what').text("Technician")
         $('.assessment-section').css('display' , 'none')
         $('.tech-assessment-section').css('display' , 'flex')
+        $('.tech-remarks-textarea').attr('placeholder', 'Enter remarks details. Input at least 10 characters...')
         $('#start-assess-btn').text("Finish Job")
+
+        if($('.tech-remarks-textarea').val().length >= 10){
+            $('#start-assess-btn').css('opacity' , '1')
+            $('#start-assess-btn').css('pointer-events' , 'auto')
+        }else{
+            $('#start-assess-btn').css('opacity' , '0.5')
+            $('#start-assess-btn').css('pointer-events' , 'none')
+        }
 
         $('#tech-name-i').text(data.processedBy)
         $('#reception-date-i').text(data.requestStartDate)
+        $('#rtr-assess-btn').css('display' , 'flex')
+        $('#start-assess-btn').css('display' , 'flex')
 
         if(clicked_sub_nav === "Evaluation"){
             $('.tech-remarks-textarea').val(data.requestJobRemarks)
@@ -480,12 +501,15 @@ $(document).ready(function(){
             $('#start-assess-btn').css('opacity' , '0.7')
             $('#start-assess-btn').css('pointer-events' , 'none')
             $('#start-assess-btn').text("Waiting for User's Evaluation...")
+            $('#rtr-assess-btn').css('display' , 'none')
         }
 
         else if(clicked_sub_nav === "Completed"){
             $('.tech-remarks-textarea').val(data.requestJobRemarks)
             $('.tech-remarks-textarea').css('pointer-events' , 'none')
             $('#start-assess-btn').css('display' , 'none')
+            $('#rtr-assess-btn').css('display' , 'none')
+
         }
 
         request_modal.show();
@@ -613,6 +637,19 @@ $(document).ready(function(){
         $('#request-list-btn').css('opacity' , '0.5')
 
         $('.sub-table-nav').css('display' , 'flex')
+
+        // reset the css for the sub buttons
+        $("#for-evaluation-sub-btn, #on-process-sub-btn, #completed-sub-btn").css({
+            "opacity": "0.5",
+            "background": "none",
+            "color": "white"
+        });
+        // Highlight the "On-Process" button
+        $("#on-process-sub-btn").css({
+            "opacity": "1",
+            "background": "white",
+            "color": "black"
+        });
     })     
     
     $(document).off('click', '#request-list-btn').on('click', '#request-list-btn', function() {
@@ -649,9 +686,19 @@ $(document).ready(function(){
         });
     });
 
-    
-    $(document).off('click', '#rtr-assess-btn').on('click', '#rtr-assess-btn', function() {
-       console.log(654)
-    })  
+    $('.tech-remarks-textarea').on('input', function() {
+        if ($(this).val().length >= 10) {
+            $('#start-assess-btn').css({
+                'opacity': '1',
+                'pointer-events': 'auto'
+            });
+        } else {
+            $('#start-assess-btn').css({
+                'opacity': '0.5',
+                'pointer-events': 'none'
+            });
+        }
+    });
+
 
 })

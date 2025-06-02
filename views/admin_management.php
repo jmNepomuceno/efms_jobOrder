@@ -3,7 +3,7 @@
     include('../assets/connection.php');
     include('../assets/mssql_connection.php');
 
-    $sql = "SELECT techBioID, firstName, lastName, middle, techCategory FROM efms_technicians";
+    $sql = "SELECT techBioID, firstName, lastName, middle, techCategory, role FROM efms_technicians";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -31,22 +31,21 @@
     function generateDraggableSpans($employees, $extraClass = "") {
         $output = "";
         foreach ($employees as $perHead) {
-            $output .= '<span class="draggable ' . $extraClass . '" draggable="true" id="' . $perHead['techBioID'] . '">'
+            if($perHead['role'] == 'tech'){
+                $output .= '<span class="draggable ' . $extraClass . '" draggable="true" id="' . $perHead['techBioID'] . '">'
                     . strtoupper($perHead['lastName']) . ', ' . strtoupper($perHead['firstName']) .
                     '</span>';
+            }
+            
         }
         return $output;
     }
 
-    // echo '<pre>'; print_r($sample_list);  echo '</pre>';
+    // echo '<pre>'; print_r($categories);  echo '</pre>';
 
     // $sql = "DELETE FROM efms_technicians WHERE techBioID=4826";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
-    
-    $sql = "UPDATE efms_technicians SET techCategory = 'RESIGNED' WHERE techCategory IS NULL OR techCategory = ''";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
 ?>
 
 <!DOCTYPE html>
@@ -102,6 +101,8 @@
             <div class="category-container">
                 <?php
                 $category_names = ["IU", "EU" , "MU"];
+                
+
                 foreach ($category_names as $category) {
                     $cat_name = "";
                     if($category == 'IU'){
@@ -113,11 +114,18 @@
                         $cat_name = "ELECTRICAL UNIT";
                     }
 
+                    $sql = "SELECT firstName, lastName, middle FROM efms_technicians WHERE role='admin' AND techCategory =?";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([$category]);
+                    $tech_admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
                     $categoryID = $category;
                     echo '
                     <div class="container">
                         <div class="title">' . $cat_name . '</div>
                         <div class="draggable-container" id="' . $categoryID . '-category">
+                            <span class="tech-admin-span">' . $tech_admin['lastName'] . ", " . $tech_admin['firstName'] . '</span>
                             ' . (isset($categories[$categoryID]) ? generateDraggableSpans($categories[$categoryID], "draggable-done") : "") . '
                         </div>
                     </div>';

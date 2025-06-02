@@ -23,6 +23,12 @@
         $username_role = $tech_category['techCategory'];
     }
 
+    // check the current number of incoming requests after refresh
+    $sql = "SELECT COUNT(*) as count FROM job_order_request WHERE requestStatus='Pending'";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $incoming_request_count = $stmt->fetch(PDO::FETCH_ASSOC);
+    $incoming_request_count = $incoming_request_count['count'];
 ?>
     <div class="left-container">
         <div class="home-name-div">
@@ -37,7 +43,12 @@
 
             <div class="side-bar-routes" id="incoming-request-sub-div">
                 <i class="fa-solid fa-box"></i>
-                <span>Pending</span>
+                <audio id="notificationSound" src="../source/sounds/efms_alarm.wav" preload="auto" loop></audio>
+                <span>Incoming Request</span>
+
+                <span id="notif-value">0</span>
+                <!-- change padding - 3px 10px 3px 10px -->
+                <!-- change padding - 3px 7px 3px 7px-->
             </div>
 
             <?php if ($_SESSION['role'] == 'admin') { ?>
@@ -104,7 +115,7 @@
 
     <script> 
         var view = "<?php echo $view ?>";
-            
+        var incoming_request_count = <?php echo $incoming_request_count ?>;
         // const audio = new Audio('../source/sound/shopee.mp3'); // Load the notification sound
         // let previousResponse = 0; // Store the previous count to prevent duplicate sounds
 

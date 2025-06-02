@@ -27,7 +27,9 @@
 
     // get the tech category
 
+    // echo "<pre>"; print_r($_SESSION); "</pre>";
 
+    include('../php/get_section.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +53,7 @@
 
     <div class="nav-main-div">
         <h2>EFMS JOB ORDER REQUEST FORM</h2>
+        <h3><?php echo $section; ?></h3>
         <div class="nav-div">
             <button class="nav-sub-div" id="request-form-nav-btn">Request Form</button>
             <button class="nav-sub-div" id="pending-nav-btn">Pending <span id="pending-notif-span"></button>

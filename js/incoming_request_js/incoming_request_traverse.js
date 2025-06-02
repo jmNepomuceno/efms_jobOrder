@@ -6,7 +6,9 @@ $(document).ready(function(){
 
         $('#correction-btn').css('opacity' , '0.5')
         $('#diagnosis-btn').css('opacity' , '1')
-
+        
+        $('#start-assess-btn').css('pointer-events', 'auto');
+        $('#start-assess-btn').css('opacity', '1');
     });
 
     $(document).off('click', '#correction-btn').on('click', '#correction-btn', function() {        
@@ -15,6 +17,9 @@ $(document).ready(function(){
 
         $('#correction-btn').css('opacity' , '1')
         $('#diagnosis-btn').css('opacity' , '0.5')
+
+        $('#start-assess-btn').css('pointer-events', 'none');
+        $('#start-assess-btn').css('opacity', '0.5');
     });
 
     let divisionSelect = document.getElementById("division-select");
@@ -39,5 +44,16 @@ $(document).ready(function(){
             sectionSelect.appendChild(option);
         });
     });
+
+    $('.assessment-textarea').on('input', function() {
+        console.log('here')
+        if ($(this).val().length > 5) {
+            $('#start-assess-btn').css('pointer-events', 'auto');
+            $('#start-assess-btn').css('opacity', '1');
+        } else {
+            $('#start-assess-btn').css('pointer-events', 'none');
+            $('#start-assess-btn').css('opacity', '0.5');
+        }
+    })
 })
 

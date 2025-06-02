@@ -1,7 +1,44 @@
 let modal_logout = new bootstrap.Modal(document.getElementById('modal-logout'));
 
+const checkNotif_incominRequest = () => {
+    if(incoming_request_count > 0){
+        $('#notif-value').text(incoming_request_count);
+        $('#notif-value').css('display', 'flex');
+    }
+
+      // Play sound
+    const sound = document.getElementById('notificationSound');
+    sound.play().catch(err => {
+        console.warn("Audio could not be played automatically. User interaction may be required.", err);
+    });
+}
+
+
+// // Optional: only run if socket is defined
+// if (typeof socket !== 'undefined') {
+//     console.log(19)
+//     const originalHandler = socket.onmessage;
+
+//     socket.onmessage = function(event) {
+//         let data = JSON.parse(event.data);
+//         console.log("Sidebar WebSocket handler received:", data);
+
+//         // Forward to original handler (to keep incoming_request.js working)
+//         if (originalHandler) originalHandler(event);
+
+//         switch (data.action) {
+//             case "refreshNotification":
+//                 checkNotif_incominRequest(); // Or your sidebar update logic
+//                 break;
+//         }
+//     };
+// }
 
 $(document).ready(function(){
+    console.log(38)
+    checkNotif_incominRequest()
+
+
     // console.log(view)
     $(`#${view}`).css('background','#5a4038')
     $(`#${view}`).css('border-left','3px solid white')

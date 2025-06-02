@@ -114,6 +114,16 @@
                             </div>
 
                             <div class="request-tally-sub-div">
+                                <span>Total Job Pending</span>
+                                <span id="total-request-pending-value">0</span>
+                            </div>
+
+                            <div class="request-tally-sub-div">
+                                <span>Total Job Order In-Progress</span>
+                                <span id="total-request-onProcess-value">0</span>
+                            </div>
+
+                            <div class="request-tally-sub-div">
                                 <span>Total For Correction Jobs</span>
                                 <span id="total-request-correction-value">0</span>
                             </div>
