@@ -1,0 +1,278 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+::-webkit-scrollbar {
+    width: 8px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 4px; 
+    cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1; 
+}
+
+body{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+body .right-container{
+    width: 85%;
+    height: 100vh;
+
+    background: #FFFEFE;
+    
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body .right-container .dashboard-container{
+    width: 90%;
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+body .right-container .dashboard-container .dashboard-content-div{
+    width: 100%;
+    height: 100%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    /* border:1px solid red; */
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div{
+    width: 100%;
+    height: 50px;
+    /* border:1px solid white; */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap:10px;
+    margin-top:30px;
+}
+
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div button{
+    
+}
+
+
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div .start-date-div,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div, .end-date-div{
+    /* border:1px solid red; */
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    /* gap:10px; */
+
+    /* background: #2e1d18; */
+    border-radius: 10px;
+    padding:15px;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div .start-date-div,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div{
+    margin-left:20px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div h1{
+    /* color:white; */
+    color:#2e1d18;
+    padding:0;
+    margin:0;
+    margin-top:50px;
+    width: 100%;
+    /* border:1px solid white; */
+    margin-left:20px;
+    font-weight: 600;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div span,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div span, .end-date-div span{
+    color:#2e1d18;
+    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div input,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div input, .end-date-div input{
+    padding: 5px 10px 5px 10px;
+    font-family: "Roboto Mono",monospace;
+    color:#2e1d18;
+    font-size: 1rem;
+    border: none;
+    outline: none;
+    /* border-radius: 5px; */
+    font-weight: 600;
+    background: none;
+    border-bottom:1px solid white;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    /* border:1px solid red; */
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div button{
+    background: #2e1d18;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .division-div,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .section-div{
+    width: auto;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    border-radius: 10px;
+    padding:5px 15px 5px 15px;
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .division-div select,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .section-div select{
+    width: auto;
+    height: 100%;
+    /* background: #2e1d18; */
+    color:#2e1d18;
+    font-size: 1rem;
+    font-weight: 600;
+    /* padding:5px; */
+    border:none;
+    outline:none;
+    cursor: pointer;
+}
+
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top:20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .pie-div{
+    /* border:1px solid red; */
+    width: 100%;
+    height: 70%;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .pie-div #requestCategory3DPie,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .pie-div #requestCategory3DPie-Sub{
+    height: 100%; 
+    width: 49%; 
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .kpi-division{
+    width:90%;
+    height: 25%;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:30px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .kpi-division .total-request-div,
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .kpi-division .top-request-div{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    color:#2e1d18;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .kpi-division .total-request-div span:nth-child(1),
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .kpi-division .top-request-div span:nth-child(1){
+    font-size: 2rem;
+    font-weight: 600;
+    margin-top:10px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .kpi-division .total-request-div span:nth-child(2){
+    font-size: 3.5rem;
+    font-weight: 600;
+    margin:0;
+    padding:0;
+    height: auto;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .kpi-division .top-request-div span:nth-child(2){
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top:20px;
+}
+
+
+::-webkit-calendar-picker-indicator{
+    background-color: #ffffff;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
