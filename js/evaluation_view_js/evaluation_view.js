@@ -128,6 +128,22 @@ $(document).ready(function(){
 
         console.log(129, data)
 
+        $.ajax({
+            url: '../php/incoming_request_php/fetch_account_photo.php',
+            method: "POST",
+            data: {bioID : data.processedByID},
+            success: function(response) {
+                console.log(response);
+
+                const base64Data = (response.photo || "").trim();
+                $('#tech-photo').attr('src', `data:image/bmp;base64,${base64Data}`);
+            },
+
+            error: function(xhr, status, error) {
+                console.error("AJAX request failed:", error);
+            }
+        });
+
         $('#user-name').text(data.requestBy.name);
         $('#user-bioid').text(data.requestBy.bioID);
         $('#user-division').text(data.requestBy.division);
@@ -140,10 +156,14 @@ $(document).ready(function(){
         $('#request-description').text(data.requestDescription);
 
         $('#tech-name-i').text(data.processedBy)
-        $('#reception-date-i').text(data.requestStartDate)
+        // tech-bioID-i
+        $('#tech-bioID-i').text(data.processedByID)
+
+        // $('#reception-date-i').text(data.requestStartDate)
         $('.tech-remarks-textarea').val(data.requestJobRemarks)
         modal_view_eval_form.show()
     })
+        modal_view_eval_form.show()
 
     $(document).off('click', '.view-eval-form-btn').on('click', '.view-eval-form-btn', function() {
         const index = $('.view-eval-form-btn').index(this);

@@ -53,12 +53,23 @@
 
                 <div class="tech-assessment-section">
                     <h5 class="info-heading">Technician Remarks Details</h5>
-                    
-                    <div class="tech-info-assessment">
-                        <span><b>Technician Name:</b> <i id="tech-name-i">Dell Waje</i></span>
-                        <span><b>Reception Date:</b> <i id="reception-date-i">03030303030303</i></span>
+
+                    <div class="tech-assessment-partition">
+                        <div class="tech-photo-container">
+                            <img id="tech-photo" src="" alt="Technician Photo">
+                            <div class="tech-info-assessment">
+                                <span><b>Technician Name: </b> <p id="tech-name-i">Dell Waje</p></span>
+                                <span><b>BioID: </b> <p id="tech-bioID-i">1234</p></span>
+                                <span><b>Division: </b> <p id="tech-division-i">HOPSS Division</p></span>
+                                <span><b>Section: </b> <p id="tech-section-i">Engineering Facilities Management Section
+</p></span>
+                            </div>
+                        </div>
+                        
+                        <div class="tech-info-assessment-div">
+                            <textarea class="tech-remarks-textarea" placeholder="Currently assessing..."></textarea>
+                        </div>
                     </div>
-                    <textarea class="tech-remarks-textarea" placeholder="Currently assessing..."></textarea>
                 </div>
 
 
