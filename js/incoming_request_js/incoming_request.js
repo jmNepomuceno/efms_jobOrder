@@ -1,5 +1,5 @@
 let request_modal = new bootstrap.Modal(document.getElementById('user-info-modal'));
-// request_modal.show()
+// let assign_modal = new bootstrap.Modal(document.getElementById('assign-to-modal'));
 
 let fetch_requestData, fetch_techMyJob;
 let clicked_requestNo = 0, clicked_requestNo_myJob = 0;
@@ -36,6 +36,7 @@ const dataTable_incoming_request = () =>{
             dataType : "json",
             success: function(response) {
                 fetch_requestData = response
+                console.log(fetch_requestData)
                 try {
                     let dataSet = [];
                     for(let i = 0; i < response.length; i++){
@@ -177,7 +178,6 @@ const dataTable_incoming_request = () =>{
     } catch (ajaxError) {
         console.error("Unexpected error occurred:", ajaxError);
     }
-   
 }
 
 const getTimeDifference = (start, end) => {
@@ -206,6 +206,9 @@ const dataTable_my_jobs = (what) =>{
             data : {what},
             dataType : "json",
             success: function(response) {
+                $('#assign-assess-btn').toggleClass('d-none', true);
+                $('.assign-to-div').toggleClass('d-none', true);
+
                 console.log(response)
                 fetch_techMyJob = response
                 try {
@@ -231,7 +234,7 @@ const dataTable_my_jobs = (what) =>{
                             } else {
                                 interval_style = "color: #1a8754;";
                             }
-                            
+
                             dataSet.push([
                                 `<div><span>${response[i].requestNo}</span></div>`,
                                 `<div class="request-by-td-div">
@@ -352,7 +355,7 @@ const dataTable_my_jobs = (what) =>{
                         data: dataSet,
                         columns: [
                             { title: "REQUEST NO.", data:0 },
-                            { title: "NAME OF TECHNICIAN", data:1 },
+                            { title: "NAME OF REQUESTER", data:1 },
                             { title: "DATE", data:2 },
                             { title: "UNIT", data:3 },
                             { title: "CATEGORY", data:4 },
@@ -484,6 +487,8 @@ $(document).ready(function(){
     // }, 10000); // 10 seconds (10000ms)
 
     $(document).off('click', '.incoming-req-row-class').on('click', '.incoming-req-row-class', function() {        
+        // fetch data-photo
+        console.log(491)
         const index = $('.incoming-req-row-class').index(this);
         const data = fetch_requestData[index];
         clicked_requestNo = data.requestNo
@@ -507,9 +512,25 @@ $(document).ready(function(){
         $('#start-assess-btn').css('display' , 'flex')
         $('#rtr-assess-btn').css('display' , 'flex')
 
+        $.ajax({
+            url: '../php/incoming_request_php/fetch_account_photo.php',
+            method: "POST",
+            data: {bioID : data.requestBy.bioID},
+            success: function(response) {
+                console.log(response);
+                const base64Data = (response.photo || "").trim();
+                const $userImage = $('#user-image');
+                $userImage.css('background-image', `url('data:image/bmp;base64,${base64Data}')`);
+                $userImage.removeClass('fa-solid fa-user');
+            },
+
+            error: function(xhr, status, error) {
+                console.error("AJAX request failed:", error);
+            }
+        });
+
         request_modal.show();
     });
-
     $(document).off('click', '.my-job-row-class').on('click', '.my-job-row-class', function() {        
         const index = $('.my-job-row-class').index(this);
         const data = fetch_techMyJob[index];
@@ -564,9 +585,23 @@ $(document).ready(function(){
 
         }
 
+        $.ajax({
+            url: '../php/incoming_request_php/fetch_account_photo.php',
+            method: "POST",
+            data: {bioID : data.requestBy.bioID},
+            success: function(response) {
+                const base64Data = (response.photo || "").trim();
+                const $userImage = $('#user-image');
+                $userImage.css('background-image', `url('data:image/bmp;base64,${base64Data}')`);
+                $userImage.removeClass('fa-solid fa-user');
+            },
+
+            error: function(xhr, status, error) {
+                console.error("AJAX request failed:", error);
+            }
+        });
+
         request_modal.show();
-
-
     });
 
     // requestCompletedDate
@@ -682,6 +717,41 @@ $(document).ready(function(){
         }
     })   
 
+    // assign-assess-btn
+    $(document).off('click', '#assign-assess-btn').on('click', '#assign-assess-btn', function() {
+        // assign_modal.show();
+        console.log(clicked_requestNo)
+
+        $.ajax({
+            url: '../php/incoming_request_php/fetch_assign_technicians.php',
+            method: "POST",
+            data: {requetNo : clicked_requestNo},
+            dataType: "json",
+            success: function(response) {
+                try { 
+                    const $select = $('#assign-tech-select');
+                    $select.empty(); // Clear existing options
+
+                    // Add default option
+                    $select.append('<option value="">Select Technician</option>');
+
+                    // Loop through the technician list
+                    response.forEach(function(tech) {
+                        const fullName = `${tech.firstName} ${tech.middle} ${tech.lastName}`;
+                        $select.append(`<option value="${tech.techBioID}">${fullName} - ${tech.techBioID}</option>`);
+                    });
+                } catch (innerError) {
+                    console.error("Error processing response:", innerError);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX request failed:", error);
+            }
+        });
+
+        $('.assign-to-div').toggle();
+    });
+
     // $(document).off('click', '#your-job-btn').on('click', '#your-job-btn', function() {
     //     dataTable_my_jobs("On-Process")
 
@@ -780,6 +850,4 @@ $(document).ready(function(){
             });
         }
     });
-
-
 })

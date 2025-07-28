@@ -16,6 +16,7 @@ $(document).ready(function(){
                 password: password_input
             },
             success: function(response) {
+                console.log(response)
                 if(response === "invalid") {
                     $('#modal-notif .modal-content .modal-header .modal-title-incoming').text("Invalid Credentials")
                     modal_notif.show()

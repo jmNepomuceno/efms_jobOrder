@@ -3,19 +3,57 @@ include('../../session.php');
 include('../../assets/connection.php');
 
 $startDate = !empty($_POST['startDate']) ? $_POST['startDate'] : date('Y-m-d');
-$endDate = !empty($_POST['endDate']) ? $_POST['endDate'] : date('Y-m-d', strtotime($startDate . ' +1 day'));
+// $endDate = !empty($_POST['endDate']) ? $_POST['endDate'] : date('Y-m-d', strtotime($startDate . ' +1 day'));
+$endDate = !empty($_POST['endDate']) ? $_POST['endDate'] : date('Y-m-d');
+
 $divisionID = $_POST['division'] ?? null;
 $sectionID = $_POST['section'] ?? null;
-
-$startDate = "2025-05-01";
-$endDate = "2025-05-26";
-$divisionID = 4;
-$sectionID = 12;
 
 $startDateFormatted = date('m/d/Y', strtotime($startDate));
 $endDateFormatted = date('m/d/Y', strtotime($endDate));
 
 try {
+
+    // If division and section are not provided, fetch the top ones from the database
+    if (empty($_POST['division']) || empty($_POST['section'])) {
+        $stmt = $pdo->prepare("
+            SELECT 
+                JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.division')) AS division,
+                JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.section')) AS section,
+                COUNT(*) AS total
+            FROM job_order_request
+            WHERE STR_TO_DATE(requestDate, '%m/%d/%Y - %r') 
+                BETWEEN STR_TO_DATE(:startDate, '%m/%d/%Y') 
+                AND STR_TO_DATE(CONCAT(:endDate, ' 11:59:59 PM'), '%m/%d/%Y %r')
+            GROUP BY division, section
+            ORDER BY total DESC
+            LIMIT 1
+        ");
+        $stmt->execute([
+            ':startDate' => $startDateFormatted,
+            ':endDate' => $endDateFormatted
+        ]);
+        $topRequestor = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($topRequestor) {
+            // Now get their IDs
+            $stmtDiv = $pdo->prepare("SELECT PGSDivisionID FROM pgsdivision WHERE PGSDivisionName = ?");
+            $stmtDiv->execute([$topRequestor['division']]);
+            $divisionID = $stmtDiv->fetchColumn();
+
+            $stmtSec = $pdo->prepare("SELECT sectionID FROM pgssection WHERE sectionName = ?");
+            $stmtSec->execute([$topRequestor['section']]);
+            $sectionID = $stmtSec->fetchColumn();
+        } else {
+            echo json_encode(['error' => 'No job order requests found to determine top requestor.']);
+            exit;
+        }
+    } else {
+        $divisionID = $_POST['division'];
+        $sectionID = $_POST['section'];
+    }
+
+
     // Step 1: Resolve division and section names
     $stmt = $pdo->prepare("SELECT PGSDivisionName FROM pgsdivision WHERE PGSDivisionID = ?");
     $stmt->execute([$divisionID]);
@@ -149,7 +187,10 @@ try {
         'division' => $divisionName,
         'section' => $sectionName,
         'totalRequestsForSection' => $totalRequests,
-        'topSectionInDivision' => $topSection ?: ['section' => null, 'total' => 0],
+        'topSectionInDivision' => [
+            'section' => $topSection['section'] ?? 'N/A',
+            'total' => $topSection['total'] ?? 0
+        ],
         'categoryPie' => $categoryPie,
         'subCategoryPie' => $subCategoryPie
     ]);

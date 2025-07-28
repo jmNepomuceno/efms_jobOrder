@@ -3,6 +3,8 @@ include ('../../session.php');
 include('../../assets/connection.php');
 
 try {
+
+
     $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
         FROM job_order_request 
         WHERE requestStatus='Pending'";

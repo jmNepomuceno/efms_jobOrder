@@ -38,10 +38,12 @@
             }
             
         }
+
+        // echo $output;
         return $output;
     }
 
-    // echo '<pre>'; print_r($categories);  echo '</pre>';
+    // echo '<pre>'; print_r($categories['free_agents']);  echo '</pre>';
 
     // $sql = "DELETE FROM efms_technicians WHERE techBioID=4826";
     // $stmt = $pdo->prepare($sql);

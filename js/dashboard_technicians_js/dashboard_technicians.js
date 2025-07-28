@@ -11,8 +11,8 @@ const onLoadFetch_total_request = (startDate, endDate, category, subCategory, te
     console.log("category: ", category);
     console.log("sub category: ", subCategory);
     console.log("techBioID: ", techBioID);
-    startDate = "2025-05-01"
-    endDate = "2025-07-10"
+    // startDate = "2025-05-01"
+    // endDate = "2025-07-10"
     $.ajax({
         url: '../../php/dashboard_technician_php/fetch_dashboard_technician.php',
         method: 'POST',
@@ -95,10 +95,31 @@ const kpiCard = (startDate, endDate, category, subCategory, techBioID) => {
                 totalPercentage = ((totalCompleted / (totalRequests - totalCorrection)) * 100).toFixed(2);
             }
 
+
+
             // Display totals
             $('#total-assigned-value').text(totalRequests);
             $('#total-request-completed-value').text(totalCompleted);
+
+            // Set the text
             $('#total-request-average-value').text(totalAverage);
+
+            // Split into parts
+            let parts = totalAverage.split(":");
+            let hours = parseInt(parts[0]);
+            let minutes = parseInt(parts[1]);
+            let seconds = parseInt(parts[2]);
+
+            // Convert to total seconds
+            let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+            // Compare and apply color style
+            if (totalSeconds >= 7200) { // 2 hours = 7200 seconds
+                $('#total-request-average-value').css('color', 'red');
+            } else {
+                $('#total-request-average-value').css('color', 'green'); // Or default
+            }
+            
             $('#total-request-correction-value').text(totalCorrection);
             $('#total-request-onProcess-value').text(totalOnProcess);
             $('#total-request-pending-value').text(totalPending);

@@ -50,7 +50,6 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && trim($_POST["usern
                 die("Database error: " . $e->getMessage());
             }
         
-
             $admin_users = [3858, 3522, 1842, 2462, 1525]; // List of admin user IDs
             if(in_array($_SESSION["user"], $admin_users)) {
                 $_SESSION["role"] = 'admin';

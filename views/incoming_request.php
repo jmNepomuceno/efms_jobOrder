@@ -217,7 +217,8 @@
                     <div class="main-information">
 
                         <div class="user-info">
-                             <i class="fa-solid fa-user"></i>
+                            <i class="" id="user-image"></i>
+
                             <div class="user-details">
                                 <p><strong> <span id="user-what">Requester</span> Name:</strong> <span id="user-name">John Marvin Nepomuceno</span></p>
                                 <p><strong>BioID:</strong> <span id="user-bioid">4497</span></p>
@@ -259,11 +260,28 @@
                         <textarea class="tech-remarks-textarea" placeholder="Enter remarks details..."></textarea>
                     </div>
                     
+                     <div class="assign-to-div">
+                        <h5 class="info-heading">Assign Job Order</h5>
+                        <div class="mb-3">
+                            <label for="assign-tech-select" class="form-label">Select Technician</label>
+                            <select id="assign-tech-select" class="form-select">
+                                <option value="">Select Technician</option>
+                                <!-- Options will be populated dynamically -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="assign-to-modal-tech-remarks" class="form-label">Remarks</label>
+                            <textarea id="assign-to-modal-tech-remarks" class="form-control" rows="3" placeholder="Enter remarks details. Input at least 10 characters..."></textarea>
+                        </div>
+                    </div>
 
                     <div class="function-btn">
                         <button id="rtr-assess-btn" class="btn btn-success">Return to Requestor</button>
                         <button id="start-assess-btn" class="btn btn-success">Start Job</button>
+                        <button id="assign-assess-btn" class="btn btn-secondary">Assign To</button>
                     </div>
+
+                   
                 </div>
 
 
@@ -274,7 +292,6 @@
             </div>
         </div>
     </div>
-
 
     <div class="modal fade" id="modal-notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-top" role="document">

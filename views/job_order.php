@@ -28,7 +28,6 @@
     // get the tech category
 
     // echo "<pre>"; print_r($_SESSION); "</pre>";
-
     include('../php/get_section.php');
 ?>
 <!DOCTYPE html>
@@ -45,11 +44,18 @@
 </head>
 <body>
 
-    <?php if($_SESSION["role"] === 'tech'){?>
-        <i class="fa-solid fa-arrow-left" id="return-btn"></i>
-    <?php } ?>
+
     
-    <div class="sample-container"></div>
+    <div class="sample-container d-flex justify-content-between align-items-center px-4">
+        <div class="welcome-text">
+            <?php if($_SESSION["role"] === 'tech' || $_SESSION["role"] === 'admin'){?>
+                <i class="fa-solid fa-arrow-left" id="return-btn"></i>
+            <?php } ?>
+            Welcome, <span id="user-name"><?php echo $_SESSION["name"]; ?></span>
+        </div>
+        <button id="logout-btn" class="btn btn-logout">Logout</button>
+    </div>
+
 
     <div class="nav-main-div">
         <h2>EFMS JOB ORDER REQUEST FORM</h2>

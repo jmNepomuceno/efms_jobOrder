@@ -361,7 +361,7 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .request-tally-sub-div #total-request-average-value{
     font-size: 2rem;
-    color:red;
+    /* color:red; */
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .table-container #tech-request-dataTable, 

@@ -230,4 +230,8 @@ $(document).ready(function(){
     $('#return-btn').click(function() {
         window.location.href = "../views/home.php"; 
     });
+
+    $('#logout-btn').click(function() {
+        window.location.href = "http://192.168.42.222:8098/"; 
+    });
 });

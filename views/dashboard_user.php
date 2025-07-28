@@ -79,12 +79,12 @@
                         <div class="kpi-division">
                             <div class="total-request-div">
                                 <span>Total Request</span>
-                                <span id="total-request-value">0</span>
+                                <span id="total-request-value"></span>
                             </div>
 
                             <div class="top-request-div">
                                 <span>Top Requestor</span>
-                                <span id="top-request-value">NURSING</span>
+                                <span id="top-request-value"></span>
                             </div>
                         </div>
 

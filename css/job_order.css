@@ -33,10 +33,6 @@ body{
 }
 
 #return-btn{
-    position:absolute;
-    top:25px;
-    left:30px;
-    font-size: 2rem;
     cursor: pointer;
     opacity: 0.5
 }
@@ -46,12 +42,36 @@ body{
 }
 
 
-.sample-container{
+.sample-container {
     width: 100%;
     height: 100px;
     background: #86ada0;
-    
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
+.btn-logout {
+    background-color: #ffffff;
+    color: #86ada0;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #6b998d;
+    color: white;
+    cursor: pointer;
+}
+
 
 .main-container{
     width: 100%;

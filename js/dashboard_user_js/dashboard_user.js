@@ -116,9 +116,36 @@ const onLoadFetch_total_request = (startDate, endDate, division, section) => {
     console.log("division: ", division);
     console.log("section: ", section);
     
+    $.ajax({
+        url: '../../php/dashboard_user_php/fetch_user_request.php',
+        method: 'POST',
+        data: {
+        startDate, endDate, division, section
+        },
+        dataType: 'json',
+        success: function (response) {
+            console.log("AJAX Response: ", response);
+
+            $('#total-request-value').text(response.totalRequestsForSection ?? 0);
+
+            if (response.topSectionInDivision && response.topSectionInDivision.section) {
+                $('#top-request-value').text(
+                    `${response.topSectionInDivision.section}`
+                );
+            } else {
+                $('#top-request-value').text('No top section data');
+            }
+
+            if (Array.isArray(response.categoryPie)) render3DPieChart(response.categoryPie);
+            if (Array.isArray(response.subCategoryPie)) render3DPieChartSub(response.subCategoryPie);
+        },
+        error: function (err) {
+            console.error('AJAX error:', err);
+        }
+    });
 }
 
-// onLoadFetch_total_request('', '', '', '');
+onLoadFetch_total_request(null, null, null, null); // Initial call with null values to fetch all data
 
 // Initial move to the first active tab on load
 $(document).ready(function () {
@@ -168,7 +195,7 @@ $(document).ready(function () {
                 console.log(response)
                 
                 $('#total-request-value').text(response.totalRequestsForSection);
-                // $('#top-request-value').text(response.topSectionInDivision.section + " - " + response.topSectionInDivision.total);
+                $('#top-request-value').text(response.topSectionInDivision.section + " - " + response.topSectionInDivision.total);
                 render3DPieChart(response.categoryPie)
                 render3DPieChartSub(response.subCategoryPie)
             },
