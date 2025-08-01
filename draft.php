@@ -15,14 +15,14 @@
     // echo "<pre>"; print_r($job_order_request); echo "</pre>";
 
     $webservice = "http://192.168.42.10:8081/EmpPortal.asmx?wsdl";
-    $biousername = "lieannlyyy";
-    $password = 0210;
-    $param = array("bioID" => 4497);
+    // $biousername = "lieannlyyy";
+    // $password = 0210;
+    // $param = array("bioID" => 4497);
     
-    $soap = new SOAPClient($webservice);
-    $result = $soap->GetEmployee($param)->GetEmployeeResult;
-    print_r($result);
-    echo $result->Photo;
+    // $soap = new SOAPClient($webservice);
+    // $result = $soap->GetEmployee($param)->GetEmployeeResult;
+    // print_r($result);
+    // echo $result->Photo;
 
     // $account = $result;
     // $array = json_decode(json_encode($account), true);
@@ -32,9 +32,10 @@
     // echo print_r($array, true);
 
 
-    // $param = array("bioUserName" => $biousername, "password" => $password, "accessMode" => 0);
+    $param = array("bioUserName" => 3858, "password" => 3858, "accessMode" => 0);
     
-    // $soap = new SOAPClient($webservice);
-    // $result = $soap->LogIn($param)->LogInResult;
-    // print_r($result);
+    $soap = new SOAPClient($webservice);
+    $result = $soap->LogIn($param)->LogInResult;
+    print_r($result);
+    echo "<pre>"; print_r($result); echo "</pre>";
 ?>

@@ -160,10 +160,9 @@ $(document).ready(function(){
         $('#tech-bioID-i').text(data.processedByID)
 
         // $('#reception-date-i').text(data.requestStartDate)
-        $('.tech-remarks-textarea').val(data.requestJobRemarks)
+        $('.tech-remarks-textarea').val(`Assessment: ` + data.requestJobRemarks)
         modal_view_eval_form.show()
     })
-        modal_view_eval_form.show()
 
     $(document).off('click', '.view-eval-form-btn').on('click', '.view-eval-form-btn', function() {
         const index = $('.view-eval-form-btn').index(this);

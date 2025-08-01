@@ -61,17 +61,15 @@
                                 <span><b>Technician Name: </b> <p id="tech-name-i">Dell Waje</p></span>
                                 <span><b>BioID: </b> <p id="tech-bioID-i">1234</p></span>
                                 <span><b>Division: </b> <p id="tech-division-i">HOPSS Division</p></span>
-                                <span><b>Section: </b> <p id="tech-section-i">Engineering Facilities Management Section
-</p></span>
+                                <span><b>Section: </b> <p id="tech-section-i">Engineering Facilities Management Section </p></span>
                             </div>
                         </div>
-                        
+
                         <div class="tech-info-assessment-div">
                             <textarea class="tech-remarks-textarea" placeholder="Currently assessing..."></textarea>
                         </div>
                     </div>
                 </div>
-
 
             </div>
             <div class="modal-footer">

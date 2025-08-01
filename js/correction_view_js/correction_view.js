@@ -90,6 +90,24 @@ $(document).ready(function(){
         const index = $('.view-correction-req-btn').index(this);
         const data = fetch_viewRequestData[index]
         clicked_requestNo = data.requestNo
+
+        console.log(data)
+
+        $.ajax({
+            url: '../php/incoming_request_php/fetch_account_photo.php',
+            method: "POST",
+            data: {bioID : data.processedByID},
+            success: function(response) {
+                console.log(response);
+
+                const base64Data = (response.photo || "").trim();
+                $('#tech-photo').attr('src', `data:image/bmp;base64,${base64Data}`);
+            },
+
+            error: function(xhr, status, error) {
+                console.error("AJAX request failed:", error);
+            }
+        });
         
         $('#user-name').text(data.requestBy.name);
         $('#user-bioid').text(data.requestBy.bioID);
@@ -103,8 +121,10 @@ $(document).ready(function(){
         $('#request-description').text(data.requestDescription);
 
         $('#tech-name-i').text(data.processedBy)
+        $('#tech-bioID-i').text(data.processedByID)
+
         $('#reception-date-i').text(data.requestCorrectionDate)
-        $('.tech-remarks-textarea').val(data.requestCorrection)
+        $('.tech-remarks-textarea').val(`Assessment: ` + data.requestCorrection)
         modal_correction_form.show()
 
         // read correction details, deduct the notif value bar
