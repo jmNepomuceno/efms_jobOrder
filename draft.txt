@@ -222,7 +222,4 @@ Open the floor for Q&A
 // EFMS Job Order System
 1. Request Designation on USER per TECH_ROLE
 2. websocket not working on the incoming request for other tech views, when one reques has been finished
-3. Job Order Request, required fields(?)
-4. User Photo for the user/requestor
-5. logout button on the job order request module #
 

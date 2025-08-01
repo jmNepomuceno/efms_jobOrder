@@ -10,7 +10,7 @@ const fetchNotifValue = () => {
         method: "GET",
         dataType: "json",
         success: function(response) {
-            console.log(response);
+            // console.log(response);
 
             // Mapping status keys from response to their corresponding spans
             const statusMap = {
@@ -42,7 +42,7 @@ const fetchNotifValue = () => {
 
 socket.onmessage = function(event) {
     let data = JSON.parse(event.data);
-    console.log("📡 WebSocket received:", data);
+    // console.log("📡 WebSocket received:", data);
 
     socketEventHandlers.forEach(handler => {
         try {
@@ -75,9 +75,9 @@ const onLoad = () =>{
             removeAllJS()
             removeAllCSS()
 
-            $('head').append('<link rel="stylesheet" href="../css/efms_container.css?v=<?php echo time(); ?>">');
-            
             let version = new Date().getTime(); // Generates a unique timestamp
+
+            $('head').append(`<link rel="stylesheet" href="../css/efms_container.css?v=${version}">`);
             $('body').append(`<script src="../js/request_form_js/requestForm_function.js?v=${version}"><\/script>`);
             $('body').append(`<script src="../js/request_form_js/requestForm_traverse.js?v=${version}"><\/script>`);
         } else {

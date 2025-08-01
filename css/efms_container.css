@@ -188,7 +188,6 @@
 
     border:none;
     border-top:2px solid #999999;
-
 }
 
 /* 233975 */
@@ -203,10 +202,32 @@
     font-weight: 600;
     letter-spacing: 1px;
 
-    opacity: 0.7;
+    opacity: 0.5;
     pointer-events: none;
+    cursor: pointer;
 }
 
 .efms-container .request-form-div .submit-div button:hover{
     opacity: 1;
+}
+
+.glow-btn {
+    box-shadow: 0 0 20px #4f4fff;
+    border-radius: 8px;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 20px #4f4fff;
+    }
+    50% {
+        box-shadow: 0 0 20px #4f4fff;
+    }
+    100% {
+        box-shadow: 0 0 20px #4f4fff;
+    }
+}
+
+.glow-btn {
+    animation: pulse-glow 1.5s infinite;
 }

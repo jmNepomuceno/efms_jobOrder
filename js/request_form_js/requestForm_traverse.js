@@ -35,8 +35,16 @@ $(document).ready(function(){
 
     $('.infra-btn').on('click', function () {
         // Reset all buttons
-        $('.infra-btn').removeClass('active').css('opacity', '0.6');
-        $(this).addClass('active').css('opacity', '1');
+        $('.infra-btn').removeClass('active glow-btn').css({
+            'opacity': '0.6',
+            'border': 'none'
+        });
+
+        // Apply active and glowing effect
+        $(this).addClass('active glow-btn').css({
+            'opacity': '1',
+            'border': '2px solid #4f4fff' // subtle blue border
+        });
 
         const selectedCategory = $(this).data('category');
         window.selectedCategory = selectedCategory; // Store globally
@@ -70,25 +78,39 @@ $(document).ready(function(){
 
     // Listen for change in sub-category selection
     $('#sub-infra-select').on('change', function () {
+        const selectedVal = $(this).val();
         const selectedText = $('#sub-infra-select option:selected').text();
-        window.selectedSubCategory = selectedText; // Store globally for use in other scripts
+        window.selectedSubCategory = selectedText;
+
+        if (selectedVal === "") {
+            // Reset glow if default option is selected
+            $(this).removeClass('active glow-btn').css({
+                'opacity': '0.6',
+                'border': 'none'
+            });
+        } else {
+            // Apply glow and active styles
+            $(this).addClass('active glow-btn').css({
+                'opacity': '1',
+                'border': '2px solid #4f4fff'
+            });
+        }
     });
+
 
     // Disable dropdown on page load
     $('#sub-infra-select').prop('disabled', true);
 
-    
+    // function checkDescriptionLength() {
+    //     if ($("#description-val-id").val().length > 1) {
+    //         $("#submit-btn").css("pointer-events", "auto"); 
+    //         $("#submit-btn").css("opacity", "1"); 
+    //     } else {
+    //         $("#submit-btn").css("pointer-events", "none"); 
+    //         $("#submit-btn").css("opacity", "0.7"); 
 
-    function checkDescriptionLength() {
-        if ($("#description-val-id").val().length > 1) {
-            $("#submit-btn").css("pointer-events", "auto"); 
-            $("#submit-btn").css("opacity", "1"); 
-        } else {
-            $("#submit-btn").css("pointer-events", "none"); 
-            $("#submit-btn").css("opacity", "0.7"); 
+    //     }
+    // }
 
-        }
-    }
-
-    $("#description-val-id").on("input", checkDescriptionLength);
+    // $("#description-val-id").on("input", checkDescriptionLength);
 })
