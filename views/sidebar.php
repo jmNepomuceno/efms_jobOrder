@@ -55,7 +55,26 @@
                 <div class="side-bar-routes" id="admin-management-sub-div">
                     <i class="fa-solid fa-box"></i>
                     <span>Admin Management</span>
+                    <i id="adminmanage-arrow" class="fa-solid fa-caret-down"></i>
                 </div>
+
+                <div class="sub-down-div" id="adminmanage-sub-down-div">
+                    <div class="sub-down-bar-routes" id="employee-admin-sub-down-div">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Employee Management</span>
+                    </div>
+
+                    <div class="sub-down-bar-routes" id="adminacc-admin-sub-down-div">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Admin Account</span>
+                    </div>
+
+                    <!-- <div class="sub-down-bar-routes" id="user-admin-sub-down-div">
+                        <i class="fa-solid fa-box"></i>
+                        <span>Users</span>
+                    </div> -->
+                </div>
+                
 
                 <div class="side-bar-routes" id="dashboard-sub-div">
                     <i class="fa-solid fa-box"></i>

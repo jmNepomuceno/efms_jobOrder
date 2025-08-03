@@ -5,18 +5,44 @@ include('../../assets/connection.php');
 try {
     $what = $_POST['what'];
 
-    // 1. Fetch job data filtered by status and processor
-    $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate,
+    $sql = "SELECT role, techCategory
+        FROM efms_technicians 
+        WHERE techBioID=?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$_SESSION['user']]);
+    $tech_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if($tech_data['role'] == 'super_admin'){
+        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate,
+                   requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks
+            FROM job_order_request
+            WHERE requestStatus = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$what]);
+        $my_jobs_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    else if($tech_data['role'] == 'admin') {
+        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate,
+                   requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks
+            FROM job_order_request
+            WHERE requestStatus = ? AND requestCategory = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$what, $tech_data['techCategory']]);
+        $my_jobs_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        // For technicians or other roles
+        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate,
                    requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks
             FROM job_order_request
             WHERE requestStatus = ? AND processedBy = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$what, $_SESSION['name']]);
-    $my_jobs_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$what, $_SESSION['name']]);
+        $my_jobs_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // 2. Build unique list of requestCategory codes
-    $categoryCodes = array_unique(array_column($my_jobs_data, 'requestCategory'));
-    
+    $categoryCodes = array_values(array_unique(array_column($my_jobs_data, 'requestCategory')));
+
     $categoryDescriptions = [];
     
     if (!empty($categoryCodes)) {

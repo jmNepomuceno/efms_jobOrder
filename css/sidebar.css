@@ -70,6 +70,15 @@ body .left-container .side-bar-route .side-bar-routes{
     /* border-top:1px solid #402d26;
     border-bottom:1px solid #402d26; */
     margin-top:5px;
+    position:relative;
+}
+
+body .left-container .side-bar-route .side-bar-routes .fa-caret-down, 
+body .left-container .side-bar-route .side-bar-routes .fa-caret-up{
+    position:absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
 }
 
 body .left-container .side-bar-route .side-bar-routes:hover{
@@ -179,14 +188,14 @@ body .left-container .user-acc-div .user-info p span{
 
 body .left-container .sub-down-div{
     width: 90%;
-    height: 200px;
-    /* border:1px solid white; */
+    height: auto;
 
     display:none;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
 }
+
 
 body .left-container .sub-down-div .sub-down-bar-routes{
     width: 100%;

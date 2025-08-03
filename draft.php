@@ -32,10 +32,33 @@
     // echo print_r($array, true);
 
 
-    $param = array("bioUserName" => 3858, "password" => 3858, "accessMode" => 0);
+    // $param = array("bioUserName" => 3858, "password" => 3858, "accessMode" => 0);
     
-    $soap = new SOAPClient($webservice);
-    $result = $soap->LogIn($param)->LogInResult;
-    print_r($result);
-    echo "<pre>"; print_r($result); echo "</pre>";
+    // $soap = new SOAPClient($webservice);
+    // $result = $soap->LogIn($param)->LogInResult;
+    // print_r($result);
+
+    // $sql = "SELECT role, techCategory FROM efms_technicians WHERE techBioID=?";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute([3858]);
+    // $tech_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $sql = "SELECT requestCategory
+            FROM job_order_request
+            WHERE requestStatus = 'Completed'";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $tech_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    echo "<pre>"; print_r($tech_data); echo "</pre>";
+    // echo json_encode($tech_data);
+
+
+    // Prismatic cake: 1 banana + 4 bone blossoms
+    // Prismatic hotdog: 1 corn + 4 bone blossoms
+    // Prismatic salad: 1 tomato + 4 bone blossoms
+    // Prismatic donut: 1 sugar glaze + 4 bone blossoms
+    // Prismatic pie: 1 pumpkin + 4 bone blossoms
+    // Prismatic Ice Cream : 1 banana + 1 sugar apple + 3 bone blossom
+    // Prismatic Pizza : 1 Sugar apple + 1 Violet corn + 3 Bone blossom
 ?>

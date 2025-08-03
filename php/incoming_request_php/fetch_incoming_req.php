@@ -4,13 +4,48 @@ include('../../assets/connection.php');
 
 try {
 
-
-    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
-        FROM job_order_request 
-        WHERE requestStatus='Pending'";
+    
+    $sql = "SELECT role, techCategory
+        FROM efms_technicians 
+        WHERE techBioID=?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    $stmt->execute([$_SESSION['user']]);
+    $tech_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // if tech_data['role'] is admi
+    if($tech_data['role'] == 'super_admin') {
+        // super Admins can access all job orders
+        $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
+                FROM job_order_request 
+                WHERE requestStatus='Pending'";
+    } else {
+        $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
+                FROM job_order_request 
+                WHERE requestStatus='Pending' AND requestCategory=?";
+    }
+    $stmt = $pdo->prepare($sql);
+    if($tech_data['role'] == 'admin') {
+        $stmt->execute([$tech_data['techCategory']]);
+    } else {
+        $stmt->execute();
+    }
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+
+
+    // $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
+    //         FROM job_order_request 
+    //         WHERE requestStatus='Pending' AND requestCategory=?";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute([$tech_data['techCategory']]);
+    // $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
+    //     FROM job_order_request 
+    //     WHERE requestStatus='Pending'";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+    // $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $categoryDescriptions = [];
 

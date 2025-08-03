@@ -199,6 +199,7 @@ const getTimeDifference = (start, end) => {
 }
 
 const dataTable_my_jobs = (what) =>{ 
+    console.log
     try {
         $.ajax({
             url: '../../php/incoming_request_php/fetch_myJobs.php',
@@ -209,7 +210,7 @@ const dataTable_my_jobs = (what) =>{
                 $('#assign-assess-btn').toggleClass('d-none', true);
                 $('.assign-to-div').toggleClass('d-none', true);
 
-                console.log(response)
+                // console.log(response)
                 fetch_techMyJob = response
                 try {
                     let dataSet = [];
@@ -787,6 +788,11 @@ $(document).ready(function(){
         // Add active to "On-Process" button
         $("#your-job-on-process-btn").addClass("active");
 
+
+        // Reset the sub-table navigation display
+        $('.search-div').css('display', 'block');
+        $('.table-div').css('height', '70%');
+
         $container.toggleClass('active');
         $subBtns.toggleClass('show');
 
@@ -812,6 +818,10 @@ $(document).ready(function(){
 
         const $container = $('.my-job-order-div');
         const $subBtns = $('#your-job-sub-btns');
+
+        // Reset the sub-table navigation display
+        $('.search-div').css('display', 'none');
+        $('.table-div').css('height', '90%');
 
         $container.removeClass('active');
         $subBtns.removeClass('show');

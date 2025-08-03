@@ -41,15 +41,25 @@ $(document).ready(function(){
     // console.log(view)
     $(`#${view}`).css('background','#5a4038')
     $(`#${view}`).css('border-left','3px solid white')
-
+    console.log(sub_view)
     if(view === "dashboard-sub-div"){
         $('#dashboard-arrow')
             .removeClass('fa-caret-down')
             .addClass('fa-caret-up');
         
-        $('.sub-down-div').css('display', 'flex');
+        $('#dashboard-sub-down-div').css('display', 'flex');
         $(`#${sub_view}`).css('background','#3f2d27')
     }
+
+    if(view === "admin-management-sub-div"){
+        $('#adminmanage-arrow')
+            .removeClass('fa-caret-down')
+            .addClass('fa-caret-up');
+
+        $('#adminmanage-sub-down-div').css('display', 'flex');
+        $(`#${sub_view}`).css('background','#3f2d27')
+    }
+
     // dashboard-arrow
     $('#dashboard-arrow, #dashboard-sub-div').click(function(event) {
         event.stopPropagation();
@@ -59,13 +69,31 @@ $(document).ready(function(){
                 .removeClass('fa-caret-down')
                 .addClass('fa-caret-up');
             
-            $('.sub-down-div').css('display', 'flex');
+            $('#dashboard-sub-down-div').css('display', 'flex');
         } else {
             $('#dashboard-arrow')
                 .removeClass('fa-caret-up')
                 .addClass('fa-caret-down');
             
-            $('.sub-down-div').css('display', 'none');
+            $('#dashboard-sub-down-div').css('display', 'none');
+        }
+    });
+
+    $('#adminmanage-arrow, #admin-management-sub-div').click(function(event) {
+        event.stopPropagation();
+
+        if ($('#adminmanage-arrow').hasClass('fa-caret-down')) {
+            $('#adminmanage-arrow')
+                .removeClass('fa-caret-down')
+                .addClass('fa-caret-up');
+
+            $('#adminmanage-sub-down-div').css('display', 'flex');
+        } else {
+            $('#adminmanage-arrow')
+                .removeClass('fa-caret-up')
+                .addClass('fa-caret-down');
+
+            $('#adminmanage-sub-down-div').css('display', 'none');
         }
     });
 
@@ -77,7 +105,7 @@ $(document).ready(function(){
         window.location.href = "../views/incoming_request.php";
     });
 
-    $('#admin-management-sub-div').click(function(){
+    $('#employee-admin-sub-down-div').click(function(){
         window.location.href = "../views/admin_management.php";
     });
 

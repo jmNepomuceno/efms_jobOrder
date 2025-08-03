@@ -68,7 +68,7 @@
 
     <?php 
         $view = "admin-management-sub-div";
-        $sub_view = "none";
+        $sub_view = "employee-admin-sub-down-div";
         include("./sidebar.php");
     ?>
 
