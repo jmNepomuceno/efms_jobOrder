@@ -147,6 +147,82 @@ const barGraph = (data = []) => {
     });
 };
 
+const fetchNotifValue = () =>{
+    $.ajax({
+        url: '../php/incoming_request_php/fetch_notifValue.php',
+        method: "POST",
+        dataType : 'json',
+        success: function(response) {
+            try { 
+                // console.log(response)
+                const pending_value = parseInt(response.count_pending)
+                const myJob_value = parseInt(response.count_evaluation) + parseInt(response.count_onProcess)
+                const onProcess_value = parseInt(response.count_onProcess)
+                const evaluation_value = parseInt(response.count_evaluation)
+                
+                console.log(356, pending_value)
+
+                if(pending_value > 0){
+                    $('#jobOrder-notif-span').text(pending_value)
+                    $('#jobOrder-notif-span').css('display' , 'block')
+
+                    $('#notif-value').text(pending_value);
+                    $('#notif-value').css('display', 'flex');
+
+                }else{
+                    $('#jobOrder-notif-span').css('display' , 'none')
+                    
+                    $('#notif-value').text(pending_value);
+                    $('#notif-value').css('display', 'none');
+                }
+                
+                if(myJob_value > 0){
+                    $('#your-job-notif-span').text(myJob_value)
+                    $('#your-job-notif-span').css('display' , 'block')
+
+                }else{
+                    $('#your-job-notif-span').css('display' , 'none')
+                }
+
+                if(onProcess_value > 0){
+                    $('#on-process-notif-span').text(onProcess_value)
+                    $('#on-process-notif-span').css('display' , 'block')
+                }else{
+                    $('#on-process-notif-span').css('display' , 'none')
+                }
+
+                
+                if(evaluation_value > 0){
+                    $('#for-evaluation-notif-span').text(evaluation_value)
+                    $('#for-evaluation-notif-span').css('display' , 'block')
+                }else{
+                    $('#for-evaluation-notif-span').css('display' , 'none')
+                }
+
+            } catch (innerError) {
+                console.error("Error processing response:", innerError);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX request failed:", error);
+        }
+    });
+}
+
+socket.onmessage = function(event) {
+    let data = JSON.parse(event.data);
+    console.log("Received from WebSocket:", data); // Debugging
+
+    // Call fetchNotifValue() on every process update
+    switch (data.action) {
+        case "refreshIncomingTable":
+            fetchNotifValue()
+            break;
+        default:
+            console.log("Unknown action:", data.action);
+    }
+};
+
 
 // Initial move to the first active tab on load
 $(document).ready(function () {

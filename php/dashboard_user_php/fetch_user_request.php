@@ -77,24 +77,43 @@ try {
 
     $excludedSubcategories = ['CARPENTRY WORKS', 'PLUMBING WORKS'];
 
-    // Step 3: Fetch total number of requests for this section
-    $sql = "
-        SELECT COUNT(*)
-        FROM job_order_request
-        WHERE JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.division')) = :division
-          AND JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.section')) = :section
-          AND STR_TO_DATE(requestDate, '%m/%d/%Y - %r')
-              BETWEEN STR_TO_DATE(:startDate, '%m/%d/%Y')
-              AND STR_TO_DATE(CONCAT(:endDate, ' 11:59:59 PM'), '%m/%d/%Y %r')
-    ";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([
-        ':division' => $divisionName,
-        ':section' => $sectionName,
-        ':startDate' => $startDateFormatted,
-        ':endDate' => $endDateFormatted
-    ]);
+    // Step 3: Fetch total number of requests
+    if (empty($_POST['division']) && empty($_POST['section'])) {
+        // No filters → count all
+        $sql = "
+            SELECT COUNT(*)
+            FROM job_order_request
+            WHERE STR_TO_DATE(requestDate, '%m/%d/%Y - %r')
+                BETWEEN STR_TO_DATE(:startDate, '%m/%d/%Y')
+                AND STR_TO_DATE(CONCAT(:endDate, ' 11:59:59 PM'), '%m/%d/%Y %r')
+        ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':startDate' => $startDateFormatted,
+            ':endDate' => $endDateFormatted
+        ]);
+    } else {
+        // Filter by division/section
+        $sql = "
+            SELECT COUNT(*)
+            FROM job_order_request
+            WHERE JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.division')) = :division
+            AND JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.section')) = :section
+            AND STR_TO_DATE(requestDate, '%m/%d/%Y - %r')
+                BETWEEN STR_TO_DATE(:startDate, '%m/%d/%Y')
+                AND STR_TO_DATE(CONCAT(:endDate, ' 11:59:59 PM'), '%m/%d/%Y %r')
+        ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':division' => $divisionName,
+            ':section' => $sectionName,
+            ':startDate' => $startDateFormatted,
+            ':endDate' => $endDateFormatted
+        ]);
+    }
+
     $totalRequests = (int)$stmt->fetchColumn();
+
 
     // Step 4: Category-wise percentage
     $sql = "

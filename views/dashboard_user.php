@@ -119,6 +119,7 @@
     
 
     <?php require "../links/script_links.php" ?>
+    <script src="../assets/script.js?v=<?php echo time(); ?>"></script>
     <script src="../js/sidebar_traverse.js?v=<?php echo time(); ?>"></script>
     <script src="../js/dashboard_user_js/dashboard_user.js?php echo time(); ?>"></script>
 

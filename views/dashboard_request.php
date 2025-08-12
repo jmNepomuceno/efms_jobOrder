@@ -183,6 +183,7 @@
     
 
     <?php require "../links/script_links.php" ?>
+    <script src="../assets/script.js?v=<?php echo time(); ?>"></script>
     <script src="../js/sidebar_traverse.js?v=<?php echo time(); ?>"></script>
     <script src="../js/dashboard_request_js/dashboard_request.js?php echo time(); ?>"></script>
 </body>

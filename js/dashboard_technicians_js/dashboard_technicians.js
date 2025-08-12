@@ -104,21 +104,27 @@ const kpiCard = (startDate, endDate, category, subCategory, techBioID) => {
             // Set the text
             $('#total-request-average-value').text(totalAverage);
 
-            // Split into parts
-            let parts = totalAverage.split(":");
-            let hours = parseInt(parts[0]);
-            let minutes = parseInt(parts[1]);
-            let seconds = parseInt(parts[2]);
-
-            // Convert to total seconds
-            let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
-
-            // Compare and apply color style
-            if (totalSeconds >= 7200) { // 2 hours = 7200 seconds
-                $('#total-request-average-value').css('color', 'red');
+            // Handle 0 or empty case
+            if (!totalAverage || totalAverage === "0" || totalAverage === "00:00:00") {
+                $('#total-request-average-value').css('color', 'black'); // or your default color
             } else {
-                $('#total-request-average-value').css('color', 'green'); // Or default
+                // Split into parts safely
+                let parts = totalAverage.split(":");
+                let hours = parseInt(parts[0]) || 0;
+                let minutes = parseInt(parts[1]) || 0;
+                let seconds = parseInt(parts[2]) || 0;
+
+                // Convert to total seconds
+                let totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+
+                // Compare and apply color style
+                if (totalSeconds >= 7200) { // 2 hours = 7200 seconds
+                    $('#total-request-average-value').css('color', 'red');
+                } else {
+                    $('#total-request-average-value').css('color', 'green');
+                }
             }
+
             
             $('#total-request-correction-value').text(totalCorrection);
             $('#total-request-onProcess-value').text(totalOnProcess);
@@ -259,7 +265,6 @@ const techDataTable = (startDate, endDate, category, subCategory, techBioID) =>{
                         { title: "CATEGORY" },
                         { title: "Status" },
                         { title: "ACTION" },
-                        
                     ],
                     columnDefs: [
                         { targets: 0, createdCell: function(td) { $(td).addClass('request-id-td'); } },
@@ -269,11 +274,11 @@ const techDataTable = (startDate, endDate, category, subCategory, techBioID) =>{
                         { targets: 4, createdCell: function(td) { $(td).addClass('request-category-td'); } },
                         { targets: 5, createdCell: function(td) { $(td).addClass('request-status-td'); } },
                         { targets: 6, createdCell: function(td) { $(td).addClass('request-action-td'); } },
-                        
                     ],
                     // "paging": false,
                     // "info": false,
                     "ordering": false,
+                    "pageLength": 8,
                     // "stripeClasses": [],
                     // "search": false,
                     // autoWidth: false,
@@ -351,7 +356,9 @@ const fetchTechEval = (startDate, endDate, category, subCategory, techBioID) => 
                     { targets: 9, createdCell: (td) => $(td).addClass('eval-q5') },
                     { targets: 10, createdCell: (td) => $(td).addClass('eval-comments') },
                 ],
-                ordering: false
+                ordering: false,
+                "pageLength": 8,
+
             });
         },
         error: function (xhr, status, error) {
@@ -359,6 +366,83 @@ const fetchTechEval = (startDate, endDate, category, subCategory, techBioID) => 
         }
     });
 };
+
+const fetchNotifValue = () =>{
+    $.ajax({
+        url: '../php/incoming_request_php/fetch_notifValue.php',
+        method: "POST",
+        dataType : 'json',
+        success: function(response) {
+            try { 
+                // console.log(response)
+                const pending_value = parseInt(response.count_pending)
+                const myJob_value = parseInt(response.count_evaluation) + parseInt(response.count_onProcess)
+                const onProcess_value = parseInt(response.count_onProcess)
+                const evaluation_value = parseInt(response.count_evaluation)
+                
+                console.log(356, pending_value)
+
+                if(pending_value > 0){
+                    $('#jobOrder-notif-span').text(pending_value)
+                    $('#jobOrder-notif-span').css('display' , 'block')
+
+                    $('#notif-value').text(pending_value);
+                    $('#notif-value').css('display', 'flex');
+
+                }else{
+                    $('#jobOrder-notif-span').css('display' , 'none')
+                    
+                    $('#notif-value').text(pending_value);
+                    $('#notif-value').css('display', 'none');
+                }
+                
+                if(myJob_value > 0){
+                    $('#your-job-notif-span').text(myJob_value)
+                    $('#your-job-notif-span').css('display' , 'block')
+
+                }else{
+                    $('#your-job-notif-span').css('display' , 'none')
+                }
+
+                if(onProcess_value > 0){
+                    $('#on-process-notif-span').text(onProcess_value)
+                    $('#on-process-notif-span').css('display' , 'block')
+                }else{
+                    $('#on-process-notif-span').css('display' , 'none')
+                }
+
+                
+                if(evaluation_value > 0){
+                    $('#for-evaluation-notif-span').text(evaluation_value)
+                    $('#for-evaluation-notif-span').css('display' , 'block')
+                }else{
+                    $('#for-evaluation-notif-span').css('display' , 'none')
+                }
+
+            } catch (innerError) {
+                console.error("Error processing response:", innerError);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX request failed:", error);
+        }
+    });
+}
+
+socket.onmessage = function(event) {
+    let data = JSON.parse(event.data);
+    console.log("Received from WebSocket:", data); // Debugging
+
+    // Call fetchNotifValue() on every process update
+    switch (data.action) {
+        case "refreshIncomingTable":
+            fetchNotifValue()
+            break;
+        default:
+            console.log("Unknown action:", data.action);
+    }
+};
+
 
 
 // Initial move to the first active tab on load
@@ -546,4 +630,24 @@ $(document).ready(function () {
         $('#modal-status-incoming').text(data.requestStatus);
         modal_view_form.show()
     })
+
+    document.querySelectorAll('.dashboard-nav span').forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Highlight active
+            document.querySelectorAll('.dashboard-nav span').forEach(s => s.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Scroll to section
+            const targetId = tab.getAttribute('data-target');
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
 });

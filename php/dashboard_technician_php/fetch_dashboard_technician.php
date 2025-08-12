@@ -12,7 +12,6 @@ if (!empty($_POST['endDate'])) {
     $endDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
 }
 
-
 $category = $_POST['category'] ?? "ALL";
 $subCategory = !empty($_POST['subCategory']) ? $_POST['subCategory'] : "none";
 

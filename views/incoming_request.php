@@ -260,30 +260,45 @@
                         <textarea class="tech-remarks-textarea" placeholder="Enter remarks details..."></textarea>
                     </div>
                     
-                     <div class="assign-to-div">
+                    <div class="assign-to-div">
                         <h5 class="info-heading">Assign Job Order</h5>
+
                         <div class="mb-3">
                             <label for="assign-tech-select" class="form-label">Select Technician</label>
                             <select id="assign-tech-select" class="form-select">
                                 <option value="">Select Technician</option>
-                                <!-- Options will be populated dynamically -->
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label for="assign-to-modal-tech-remarks" class="form-label">Remarks</label>
                             <textarea id="assign-to-modal-tech-remarks" class="form-control" rows="3" placeholder="Enter remarks details. Input at least 10 characters..."></textarea>
+                        </div>
+
+                        <!-- Target Start & End DateTime (Flex Row) -->
+                        <div class="mb-3 d-flex gap-3 flex-wrap">
+                            <div class="flex-fill">
+                                <label for="target-start-datetime" class="form-label">Target Start Date & Time</label>
+                                <input type="datetime-local" id="target-start-datetime" class="form-control" />
+                            </div>
+
+                            <div class="flex-fill">
+                                <label for="target-end-datetime" class="form-label">Target End Date & Time</label>
+                                <input type="datetime-local" id="target-end-datetime" class="form-control" />
+                            </div>
                         </div>
                     </div>
 
                     <div class="function-btn">
                         <button id="rtr-assess-btn" class="btn btn-success">Return to Requestor</button>
                         <button id="start-assess-btn" class="btn btn-success">Start Job</button>
+                        <?php if ($_SESSION['role'] === 'admin'): ?>
                         <button id="assign-assess-btn" class="btn btn-secondary">Assign To</button>
+                        <button id="cancel-assign-assess-btn" class="btn btn-secondary" style="display:none;">Cancel Assignment</button>
+
+                        <?php endif; ?>
                     </div>
-
-                   
                 </div>
-
 
                 <!-- Modal Footer -->
                 <div class="modal-footer">

@@ -199,7 +199,7 @@ const getTimeDifference = (start, end) => {
 }
 
 const dataTable_my_jobs = (what) =>{ 
-    console.log
+
     try {
         $.ajax({
             url: '../../php/incoming_request_php/fetch_myJobs.php',
@@ -207,8 +207,9 @@ const dataTable_my_jobs = (what) =>{
             data : {what},
             dataType : "json",
             success: function(response) {
-                $('#assign-assess-btn').toggleClass('d-none', true);
-                $('.assign-to-div').toggleClass('d-none', true);
+                $('#assign-assess-btn').css('display', 'none'); // cancel-assign-assess-btn
+                $('.assign-to-div').css('display', 'none');
+                $('#cancel-assign-assess-btn').css('display', 'none');
 
                 // console.log(response)
                 fetch_techMyJob = response
@@ -465,12 +466,17 @@ socket.onmessage = function(event) {
     // Call fetchNotifValue() on every process update
     switch (data.action) {
         case "refreshIncomingTable":
+            console.log(468)
             fetchNotifValue()
             dataTable_incoming_request();  
             break;
         case "refreshDoneEvaluationTableUser":
             fetchNotifValue()
             dataTable_my_jobs("Evaluation");  
+            break;
+        case "refreshPendingTableTech":
+            fetchNotifValue()
+            dataTable_incoming_request()
             break;
         default:
             console.log("Unknown action:", data.action);
@@ -719,39 +725,59 @@ $(document).ready(function(){
     })   
 
     // assign-assess-btn
-    $(document).off('click', '#assign-assess-btn').on('click', '#assign-assess-btn', function() {
-        // assign_modal.show();
-        console.log(clicked_requestNo)
+    if ($('#assign-assess-btn').length) {
+        $(document).off('click', '#assign-assess-btn').on('click', '#assign-assess-btn', function() {
+            // assign_modal.show();
+            console.log(clicked_requestNo)
 
-        $.ajax({
-            url: '../php/incoming_request_php/fetch_assign_technicians.php',
-            method: "POST",
-            data: {requetNo : clicked_requestNo},
-            dataType: "json",
-            success: function(response) {
-                try { 
-                    const $select = $('#assign-tech-select');
-                    $select.empty(); // Clear existing options
+            $.ajax({
+                url: '../php/incoming_request_php/fetch_assign_technicians.php',
+                method: "POST",
+                data: {requetNo : clicked_requestNo},
+                dataType: "json",
+                success: function(response) {
+                    try { 
+                        const $select = $('#assign-tech-select');
+                        $select.empty(); // Clear existing options
 
-                    // Add default option
-                    $select.append('<option value="">Select Technician</option>');
+                        // Add default option
+                        $select.append('<option value="">Select Technician</option>');
 
-                    // Loop through the technician list
-                    response.forEach(function(tech) {
-                        const fullName = `${tech.firstName} ${tech.middle} ${tech.lastName}`;
-                        $select.append(`<option value="${tech.techBioID}">${fullName} - ${tech.techBioID}</option>`);
-                    });
-                } catch (innerError) {
-                    console.error("Error processing response:", innerError);
+                        // Loop through the technician list
+                        response.forEach(function(tech) {
+                            const fullName = `${tech.firstName} ${tech.middle} ${tech.lastName}`;
+                            $select.append(`<option value="${tech.techBioID}">${fullName} - ${tech.techBioID}</option>`);
+                        });
+                    } catch (innerError) {
+                        console.error("Error processing response:", innerError);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX request failed:", error);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error("AJAX request failed:", error);
-            }
+            });
+
+            $('.assign-to-div').css('display', 'block');
+            // $('#assign-to-div').toggle()
+
+
+            // change its class
+            $('#assign-assess-btn').css('display', 'none');
+            $('#cancel-assign-assess-btn').css('display', 'flex');
+
+            // $('#assign-assess-btn').text('Submit Assignment');
         });
 
-        $('.assign-to-div').toggle();
-    });
+         $(document).off('click', '#cancel-assign-assess-btn').on('click', '#cancel-assign-assess-btn', function() {
+            $('#assign-assess-btn').css('display', 'flex');
+            $('#cancel-assign-assess-btn').css('display', 'none');
+
+            $('.assign-to-div')?.css('display', 'none');
+
+
+            $('#assign-assess-btn').text('Assign To');
+         })
+    }
 
     // $(document).off('click', '#your-job-btn').on('click', '#your-job-btn', function() {
     //     dataTable_my_jobs("On-Process")
@@ -822,6 +848,13 @@ $(document).ready(function(){
         // Reset the sub-table navigation display
         $('.search-div').css('display', 'none');
         $('.table-div').css('height', '90%');
+
+        // $('#assign-assess-btn')?.toggleClass('d-none', false);
+        // $('#cancel-assign-assess-btn')?.toggleClass('d-none', true);
+        // $('#assign-to-div')?.toggleClass('d-none', true);
+        
+        $('#assign-assess-btn').css('display', 'block');
+        $('.assign-to-div').css('display', 'none');
 
         $container.removeClass('active');
         $subBtns.removeClass('show');

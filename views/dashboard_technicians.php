@@ -96,16 +96,26 @@
                         <button id="filter-date-search-btn" type="button" class="btn btn-secondary">Search</button>
                     </div>
 
-                    <h1>EFMS Requests Dashboard</h1>
+                    <div class="header-div">
+                        <h1>EFMS Requests Dashboard</h1>
+                        <nav class="dashboard-nav">
+                            <span class="active" data-target="section-bar-graph">Request Graph</span>
+                            <span data-target="section-job-summary">Job Order Summary</span>
+                            <span data-target="section-job-orders">Job Orders List</span>
+                            <span data-target="section-survey">Satisfaction Survey</span>
+                        </nav>
+
+                    </div>
+
 
                     <div class="request-graph-div" style="overflow-x: auto;">
 
-                        <h4>Bar Graph: Completed Requests Over Time</h4>
+                        <h4 id="section-bar-graph">Bar Graph: Completed Requests Over Time</h4>
                         <canvas id="requestsPerHourChart" width="1500" height="400" ></canvas>
                         
                         <div class="hl"></div>
 
-                        <h4>Job Order Summary</h4>
+                        <h4 id="section-job-summary">Job Order Summary</h4>
                         <div class="request-tally-div">
                             <div class="request-tally-sub-div">
                                 <span>Total Assigned Jobs</span>
@@ -156,7 +166,7 @@
 
                         <div class="hl"></div>
                         
-                        <h4>Completed Job Orders List</h4>
+                        <h4 id="section-job-orders">Completed Job Orders List</h4>
                         <div class="table-container">
                             <table id="tech-request-dataTable">
                                 <thead>
@@ -176,7 +186,7 @@
 
                         <div class="hl"></div>
                         
-                        <h4>Completed Job Orders List</h4>
+                        <h4 id="section-survey">SATISFACTION SURVEY</h4>
                         <div class="table-container">
                             <table id="tech-eval-table">
                                 <thead>
@@ -286,6 +296,7 @@
     
 
     <?php require "../links/script_links.php" ?>
+    <script src="../assets/script.js?v=<?php echo time(); ?>"></script>
     <script src="../js/sidebar_traverse.js?v=<?php echo time(); ?>"></script>
     <script src="../js/dashboard_technicians_js/dashboard_technicians.js?php echo time(); ?>"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />

@@ -5,6 +5,11 @@
     font-family: Arial, sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+
 ::-webkit-scrollbar {
     width: 8px; 
 }
@@ -146,6 +151,8 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     margin-left:50px;
 }
 
+
+
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .title-filter-div{
     margin-top:50px;
     height: auto;
@@ -278,6 +285,50 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     background: #2e1d18;
 }
 
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .header-div{
+    width: 100%;
+    height: auto;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding:10px;
+    margin-top:10px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .header-div h1{
+    padding:0;
+    margin:0;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .header-div .dashboard-nav{
+    width: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    margin-right:20px;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .header-div .dashboard-nav span {
+    padding: 2px 5px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+                rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    cursor: pointer;
+    border-radius: 5px;
+    color: black;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body .right-container .dashboard-container .dashboard-content-div .request-conent-div .header-div .dashboard-nav span.active {
+    background: #593f37; /* your active color */
+    color: white;
+}
+
+
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div{
     width: 100%;
     height: 75%;
@@ -369,7 +420,6 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     width: 100%;
     height: 100%;
     text-align: center !important;
-    
 }
 
 /* D9D9D9 */

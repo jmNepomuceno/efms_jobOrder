@@ -551,7 +551,7 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr t
 }
 
 #user-info-modal .modal-body .assign-to-div{
-    height: 300px;
+    height: auto;
     display:none;
 }
 

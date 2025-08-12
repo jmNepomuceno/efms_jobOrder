@@ -24,14 +24,13 @@ try {
                 WHERE requestStatus='Pending' AND requestCategory=?";
     }
     $stmt = $pdo->prepare($sql);
-    if($tech_data['role'] == 'admin') {
+    if($tech_data['role'] == 'admin' || $tech_data['role'] == 'tech') {
         $stmt->execute([$tech_data['techCategory']]);
     } else {
         $stmt->execute();
     }
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-
 
     // $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestSubCategory 
     //         FROM job_order_request 

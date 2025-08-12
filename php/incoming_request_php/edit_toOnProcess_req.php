@@ -16,6 +16,7 @@ try {
     $client = new Client("ws://192.168.42.222:8080");
     $client->send(json_encode(["action" => "refreshOnProcessTableUser"])); 
     $client->send(json_encode(["action" => "refreshPendingTableUser"]));
+    $client->send(json_encode(["action" => "refreshPendingTableTech"]));
 
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());

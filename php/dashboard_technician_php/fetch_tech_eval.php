@@ -14,6 +14,9 @@ if (!empty($_POST['endDate'])) {
     $endDate = date('Y-m-d', strtotime($startDate . ' +1 day'));
 }
 
+// $startDate = "2025-07-01"; // For testing purposes, set a fixed start date
+// $endDate = "2025-08-11"; // For testing purposes, set a
+
 
 $category = $_POST['category'] ?? "ALL";
 $subCategory = !empty($_POST['subCategory']) ? $_POST['subCategory'] : "none";
