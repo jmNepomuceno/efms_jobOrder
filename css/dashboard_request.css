@@ -374,3 +374,27 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     cursor: pointer;
     border-radius: 3px;
 }
+
+/* 
+
+
+*/
+
+@media only screen and (max-height: 800px){
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div h1{
+        font-size: 2.5rem;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .request-tally-sub-div span:nth-child(1){
+        font-size: 0.7rem;
+    }
+
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div .request-tally-div .request-tally-sub-div span:nth-child(2){
+        font-size: 2.5rem;
+    }
+
+    #total-request-accomplished-value{
+        font-size: 2rem;
+    }
+}

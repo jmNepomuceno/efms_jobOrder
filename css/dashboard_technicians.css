@@ -709,3 +709,61 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     font-size: 0.9rem;
     border:1px solid #90afc5;
 }
+
+@media only screen and (max-height: 800px){
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .header-div h1{
+        font-size: 2rem;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div{
+        width: auto;
+        height: auto;
+        margin-left:50px;
+        margin-top:20px;
+
+        display:flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap:10px;
+
+        border-radius: 10px;
+        padding:10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+        width: 90%;
+        border:1px solid red;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div select{
+        margin-left:5px;
+        padding:5px 10px 5px 10px;
+        margin:0;
+        width: auto;
+        border-radius: 5px;
+        background: none;
+        border:2px solid #593f37;
+        cursor: pointer;
+
+        font-weight: 600;
+        font-size: 0.7rem;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div span{
+        font-size: 0.9rem;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div button{
+        padding:5px 10px 5px 10px;
+        width: 100px;
+        font-size: 0.6rem;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div #iu-filter-btn{
+        width: 120px;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .filter-category-div #all-filter-btn{
+        width: 50px;
+    }
+}

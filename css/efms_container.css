@@ -37,7 +37,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
-
 }
 
 .efms-container .request-form-div .section-div{
@@ -67,7 +66,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-
 }
 
 .efms-container .request-form-div .sub-infra-div{
@@ -230,4 +228,20 @@
 
 .glow-btn {
     animation: pulse-glow 1.5s infinite;
+}
+
+@media only screen and (max-height: 800px){
+    .efms-container .request-form-div .infra-div .infra-sub-div div{
+        width: 30%;
+        font-size: 0.9rem;
+    }
+
+    .efms-container .request-form-div{
+        height: 90%;
+        padding:5px;
+    }
+
+    .efms-container .request-form-div .submit-div{
+        margin-top:20px;
+    }
 }

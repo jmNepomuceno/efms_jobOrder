@@ -384,6 +384,12 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr t
 body .right-container .table-div .table-container #incoming-req-table tbody tr td .request-by-td-div span:nth-child(3),
 body .right-container .table-div .table-container #incoming-req-table tbody tr td .request-by-td-div span:nth-child(4){
     font-size: 0.75rem;
+    text-align: left;
+}
+
+body .right-container .table-div .table-container #incoming-req-table tbody tr td .request-date-td-div span{
+    font-size: 0.75rem;
+    text-align: left;
 }
 
 body .right-container .table-div .table-container #incoming-req-table tbody tr td .request-date-td-div{
@@ -677,5 +683,60 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr t
 }
 
 #user-info-modal .modal-body .function-btn #start-assess-btn{
+}
+
+@media only screen and (max-height: 800px){
+    .table-div .table-container #incoming-req-table thead tr{
+        background: #646b6b;
+    }
+
+    .table-div .table-container #incoming-req-table thead tr th{
+        font-size: 0.8rem;
+    }
+
+    .table-div .table-container #incoming-req-table tbody tr td span,
+    .table-div .table-container #incoming-req-table tbody tr td div button{
+        font-size: 0.7rem !important;
+    }
+
+
+    #incoming-req-table tbody tr .item-date-td span{
+        /* font-size: 0.5rem !important;
+        color:red; */
+    }
+
+    .recept-interval{
+        display:none;
+    }
+
+    body .right-container .search-div .top-div #job-no-input{
+        font-size: 0.7rem;
+    }
+
+    body .right-container .search-div .top-div #division-select,
+    body .right-container .search-div .top-div #section-select{
+        font-size: 0.7rem;
+    }
+
+    body .right-container .search-div .top-div #lastname-input,
+    body .right-container .search-div .top-div #firstname-input,
+    body .right-container .search-div .bottom-div #technician-select{
+        font-size: 0.7rem;
+    }
+
+    body .right-container .search-div .bottom-div #bioId-input,
+    body .right-container .search-div .bottom-div #requestType-select,
+    body .right-container .search-div .bottom-div #status-select,
+    body .right-container .search-div .bottom-div #dateFrom-input,
+    body .right-container .search-div .bottom-div #dateTo-input{
+        font-size: 0.7rem;
+    }
+
+    body .right-container .table-div .table-container{
+        width: 100%;
+        /* height: 450px; */
+        overflow-y: scroll !important;
+        overflow-x: hidden;
+    }
 }
 

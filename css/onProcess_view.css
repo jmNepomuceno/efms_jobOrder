@@ -288,3 +288,22 @@
     font-size: 0.9rem;
     border:1px solid #90afc5;
 }
+
+@media only screen and (max-height: 800px){
+    .onProcess-view .table-container #onProcess-dataTable thead tr{
+        background: #646b6b;
+    }
+
+    .onProcess-view .table-container #onProcess-dataTable thead tr th{
+        font-size: 0.8rem;
+    }
+
+    .onProcess-view .table-container #onProcess-dataTable tbody tr td span,
+    .onProcess-view .table-container #onProcess-dataTable tbody tr td div button{
+        font-size: 0.8rem;
+    }
+
+    #onProcess-dataTable tbody tr .onProcess-date-td span{
+        font-size: 0.7rem !important;
+    }
+}

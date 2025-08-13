@@ -284,3 +284,36 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     cursor: pointer;
     border-radius: 3px;
 }
+
+@media only screen and (max-height: 800px){
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div, .end-date-div{
+        /* border:1px solid red; */
+        width: 250px;
+        padding:5px;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div span,
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div span, .end-date-div span{
+        font-size: 0.8rem;
+    }
+
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div{
+        width: 100%;
+        height: 50px;
+        /* border:1px solid white; */
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        gap:10px;
+        margin-top:30px;
+
+        flex-wrap: wrap;
+    }
+
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .division-div select,
+    body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .section-div select{
+        font-size: 0.7rem;
+    }
+}

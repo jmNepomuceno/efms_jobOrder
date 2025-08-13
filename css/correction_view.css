@@ -356,3 +356,22 @@
     margin:0;
     padding:0;
 }
+
+@media only screen and (max-height: 800px){
+    .correction-view .table-container #correction-dataTable thead tr{
+        background: #646b6b;
+    }
+
+    .correction-view .table-container #correction-dataTable thead tr th{
+        font-size: 0.8rem;
+    }
+
+    .correction-view .table-container #correction-dataTable tbody tr td span,
+    .correction-view .table-container #correction-dataTable tbody tr td div button{
+        font-size: 0.8rem;
+    }
+
+    #correction-dataTable tbody tr .correction-date-td span{
+        font-size: 0.7rem !important;
+    }
+}

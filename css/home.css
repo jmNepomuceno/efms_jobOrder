@@ -70,5 +70,17 @@ body .right-container .title-div h3{
 
 
 @media only screen and (max-height: 800px){
-    
+    body .right-container .title-div h1{
+        font-size:2rem;
+    }
+
+    body .right-container .title-div h1 span{
+        font-size: 3.5rem;
+    }
+
+    body .right-container .title-div h3{
+        color:#30211d;
+        font-weight: 600;
+        font-size: 1.5rem;
+    }
 }

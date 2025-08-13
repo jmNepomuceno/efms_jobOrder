@@ -391,3 +391,22 @@
     align-items: center;
     gap:30px;
 }
+
+@media only screen and (max-height: 800px){
+    .completed-view .table-container #completed-dataTable thead tr{
+        background: #646b6b;
+    }
+
+    .completed-view .table-container #completed-dataTable thead tr th{
+        font-size: 0.8rem;
+    }
+
+    .completed-view .table-container #completed-dataTable tbody tr td span,
+    .completed-view .table-container #completed-dataTable tbody tr td div button{
+        font-size: 0.8rem;
+    }
+
+    #completed-dataTable tbody tr .completed-date-td span{
+        font-size: 0.7rem !important;
+    }
+}

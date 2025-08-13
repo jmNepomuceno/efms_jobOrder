@@ -805,6 +805,21 @@ $(document).ready(function(){
         const $container = $('.my-job-order-div');
         const $subBtns = $('#your-job-sub-btns');
 
+        let winHeight = $(window).height();
+        let winWidth = $(window).width();
+
+        console.log("Height: " + winHeight, "Width: " + winWidth);
+
+        if (winHeight <= 800) {
+            console.log('here')
+            $('body .right-container .table-div .table-container').css({
+                width: '100%',
+                height: '400px',
+                'overflow-y': 'scroll',
+                'overflow-x': 'hidden',
+            });
+        }
+
         $('#your-job-btn').css('opacity', '1');
         $('#request-list-btn').css('opacity', '0.5');
 
@@ -823,6 +838,7 @@ $(document).ready(function(){
         $subBtns.toggleClass('show');
 
         dataTable_my_jobs("On-Process");
+        
     });
 
 
@@ -836,6 +852,21 @@ $(document).ready(function(){
     
     $(document).off('click', '#request-list-btn').on('click', '#request-list-btn', function() {
         dataTable_incoming_request()
+
+        let winHeight = $(window).height();
+        let winWidth = $(window).width();
+
+        console.log("Height: " + winHeight, "Width: " + winWidth);
+
+        if (winHeight <= 800) {
+            console.log('here')
+            $('body .right-container .table-div .table-container').css({
+                width: '100%',
+                height: '',
+                'overflow-y': 'scroll',
+                'overflow-x': 'hidden',
+            });
+        }
 
         $('#your-job-btn').css('opacity' , '0.5')
         $('#request-list-btn').css('opacity' , '1')

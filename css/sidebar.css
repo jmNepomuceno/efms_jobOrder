@@ -253,3 +253,36 @@ body .left-container .side-bar-route .side-bar-routes #dashboard-arrow{
     font-size: 0.9rem;
     font-weight: bold;
 }
+
+@media only screen and (max-height: 800px){
+    body .left-container .home-name-div h1{
+        font-size: 0.8rem;
+    }
+
+    body .left-container .side-bar-route .side-bar-routes i,
+    body .left-container .side-bar-route .side-bar-routes span{
+        color:white;
+        margin-left:20px;
+        font-size: 0.7rem;
+    }
+
+    body .left-container .side-bar-route .side-bar-routes #notif-value{
+        padding:0 7px 0 7px;
+        font-size: 0.9rem;
+    }
+
+    body .left-container .sub-down-div .sub-down-bar-routes i,
+    body .left-container .sub-down-div .sub-down-bar-routes span{
+        color:white;
+        margin-left:20px;
+        font-size: 0.65rem;
+    }
+
+    body .left-container .user-acc-div .user-info p{
+        font-size:0.7rem;
+    }
+
+    body .left-container .user-acc-div .user-info p span{
+        font-size:0.7rem;
+    }
+}

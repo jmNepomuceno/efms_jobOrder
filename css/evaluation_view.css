@@ -351,3 +351,22 @@
     font-size: 0.9rem;
     border:1px solid #90afc5;
 }
+
+@media only screen and (max-height: 800px){
+    .evaluation-view .table-container #evaluation-dataTable thead tr{
+        background: #646b6b;
+    }
+
+    .evaluation-view .table-container #evaluation-dataTable thead tr th{
+        font-size: 0.8rem;
+    }
+
+    .evaluation-view .table-container #evaluation-dataTable tbody tr td span,
+    .evaluation-view .table-container #evaluation-dataTable tbody tr td div button{
+        font-size: 0.8rem;
+    }
+
+    #evaluation-dataTable tbody tr .evaluation-date-td span{
+        font-size: 0.7rem !important;
+    }
+}
