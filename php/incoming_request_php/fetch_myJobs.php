@@ -13,7 +13,7 @@ try {
     $tech_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($tech_data['role'] == 'super_admin'){
-        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate,
+        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate, requestCorrection, 
                    requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks
             FROM job_order_request
             WHERE requestStatus = ?";
@@ -22,7 +22,7 @@ try {
         $my_jobs_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     else if($tech_data['role'] == 'admin') {
-        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate,
+        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate, requestCorrection,
                    requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks
             FROM job_order_request
             WHERE requestStatus = ? AND requestCategory = ?";
@@ -31,7 +31,7 @@ try {
         $my_jobs_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
         // For technicians or other roles
-        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate,
+        $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate, requestCorrection,
                    requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks
             FROM job_order_request
             WHERE requestStatus = ? AND processedBy = ?";

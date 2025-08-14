@@ -209,6 +209,15 @@ body .right-container{
 
     pointer-events: none;
     width: 250px;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+
+.manage-accts-div .draft-container-div .free-agents .draggable .delete-btn{
 }
 
 .manage-accts-div .draft-container-div .free-agents .selected {
@@ -273,9 +282,45 @@ body .right-container{
 
     width: 100%;
     height: 8%;
-    padding: 10px;
+    /* padding: 10px; */
     background: #4c6444;
 }
+
+.manage-accts-div .category-container .container .title-search-div{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: 60%;
+    margin-top:5px;
+}
+
+.manage-accts-div .category-container .container .title-search-div .title-search-icon{
+    padding:5px;
+    cursor: pointer;
+
+    background: gray;
+    color:white;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.manage-accts-div .category-container .container .title-search-div .title-search-input {
+    padding:0;
+    margin:0;
+    height: 100%;
+    border-top: 2px solid gray;
+    border-right: 2px solid gray;
+    border-bottom: 2px solid gray;
+    border-left:0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    outline: none;
+    text-align: center;
+}
+
 
 .manage-accts-div .category-container .container .draggable-container{
     width: 100%;
@@ -303,6 +348,24 @@ body .right-container{
 
     pointer-events: none;
     width: 250px;
+
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap:20px;
+}
+
+.manage-accts-div .category-container .container .draggable-container .draggable .delete-btn{
+    cursor: pointer;
+    opacity: 0.2;
+    color:red;
+
+    display:none;
+}
+
+.manage-accts-div .category-container .container .draggable-container .draggable .delete-btn:hover{
+    opacity: 1;
 }
 
 .manage-accts-div .category-container .container .draggable-container .tech-admin-span{

@@ -43,14 +43,12 @@
     // $stmt->execute([3858]);
     // $tech_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql = "SELECT requestCategory
-            FROM job_order_request
-            WHERE requestStatus = 'Completed'";
+    $sql = "SELECT * FROM efms_technicians";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
-    $tech_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $data = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
-    echo "<pre>"; print_r($tech_data); echo "</pre>";
+    echo "<pre>"; print_r($data); echo "</pre>";
     // echo json_encode($tech_data);
 
 

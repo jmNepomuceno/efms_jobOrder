@@ -5,9 +5,10 @@ include('../../assets/connection.php');
 try {
     $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestStartDate, processedBy 
         FROM job_order_request 
-        WHERE requestFrom = ? AND requestStatus = 'On-Process'";
+        WHERE requestFrom = ? AND requestStatus = 'On-Process'
+        AND JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.bioID')) = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$_SESSION['sectionName']]);
+    $stmt->execute([$_SESSION['sectionName'] , $_SESSION['user']]);
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // Step 1: Extract unique category codes

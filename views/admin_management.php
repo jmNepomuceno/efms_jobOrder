@@ -31,15 +31,14 @@
     function generateDraggableSpans($employees, $extraClass = "") {
         $output = "";
         foreach ($employees as $perHead) {
-            if($perHead['role'] == 'tech'){
+            if ($perHead['role'] == 'tech') {
                 $output .= '<span class="draggable ' . $extraClass . '" draggable="true" id="' . $perHead['techBioID'] . '">'
                     . strtoupper($perHead['lastName']) . ', ' . strtoupper($perHead['firstName']) .
-                    '</span>';
+                    // delete button
+                    '<i class="delete-btn fa-solid fa-trash" data-id="' . $perHead['techBioID'] . '"></i>'
+                    . '</span>';
             }
-            
         }
-
-        // echo $output;
         return $output;
     }
 
@@ -122,11 +121,14 @@
                     $stmt->execute([$category]);
                     $tech_admin = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
                     $categoryID = $category;
                     echo '
                     <div class="container">
-                        <div class="title">' . $cat_name . '</div>
+                        <div class="title">' . $cat_name . ' </div>
+                        <div class="title-search-div"> 
+                            <i class="fa-solid fa-magnifying-glass title-search-icon"></i>
+                            <input type="text" class="title-search-input" placeholder="Search" />
+                        </div>
                         <div class="draggable-container" id="' . $categoryID . '-category">
                             <span class="tech-admin-span">' . $tech_admin['lastName'] . ", " . $tech_admin['firstName'] . '</span>
                             ' . (isset($categories[$categoryID]) ? generateDraggableSpans($categories[$categoryID], "draggable-done") : "") . '

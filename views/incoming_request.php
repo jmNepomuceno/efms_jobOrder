@@ -48,6 +48,10 @@
     // $sql = "DELETE FROM job_order_request WHERE requestNo='EU-2025-06-001'";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
+
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestCorrectionDate=null, requestCorrection=null, requestJobRemarks=null WHERE requestID=188";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
 ?>
 
 <!DOCTYPE html>

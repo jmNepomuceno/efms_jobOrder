@@ -119,6 +119,9 @@ $(document).ready(function(){
 
         $('.confirmation-btn').css('display', 'flex')
 
+        $('.delete-btn').css('display', 'flex')
+
+
         $('.draft-container-div .free-agents .draggable').css('pointer-events', 'auto')
         $('.category-container .container .draggable-container .draggable-done').css('pointer-events', 'auto')
         drag_function()
@@ -129,6 +132,8 @@ $(document).ready(function(){
         $('#move-personel-btn').css('opacity', '1')
         
         $('.confirmation-btn').css('display', 'none')
+
+        $('.delete-btn').css('display', 'none')
         reset_styling()
 
     })
@@ -217,5 +222,38 @@ $(document).ready(function(){
             }
         });
     });
+
+    $(document).on('click', '.delete-btn', function(e) {
+        e.stopPropagation(); // prevent drag event
+        const id = $(this).data('id');
+        console.log(id)
+        
+        if (confirm('Are you sure you want to delete this personnel?')) {
+            $.post('../php/admin_management_php/delete_personnel.php', { id: id }, function(response) {
+                const res = JSON.parse(response);
+                if (res.status === 'success') {
+                    $('#' + id).remove();
+                } else {
+                    alert('Error deleting personnel.');
+                }
+            });
+        }
+    });
+
+    
+    // Search filter logic for draggable items
+    $(document).off('input', '.title-search-input').on('input', '.title-search-input', function () {
+        let searchValue = $(this).val().toLowerCase();
+        
+        // Get the .draggable-container within the same .container
+        let $container = $(this).closest('.container').find('.draggable-container');
+        
+        // Loop over all .draggable items in that container
+        $container.find('.draggable').each(function () {
+            let text = $(this).text().toLowerCase();
+            $(this).toggle(text.includes(searchValue));
+        });
+    });
+
 
 })

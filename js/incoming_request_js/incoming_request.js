@@ -538,6 +538,7 @@ $(document).ready(function(){
 
         request_modal.show();
     });
+
     $(document).off('click', '.my-job-row-class').on('click', '.my-job-row-class', function() {        
         const index = $('.my-job-row-class').index(this);
         const data = fetch_techMyJob[index];
@@ -559,6 +560,7 @@ $(document).ready(function(){
         $('#user-what').text("Technician")
         $('.assessment-section').css('display' , 'none')
         $('.tech-assessment-section').css('display' , 'flex')
+        $('.tech-remarks-textarea').val("")
         $('.tech-remarks-textarea').attr('placeholder', 'Enter remarks details. Input at least 10 characters...')
         $('#start-assess-btn').text("Finish Job")
 
@@ -582,6 +584,14 @@ $(document).ready(function(){
             $('#start-assess-btn').css('pointer-events' , 'none')
             $('#start-assess-btn').text("Waiting for User's Evaluation...")
             $('#rtr-assess-btn').css('display' , 'none')
+        }
+
+        else if(clicked_sub_nav === "Correction"){
+            $('.tech-remarks-textarea').val(data.requestCorrection)
+            $('.tech-remarks-textarea').css('pointer-events' , 'none')
+            $('#start-assess-btn').css('display' , 'none')
+            $('#rtr-assess-btn').css('display' , 'none')
+
         }
 
         else if(clicked_sub_nav === "Completed"){
@@ -889,6 +899,8 @@ $(document).ready(function(){
 
         $container.removeClass('active');
         $subBtns.removeClass('show');
+
+        clicked_sub_nav = ""
     })  
 
     $(document).off("click", "#your-job-on-process-btn, #your-job-for-evaluation-btn, #your-job-completed-btn, #your-job-correction-btn").on("click", "#your-job-on-process-btn, #your-job-for-evaluation-btn, #your-job-completed-btn, #your-job-correction-btn", function () {

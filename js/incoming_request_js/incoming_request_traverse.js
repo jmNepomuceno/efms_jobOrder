@@ -13,6 +13,9 @@ $(document).ready(function(){
         $('#assign-assess-btn').toggleClass('d-none', false);
         $('.assign-to-div').toggleClass('d-none', false);
 
+        $('#assign-assess-btn').css('display', 'block');
+        $('.assign-to-div').css('display', 'none');
+
     });
 
     $(document).off('click', '#correction-btn').on('click', '#correction-btn', function() {        
@@ -27,6 +30,9 @@ $(document).ready(function(){
 
         $('#assign-assess-btn').toggleClass('d-none', true);
         $('.assign-to-div').toggleClass('d-none', true);
+
+        $('#assign-assess-btn').css('display', 'none');
+        $('.assign-to-div').css('display', 'none');
     });
 
     let divisionSelect = document.getElementById("division-select");

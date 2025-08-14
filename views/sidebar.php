@@ -61,7 +61,7 @@
                 <div class="sub-down-div" id="adminmanage-sub-down-div">
                     <div class="sub-down-bar-routes" id="employee-admin-sub-down-div">
                         <i class="fa-solid fa-box"></i>
-                        <span>Employee Management</span>
+                        <span>Personnel Management</span>
                     </div>
 
                     <div class="sub-down-bar-routes" id="adminacc-admin-sub-down-div">
