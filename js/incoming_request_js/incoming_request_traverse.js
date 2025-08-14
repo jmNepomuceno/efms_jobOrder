@@ -33,6 +33,7 @@ $(document).ready(function(){
 
         $('#assign-assess-btn').css('display', 'none');
         $('.assign-to-div').css('display', 'none');
+        $('#cancel-assign-assess-btn').css('display', 'none');
     });
 
     let divisionSelect = document.getElementById("division-select");

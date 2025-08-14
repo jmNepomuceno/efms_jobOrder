@@ -732,6 +732,35 @@ $(document).ready(function(){
                 console.error("Unexpected error occurred:", ajaxError);
             }
         }
+        else  if($('#start-assess-btn').text() === 'Assign Now'){
+            console.log('here')
+            try {
+                $.ajax({
+                    url: '../php/incoming_request_php/edit_toCorrection_req.php',
+                    method: "POST",
+                    data: {
+                        requestNo : clicked_requestNo,
+                        requestJobRemarks : $('.assessment-textarea').val()
+                    },
+                    success: function(response) {
+                        try { 
+                            dataTable_incoming_request()
+                            request_modal.hide()
+                            fetchNotifValue()
+                            
+                            console.log(response)
+                        } catch (innerError) {
+                            console.error("Error processing response:", innerError);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX request failed:", error);
+                    }
+                });
+            } catch (ajaxError) {
+                console.error("Unexpected error occurred:", ajaxError);
+            }
+        }
     })   
 
     // assign-assess-btn
@@ -775,6 +804,8 @@ $(document).ready(function(){
             $('#assign-assess-btn').css('display', 'none');
             $('#cancel-assign-assess-btn').css('display', 'flex');
 
+            $('#start-assess-btn').text("Assign Now")
+
             // $('#assign-assess-btn').text('Submit Assignment');
         });
 
@@ -786,6 +817,9 @@ $(document).ready(function(){
 
 
             $('#assign-assess-btn').text('Assign To');
+
+            $('#start-assess-btn').text("Start Job")
+
          })
     }
 

@@ -8,6 +8,24 @@ if (!modal_correction_form) {
     modal_correction_form = new bootstrap.Modal(document.getElementById('modal-view-correction-form'));
 }
 
+function addRefreshButton() {
+    // Wait until DataTables is initialized
+    let searchWrapper = $('#correction-dataTable_filter'); // DataTables search div
+
+    if (searchWrapper.find('.refresh-btn').length === 0) {
+        searchWrapper.append(`
+            <button class="btn btn-secondary btn-sm refresh-btn" style="margin-left: 10px;">
+                Refresh
+            </button>
+        `);
+
+        // Add click event
+        searchWrapper.on('click', '.refresh-btn', function () {
+            fetch_dataTable();
+        });
+    }
+}
+
 var fetch_dataTable = () =>{
     $.ajax({
         url: '../php/correction_view_php/fetch_correction_req.php',
@@ -72,6 +90,8 @@ var fetch_dataTable = () =>{
                     // "search": false,
                     // autoWidth: false,
                 });
+                // Add refresh button beside search bar
+                addRefreshButton();
             } catch (innerError) {
                 console.error("Error processing response:", innerError);
             }
