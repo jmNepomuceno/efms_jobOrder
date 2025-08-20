@@ -174,6 +174,7 @@
     
 
     <?php require "../links/script_links.php" ?>
+    <script src="../assets/script.js?v=<?php echo time(); ?>"></script>
     <script src="../js/sidebar_traverse.js?v=<?php echo time(); ?>"></script>
     <script src="../js/admin_management_js/admin_management.js?php echo time(); ?>"></script>
     <!-- <script src="../js/admin_management_js/admin_management_traverse.js?php echo time(); ?>"></script> -->

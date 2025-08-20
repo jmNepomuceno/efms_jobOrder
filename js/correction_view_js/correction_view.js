@@ -116,7 +116,7 @@ $(document).ready(function(){
         $.ajax({
             url: '../php/incoming_request_php/fetch_account_photo.php',
             method: "POST",
-            data: {bioID : data.processedByID},
+            data: {bioID : (data.assignToBioID ? data.assignToBioID : data.processedByID)},
             success: function(response) {
                 console.log(response);
 
@@ -130,7 +130,7 @@ $(document).ready(function(){
         });
         
         $('#user-name').text(data.requestBy.name);
-        $('#user-bioid').text(data.requestBy.bioID);
+        $('#user-bioid').text(data.requestBy.bioID);1
         $('#user-division').text(data.requestBy.division);
         $('#user-section').text(data.requestBy.section);
     
@@ -140,8 +140,8 @@ $(document).ready(function(){
     
         $('#request-description').text(data.requestDescription);
 
-        $('#tech-name-i').text(data.processedBy)
-        $('#tech-bioID-i').text(data.processedByID)
+        $('#tech-name-i').text((data.assignTo ? data.assignTo : data.processedBy))
+        $('#tech-bioID-i').text((data.assignToBioID ? data.assignToBioID : data.processedByID))
 
         $('#reception-date-i').text(data.requestCorrectionDate)
         $('.tech-remarks-textarea').val(`Assessment: ` + data.requestCorrection)

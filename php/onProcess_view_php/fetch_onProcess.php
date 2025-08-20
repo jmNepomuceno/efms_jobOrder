@@ -3,7 +3,7 @@ include ('../../session.php');
 include('../../assets/connection.php');
 
 try {
-    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestStartDate, processedBy 
+    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestStatus, requestCategory, requestStartDate, processedBy, assignTo, assignToBioID, assignTargetStartDate, assignTargetEndDate
         FROM job_order_request 
         WHERE requestFrom = ? AND requestStatus = 'On-Process'
         AND JSON_UNQUOTE(JSON_EXTRACT(requestBy, '$.bioID')) = ?";

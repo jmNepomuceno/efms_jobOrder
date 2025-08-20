@@ -226,6 +226,7 @@ socket.onmessage = function(event) {
 
 // Initial move to the first active tab on load
 $(document).ready(function () {
+    fetchNotifValue();
     onLoadFetch_total_request(null, null, "ALL", null);
 
     const today = new Date().toISOString().split('T')[0]; // format: YYYY-MM-DD

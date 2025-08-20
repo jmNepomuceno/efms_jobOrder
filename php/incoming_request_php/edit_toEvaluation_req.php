@@ -36,6 +36,11 @@ try {
     $client->send(json_encode(["action" => "refreshEvaluationTableUser"]));
     $client->send(json_encode(["action" => "refreshOnProcessTableUser"]));
 
+    $module = "request-evaluation";
+    $action = "onProcess-to-evaluation";
+    $details = "Evaluation Request";
+    include('../transaction_log.php');
+
 } catch (PDOException $e) {
     die("Database error: " . $e->getMessage());
 }

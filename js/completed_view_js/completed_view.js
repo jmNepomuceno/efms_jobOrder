@@ -64,6 +64,8 @@ var fetch_dataTable = () =>{
                         </div>`
                     ]);
                 }
+
+                console.log(dataSet)
                 
                 if ($.fn.DataTable.isDataTable('#completed-dataTable')) {
                     $('#completed-dataTable').DataTable().destroy();
@@ -90,7 +92,7 @@ var fetch_dataTable = () =>{
                     ],
                     // "paging": false,
                     // "info": false,
-                    // "ordering": false,
+                    "ordering": false,
                     // "stripeClasses": [],
                     // "search": false,
                     // autoWidth: false,
@@ -120,7 +122,7 @@ $(document).ready(function(){
         $.ajax({
             url: '../php/incoming_request_php/fetch_account_photo.php',
             method: "POST",
-            data: {bioID : data.processedByID},
+            data: {bioID : (data.assignToBioID ? data.assignToBioID : data.processedByID)},
             success: function(response) {
                 console.log(response);
 
@@ -144,8 +146,8 @@ $(document).ready(function(){
     
         $('#request-description').text(data.requestDescription);
 
-        $('#tech-name-i').text(data.processedBy)
-        $('#tech-bioID-i').text(data.processedByID)
+        $('#tech-name-i').text((data.assignTo ? data.assignTo : data.processedBy))
+        $('#tech-bioID-i').text((data.assignToBioID ? data.assignToBioID : data.processedByID))
 
         $('#reception-date-i').text(data.requestStartDate)
         $('.tech-remarks-textarea').val(`Assessmet: ` + data.requestJobRemarks)

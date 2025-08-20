@@ -83,7 +83,12 @@ if ($pending_count >= 1) {
             echo "success";
         } catch (Exception $e) {
             echo "WebSocket error: " . $e->getMessage();
-        }
+        }   
+        
+        $module = "add-job-order-request";
+        $action = "add-request";
+        $details = "adding a request.";
+        include('../transaction_log.php');
 
     } else {
         echo "error";

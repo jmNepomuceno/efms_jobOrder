@@ -45,7 +45,7 @@ var fetch_dataTable = () =>{
                 for (let i = 0; i < response.length; i++) {
                     dataSet.push([
                         `<span class="requestNo-span">${response[i].requestNo}</span>`,
-                        `<span>${response[i].processedBy}</span>`,
+                        `<span>${(response[i].assignTo ? response[i].assignTo : response[i].processedBy)}</span>`,
                         `<div class="date-request-td"> 
                             <span><b>Requested Date:</b> ${response[i].requestDate}</span>
                             <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
@@ -151,7 +151,7 @@ $(document).ready(function(){
         $.ajax({
             url: '../php/incoming_request_php/fetch_account_photo.php',
             method: "POST",
-            data: {bioID : data.processedByID},
+            data: {bioID : (data.assignToBioID ? data.assignToBioID : data.processedByID)},
             success: function(response) {
                 console.log(response);
 
@@ -175,9 +175,8 @@ $(document).ready(function(){
     
         $('#request-description').text(data.requestDescription);
 
-        $('#tech-name-i').text(data.processedBy)
-        // tech-bioID-i
-        $('#tech-bioID-i').text(data.processedByID)
+        $('#tech-name-i').text((data.assignTo ? data.assignTo : data.processedBy))
+        $('#tech-bioID-i').text((data.assignToBioID ? data.assignToBioID : data.processedByID))
 
         // $('#reception-date-i').text(data.requestStartDate)
         $('.tech-remarks-textarea').val(`Assessment: ` + data.requestJobRemarks)

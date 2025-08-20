@@ -3,7 +3,7 @@ include ('../../session.php');
 include('../../assets/connection.php');
 
 try {
-    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestCategory, requestStatus, processedBy, requestCorrectionDate, requestCorrection , processedByID
+    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestCategory, requestStatus, processedBy, requestCorrectionDate, requestCorrection , processedByID, assignTo, assignToBioID, assignTargetStartDate, assignTargetEndDate
     FROM job_order_request 
     WHERE CAST(JSON_EXTRACT(requestBy, '$.bioID') AS UNSIGNED) = ? 
     AND requestStatus = 'Correction'";

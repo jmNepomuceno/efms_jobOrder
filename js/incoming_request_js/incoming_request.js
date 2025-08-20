@@ -211,7 +211,7 @@ const dataTable_my_jobs = (what) =>{
                 $('.assign-to-div').css('display', 'none');
                 $('#cancel-assign-assess-btn').css('display', 'none');
 
-                // console.log(response)
+                console.log(response)
                 fetch_techMyJob = response
                 try {
                     let dataSet = [];
@@ -459,6 +459,26 @@ const fetchNotifValue = () =>{
     });
 }
 
+const convertDate = (rawDate) =>{
+    let date = new Date(rawDate);
+
+    // Extract parts
+    let month = String(date.getMonth() + 1).padStart(2, '0');
+    let day = String(date.getDate()).padStart(2, '0');
+    let year = date.getFullYear();
+
+    let hours = date.getHours();
+    let minutes = String(date.getMinutes()).padStart(2, '0');
+    let seconds = String(date.getSeconds()).padStart(2, '0');
+
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0 becomes 12
+    hours = String(hours).padStart(2, '0');
+
+    return `${month}/${day}/${year} - ${hours}:${minutes}:${seconds} ${ampm}`;
+}
+
 socket.onmessage = function(event) {
     let data = JSON.parse(event.data);
     console.log("Received from WebSocket:", data); // Debugging
@@ -572,7 +592,7 @@ $(document).ready(function(){
             $('#start-assess-btn').css('pointer-events' , 'none')
         }
 
-        $('#tech-name-i').text(data.processedBy)
+        $('#tech-name-i').text((data.assignTo ? data.assignTo : data.processedBy))
         $('#reception-date-i').text(data.requestStartDate)
         $('#rtr-assess-btn').css('display' , 'flex')
         $('#start-assess-btn').css('display' , 'flex')
@@ -630,7 +650,13 @@ $(document).ready(function(){
                 $.ajax({
                     url: '../php/incoming_request_php/edit_toOnProcess_req.php',
                     method: "POST",
-                    data: {requestNo : clicked_requestNo},
+                    data: {
+                        requestNo : clicked_requestNo,
+                        assignTo : null,
+                        assignStartDate : null,
+                        assignEndDate : null,
+                        
+                    },
                     success: function(response) {
                         try { 
                             console.log(response)
@@ -735,20 +761,31 @@ $(document).ready(function(){
         else  if($('#start-assess-btn').text() === 'Assign Now'){
             console.log('here')
             try {
+                // console.log(
+                //     {
+                //         requestNo : clicked_requestNo,
+                //         assignToBioID : $('#assign-tech-select option:selected').data('techbioid'),
+                //         assignStartDate : $('#target-start-datetime').val(),
+                //         assignEndDate : $('#target-start-datetime').val(),
+                //     }
+                // )
+
                 $.ajax({
-                    url: '../php/incoming_request_php/edit_toCorrection_req.php',
+                    url: '../php/incoming_request_php/edit_toOnProcess_req.php',
                     method: "POST",
                     data: {
                         requestNo : clicked_requestNo,
-                        requestJobRemarks : $('.assessment-textarea').val()
+                        assignTo : $('#assign-tech-select').val(),
+                        assignToBioID : $('#assign-tech-select option:selected').data('techbioid'),
+                        assignStartDate : convertDate($('#target-start-datetime').val()),
+                        assignEndDate : convertDate($('#target-end-datetime').val()),
                     },
                     success: function(response) {
                         try { 
-                            dataTable_incoming_request()
-                            request_modal.hide()
-                            fetchNotifValue()
-                            
                             console.log(response)
+                            dataTable_incoming_request()
+                            fetchNotifValue()
+                            request_modal.hide()
                         } catch (innerError) {
                             console.error("Error processing response:", innerError);
                         }
@@ -785,7 +822,7 @@ $(document).ready(function(){
                         // Loop through the technician list
                         response.forEach(function(tech) {
                             const fullName = `${tech.firstName} ${tech.middle} ${tech.lastName}`;
-                            $select.append(`<option value="${tech.techBioID}">${fullName} - ${tech.techBioID}</option>`);
+                            $select.append(`<option value="${fullName}" data-techBioID="${tech.techBioID}">${fullName} - ${tech.techBioID}</option>`);
                         });
                     } catch (innerError) {
                         console.error("Error processing response:", innerError);

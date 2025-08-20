@@ -14,18 +14,18 @@ try {
 
     if($tech_data['role'] == 'super_admin'){
         $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate, requestCorrection, 
-                   requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks
+                   requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks, assignTo, assignToBioID, assignBy, assignTargetStartDate, assignTargetEndDate
             FROM job_order_request
-            WHERE requestStatus = ?";
+            WHERE requestStatus = ? ORDER BY requestDate DESC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$what]);
         $my_jobs_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     else if($tech_data['role'] == 'admin') {
         $sql = "SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate, requestCorrectionDate, requestCorrection,
-                   requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks
+                   requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks, assignTo, assignToBioID, assignBy, assignTargetStartDate, assignTargetEndDate
             FROM job_order_request
-            WHERE requestStatus = ? AND requestCategory = ?";
+            WHERE requestStatus = ? AND requestCategory = ?  ORDER BY requestDate DESC";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$what, $tech_data['techCategory']]);
         $my_jobs_data = $stmt->fetchAll(PDO::FETCH_ASSOC);

@@ -4,10 +4,10 @@ include('../../assets/connection.php');
 
 try {
     // Step 1: Fetch all completed job order requests by the logged-in user
-    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestCategory, requestStatus, processedBy, requestStartDate, requestCompletedDate, requestEvaluationDate, requestEvaluation, requestJobRemarks, processedByID 
+    $sql = "SELECT requestNo, requestDate, requestBy, requestDescription, requestCategory, requestStatus, processedBy, requestStartDate, requestCompletedDate, requestEvaluationDate, requestEvaluation, requestJobRemarks, processedByID , assignTo, assignToBioID, assignTargetStartDate, assignTargetEndDate
             FROM job_order_request 
             WHERE CAST(JSON_EXTRACT(requestBy, '$.bioID') AS UNSIGNED) = ? 
-              AND requestStatus = 'Completed'";
+              AND requestStatus = 'Completed' ORDER BY requestCompletedDate DESC" ;
     
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$_SESSION['user']]);

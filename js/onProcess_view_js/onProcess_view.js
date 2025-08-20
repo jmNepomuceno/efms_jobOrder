@@ -116,7 +116,7 @@ $(document).ready(function(){
     
         $('#request-description').text(data.requestDescription);
 
-        $('#tech-name-i').text(data.processedBy)
+        $('#tech-name-i').text((data.assignTo ? data.assignTo : data.processedBy))
         $('#reception-date-i').text(data.requestStartDate)
         
         modal_view_form.show()

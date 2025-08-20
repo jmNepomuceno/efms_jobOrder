@@ -27,6 +27,11 @@
     $client = new Client("ws://192.168.42.222:8080");
     $client->send(json_encode(["action" => "refreshDoneEvaluationTableUser"]));
 
+    $module = "request-evaluation-done";
+    $action = "evaluation-to-completed";
+    $details = "Completed Request";
+    include('../transaction_log.php');
+
     // update the request status to be finl completed
     // echo json_encode($_POST);
     

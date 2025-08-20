@@ -226,6 +226,7 @@ socket.onmessage = function(event) {
 
 // Initial move to the first active tab on load
 $(document).ready(function () {
+    fetchNotifValue()
     render3DPieChart(data = [])
     render3DPieChartSub(data = [])
 
