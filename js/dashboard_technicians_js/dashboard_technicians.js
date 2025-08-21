@@ -312,7 +312,7 @@ const fetchTechEval = (startDate, endDate, category, subCategory, techBioID) => 
                     `<span>${response[i].requestDate}</span>`,
                     `<span>${response[i].requestCategory}</span>`,
                     `<span>${response[i].requestSubCategory}</span>`,
-                    `<span>${response[i].processedBy}</span>`,
+                    `<span>${(response[i].assignTo ? response[i].assignTo : response[i].processedBy)}</span>`,
                     `<span>${evalData.q1}</span>`,
                     `<span>${evalData.q2}</span>`,
                     `<span>${evalData.q3}</span>`,
@@ -625,7 +625,8 @@ $(document).ready(function () {
     
         $('#request-description').text(data.requestDescription);
 
-        $('#tech-name-i').text(data.processedBy ? data.processedBy : "No data yet.")
+        // $('#tech-name-i').text(data.processedBy ? data.processedBy : "No data yet.")
+        $('#tech-name-i').text((data.assignTo ? data.assignTo : data.processedBy))
         $('#reception-date-i').text(data.requestStartDate ? data.requestStartDate : data.requestCorrectionDate )
         $('.tech-remarks-textarea').attr('placeholder', (data.requestJobRemarks) ? data.requestJobRemarks : data.requestCorrection);
         $('#modal-status-incoming').text(data.requestStatus);

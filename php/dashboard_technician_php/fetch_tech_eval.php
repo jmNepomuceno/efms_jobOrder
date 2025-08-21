@@ -32,7 +32,7 @@ $startDateFormatted = date('m/d/Y', strtotime($startDate));
 $endDateFormatted = date('m/d/Y', strtotime($endDate));
 
 $sql = "
-    SELECT requestNo, requestDate, requestCategory, requestSubCategory, processedByID, processedBy, requestEvaluation
+    SELECT requestNo, requestDate, requestCategory, requestSubCategory, processedByID, processedBy, requestEvaluation, assignTo, assignToBioID, assignTargetStartDate, assignTargetEndDate
     FROM job_order_request
     WHERE CAST(JSON_EXTRACT(requestEvaluation, '$.q1') AS CHAR) IS NOT NULL
       AND STR_TO_DATE(requestDate, '%m/%d/%Y - %r') 
