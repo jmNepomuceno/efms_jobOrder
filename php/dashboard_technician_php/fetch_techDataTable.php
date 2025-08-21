@@ -25,7 +25,7 @@ try {
     // 2. Build SQL
     $sql = "
         SELECT requestNo, requestDate, requestStartDate, requestEvaluationDate, requestCompletedDate,
-               requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks, requestStatus, requestCorrectionDate, requestCorrection
+               requestDescription, requestCategory, requestSubCategory, requestBy, processedBy, requestJobRemarks, requestStatus, requestCorrectionDate, requestCorrection, assignTo, assignToBioID, assignTargetStartDate, assignTargetEndDate
         FROM job_order_request
         WHERE (requestStatus = 'Completed' OR requestStatus = 'Correction' OR requestStatus = 'Evaluation')
         AND STR_TO_DATE(requestDate, '%m/%d/%Y - %r') 
