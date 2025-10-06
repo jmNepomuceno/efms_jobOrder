@@ -4,6 +4,7 @@ include('../../assets/connection.php');
 
 require "../../vendor/autoload.php";  // Ensure Composer's autoload is included
 use WebSocket\Client;
+
 // Check if the user has a pending request
 $sql = "SELECT COUNT(*) AS pending_count FROM efms_joborder.job_order_request 
         WHERE (requestStatus = 'Pending' OR requestStatus = 'On-Process' OR requestStatus = 'Evaluation') 
@@ -24,6 +25,7 @@ if ($pending_count >= 1) {
         "bioID" => $_SESSION['user'],
         "division" => $_SESSION['divisionName'],
         "section" => $_SESSION['sectionName'],
+        "exact_location" => $_POST['requestExactFrom']
     ];
 
     $category = $object['requestCategory'];
@@ -67,7 +69,7 @@ if ($pending_count >= 1) {
     $success = $stmt->execute([
         $requestNo,
         $object["requestDate"],
-        $object["requestFrom"],
+        $_SESSION['sectionName'],
         json_encode($object["requestBy"]),
         $object["requestCategory"],
         $object["requestSubCategory"],
@@ -77,10 +79,14 @@ if ($pending_count >= 1) {
 
     if ($success) {
         try {
-            $client = new Client("ws://192.168.42.222:8080");
+            // $client = new Client("ws://192.168.42.222:8080");
+            // $client->send(json_encode(["action" => "refreshIncomingTable"]));
+            // $client->send(json_encode(["action" => "refreshPendingTableUser"]));
+
+
+            $client = new Client("ws://192.168.42.222:8082");
             $client->send(json_encode(["action" => "refreshIncomingTable"]));
             $client->send(json_encode(["action" => "refreshPendingTableUser"]));
-            echo "success";
         } catch (Exception $e) {
             echo "WebSocket error: " . $e->getMessage();
         }   

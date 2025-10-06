@@ -45,13 +45,18 @@
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    // $sql = "DELETE FROM job_order_request WHERE requestNo='EU-2025-06-001'";
+    // $sql = "DELETE FROM job_order_request WHERE requestNo='IU-2025-10-001'";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestCorrectionDate=null, requestCorrection=null, requestJobRemarks=null, assignTo=NULL, assignBy=NULL, assignToBioID=NULL, assignTargetStartDate=NULL, assignTargetEndDate=NULL, processedByID=NULL, requestStartDate=NULL, requestEvaluationDate=NULL, requestCompletedDate=NULL WHERE requestID=173";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestCorrectionDate=null, requestCorrection=null, requestJobRemarks=null, assignTo=NULL, assignBy=NULL, assignToBioID=NULL, assignTargetStartDate=NULL, assignTargetEndDate=NULL, processedByID=NULL, requestStartDate=NULL, requestEvaluationDate=NULL, requestCompletedDate=NULL WHERE requestID=196";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+
+    // echo "<pre>"; print_r($_SESSION); echo "</pre>";
+
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -228,6 +233,7 @@
                                 <p><strong>BioID:</strong> <span id="user-bioid">4497</span></p>
                                 <p><strong>Division:</strong> <span id="user-division">Finance Division</span></p>
                                 <p><strong>Section:</strong> <span id="user-section">Accounting Section</span></p>
+                                <p><strong>Exact Location:</strong> <span id="user-exactLocation">Accounting Section</span></p>
                             </div>
                         </div>
 

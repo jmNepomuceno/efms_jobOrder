@@ -5,6 +5,14 @@
     $current_date = date('m/d/Y - h:i:s A');
 
     include('../php/get_section.php');
+
+    $webservice = "http://192.168.42.10:8081/EmpPortal.asmx?wsdl";
+    $soap = new SOAPClient($webservice);
+    $param = array("division" => $_SESSION['division']);
+    $departments = $soap->Departments($param)->DepartmentsResult;
+    // echo "<pre>"; print_r($result); echo "</pre>";
+
+    // echo "<pre>"; print_r($_SESSION); echo "</pre>";
 ?>
 
 <div class="efms-container">
@@ -52,10 +60,28 @@
 
         </div>
 
-        <div class="section-div">
+        <!-- <div class="section-div">
             <span id="section-title-id">Location of Repair:</span>
-            <span id="section-val-id"><?php echo $section ?></span>
+            <span id="section-val-id"></span>
+        </div> -->
+
+        <div class="section-div">
+            <label for="section-val-id" id="section-title-id">Location of Repair:</label>
+            <select id="section-val-id" name="section" class="form-select">
+                <option value="" disabled selected>-- Select Department --</option>
+                <?php 
+                // Make sure EnumObject exists before looping
+                if (isset($departments->EnumObject)) {
+                    $enumObjects = is_array($departments->EnumObject) ? $departments->EnumObject : [$departments->EnumObject];
+                    foreach ($enumObjects as $dept) {
+                        echo '<option value="' . htmlspecialchars($dept->Description) . '">' . htmlspecialchars($dept->Description) . '</option>';
+                    }
+                }
+                ?>
+            </select>
         </div>
+
+
 
         <div class="description-div">
             <span id="description-title-id">Describe the details of your request: </span>

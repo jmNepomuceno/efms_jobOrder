@@ -14,7 +14,7 @@ try {
 
 
     try {
-        $client = new Client("ws://192.168.42.222:8080");
+        $client = new Client("ws://192.168.42.222:8082");
         $client->send(json_encode(["action" => "refreshCorrectionTableUser"]));
         echo "WebSocket message sent successfully!";
 

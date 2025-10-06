@@ -17,18 +17,24 @@
     $webservice = "http://192.168.42.10:8081/EmpPortal.asmx?wsdl";
     // $biousername = "lieannlyyy";
     // $password = 0210;
-    // $param = array("bioID" => 4497);
     
-    // $soap = new SOAPClient($webservice);
-    // $result = $soap->GetEmployee($param)->GetEmployeeResult;
-    // print_r($result);
+    $param = array("division" => 3);
+    
+    $soap = new SOAPClient($webservice);
+    // $result = $soap->Departments($param)->DepartmentsResult;
+    // echo "<pre>"; print_r($result); echo "</pre>";
+
+    $result = $soap->Departments($param)->DepartmentsResult;
+    echo "<pre>"; print_r($result); echo "</pre>";
+
+
     // echo $result->Photo;
 
     // $account = $result;
     // $array = json_decode(json_encode($account), true);
 
-    // // echo "<pre>"; print_r($account); echo "</pre>";
-    // // echo $account;
+    // echo "<pre>"; print_r($account); echo "</pre>";
+    // echo $account;
     // echo print_r($array, true);
 
 
@@ -43,12 +49,12 @@
     // $stmt->execute([3858]);
     // $tech_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql = "SELECT * FROM efms_technicians";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    // $sql = "SELECT * FROM efms_technicians";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+    // $data = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
-    echo "<pre>"; print_r($data); echo "</pre>";
+    // echo "<pre>"; print_r($data); echo "</pre>";
     // echo json_encode($tech_data);
 
 

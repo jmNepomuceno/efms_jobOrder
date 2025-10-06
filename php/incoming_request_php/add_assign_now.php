@@ -13,7 +13,7 @@
         $stmt->execute([$_SESSION['name'] , $_SESSION['user'] ,$current_date , $_POST['requestNo']]);
 
         // websocket server
-        $client = new Client("ws://192.168.42.222:8080");
+        $client = new Client("ws://192.168.42.222:8082");
         $client->send(json_encode(["action" => "refreshOnProcessTableUser"])); 
         $client->send(json_encode(["action" => "refreshPendingTableUser"]));
         $client->send(json_encode(["action" => "refreshPendingTableTech"]));

@@ -1,4 +1,4 @@
-const socket = new WebSocket("ws://192.168.42.222:8080");
+const socket = new WebSocket("ws://192.168.42.222:8082");
 
 // When the connection is open
 socket.onopen = function(event) {

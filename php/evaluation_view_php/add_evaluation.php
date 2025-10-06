@@ -24,7 +24,7 @@
     $stmt->execute([$evaluationJSON , $current_date, $requestNo]);
 
     // websocket server
-    $client = new Client("ws://192.168.42.222:8080");
+    $client = new Client("ws://192.168.42.222:8082");
     $client->send(json_encode(["action" => "refreshDoneEvaluationTableUser"]));
 
     $module = "request-evaluation-done";

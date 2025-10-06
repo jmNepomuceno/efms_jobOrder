@@ -32,7 +32,7 @@ try {
     ]);
 
     // websocket server
-    $client = new Client("ws://192.168.42.222:8080");
+    $client = new Client("ws://192.168.42.222:8082");
     $client->send(json_encode(["action" => "refreshEvaluationTableUser"]));
     $client->send(json_encode(["action" => "refreshOnProcessTableUser"]));
 

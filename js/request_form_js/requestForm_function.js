@@ -44,12 +44,14 @@ $(document).ready(function(){
 
         const data = {
             requestDate: $('#date-val-id').text(),
-            requestFrom: $('#section-val-id').text(),
+            requestExactFrom: $('#section-val-id').val(),
             requestCategory,
             requestSubCategory,
             requestDescription,
             requestStatus: "Pending",
         };
+
+        console.log(data)
 
         try {
             $.ajax({

@@ -104,92 +104,137 @@ body .left-container .logo-imgs img:nth-child(1){
 }
 
 
-body .left-container .login-div{
-    height: 50%;
-    width: 60%;
+/* 🎨 Container */
+body .left-container .login-div {
+    height: auto;
+    width: 65%;
+    padding: 40px 30px;
     border-radius: 20px;
-    padding:5px;
-
-    display:flex;
+    background: linear-gradient(180deg, #fff8f6 0%, #ffe7e0 100%);
+    
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap:20px;
+    gap: 25px;
 
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease;
 }
 
+body .left-container .login-div:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
 
-body .left-container .login-div span{
+/* 🧾 Header Text */
+body .left-container .login-div span {
     font-size: 2rem;
-    font-weight: 600;
-    color: #795548;
+    font-weight: 700;
+    color: #5c4033;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(124, 72, 50, 0.2);
 }
 
-body .left-container .login-div .credential-div{
-    width: 75%;
-    height: 50px;
+/* 🔐 Input Wrapper */
+body .left-container .login-div .credential-div {
+    width: 80%;
+    height: 55px;
 
-    display:flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: flex;
     align-items: center;
-
     border-radius: 10px;
-    background: #FFD8CC;
+    background: #ffe1d6;
+    border: 1px solid #e3bfb1;
+    transition: all 0.2s ease-in-out;
 }
 
-body .left-container .login-div .credential-div .credential-icon-div{
+body .left-container .login-div .credential-div:focus-within {
+    border: 1px solid #d99f8c;
+    box-shadow: 0 0 0 3px rgba(217, 159, 140, 0.2);
+}
+
+/* 👤 Icon Container */
+body .left-container .login-div .credential-div .credential-icon-div {
     height: 100%;
-    width: 17%;
+    width: 15%;
     background: #8f6556;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
 
-    display:flex;
-    flex-direction: row;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-body .left-container .login-div .credential-div .credential-icon-div i{
-    color:#ffffff;
-    font-size: 1.6rem;
+body .left-container .login-div .credential-div .credential-icon-div i {
+    color: #ffffff;
+    font-size: 1.4rem;
 }
 
-body .left-container .login-div .credential-div .credential-inputs{
+/* ✏️ Input Fields */
+body .left-container .login-div .credential-div .credential-inputs {
     height: 100%;
-    width: 83%;
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-left:1%;
-
+    width: 85%;
+    border: none;
     outline: none;
-    border:none;
+    padding: 0 10px;
+    font-size: 1.1rem;
+    color: #4b3229;
+    background: transparent;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
-
-    background: #FFD8CC;
-    font-weight: 300;
-    font-size: 1.2rem;
-
-
+    transition: all 0.2s ease;
 }
 
-body .left-container .login-div #login-btn{
-    background: #805a4d;
-    border:none;
-    border-radius: 20px;
-    width: 125px;
-    height: 40px;
-    color:white;
+body .left-container .login-div .credential-div .credential-inputs::placeholder {
+    color: #a88d80;
+    font-size: 1rem;
+}
+
+/* 🔗 Sign-up text */
+body .left-container .login-div h6 {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #5c4033;
+}
+
+body .left-container .login-div h6 a {
+    color: #b36a55;
+    text-decoration: none;
     font-weight: 600;
-    text-align: center;
-    font-size: 1.2rem;
-    letter-spacing: 1px;
 }
+
+body .left-container .login-div h6 a:hover {
+    text-decoration: underline;
+}
+
+/* 🚪 Login Button */
+body .left-container .login-div #login-btn {
+    background: linear-gradient(135deg, #8f6556, #a4725e);
+    border: none;
+    border-radius: 25px;
+    width: 140px;
+    height: 45px;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(143, 101, 86, 0.3);
+    transition: all 0.3s ease;
+}
+
+body .left-container .login-div #login-btn:hover {
+    background: linear-gradient(135deg, #a4725e, #8f6556);
+    transform: scale(1.05);
+    box-shadow: 0 6px 14px rgba(143, 101, 86, 0.4);
+}
+
+body .left-container .login-div #login-btn:active {
+    transform: scale(0.97);
+}
+
 
 #modal-notif .modal-content .modal-header{
     width: 100%;

@@ -74,6 +74,7 @@ const dataTable_incoming_request = () =>{
                                 <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
                                 <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
                                 <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
+                                <span class="request-by-exactLocation-td-div"><b>Exact Location:</b> ${response[i].requestBy.exact_location}</span>
                             </div>`,
                             `<div>${formattedDateHTML}</div>`,
                             `<div><span class="unit-td-span">${response[i].requestCategory}</span></div>`,
@@ -244,6 +245,7 @@ const dataTable_my_jobs = (what) =>{
                                     <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
                                     <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
                                     <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
+                                    <span class="request-by-exactLocation-td-div"><b>Exact Location:</b> ${response[i].requestBy.exact_location}</
                                 </div>`,
                                 `<div class="request-date-td-div">
                                     <span><b>Requested Date:</b> ${response[i].requestDate}</span>
@@ -519,11 +521,13 @@ $(document).ready(function(){
         const index = $('.incoming-req-row-class').index(this);
         const data = fetch_requestData[index];
         clicked_requestNo = data.requestNo
+        console.log(data)
         
         $('#user-name').text(data.requestBy.name);
         $('#user-bioid').text(data.requestBy.bioID);
         $('#user-division').text(data.requestBy.division);
         $('#user-section').text(data.requestBy.section);
+        $('#user-exactLocation').text(data.requestBy.exact_location);
     
         $('#job-order-id').text(`${data.requestNo}`);
         $('#date-requested').text(data.requestDate);
@@ -645,7 +649,12 @@ $(document).ready(function(){
     $(document).off('click', '#start-assess-btn').on('click', '#start-assess-btn', function() {     
         console.log()
         if($('#start-assess-btn').text() === 'Start Job'){
-            console.log(clicked_requestNo)
+            console.log(data = {
+                requestNo : clicked_requestNo,
+                assignTo : null,
+                assignStartDate : null,
+                assignEndDate : null,
+            })
             try {
                 $.ajax({
                     url: '../php/incoming_request_php/edit_toOnProcess_req.php',
