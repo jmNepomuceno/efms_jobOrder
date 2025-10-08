@@ -413,11 +413,65 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr t
     font-weight: 600;
     margin:0;
     padding:0;
-    top:-30%;
+    /* top:-30%;
     right:-22%;
-    position:absolute;
+    position:absolute; */
     color:#1a8754;
 }
+
+body .right-container .table-div .table-container #incoming-req-table tbody tr td .request-button-td-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+body .right-container .table-div .table-container #incoming-req-table tbody tr td .request-button-td-div button{
+    width: 100%;
+    height: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.request-date-td-div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+}
+
+.request-date-td-div span {
+  position: relative;
+}
+
+.interval-toggle, .interval-complete-toggle {
+  background: none;
+  border: none;
+  color: #1a8754;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-left: 5px;
+  transition: transform 0.2s ease;
+}
+
+.interval-toggle.active , .interval-complete-toggle.active {
+  transform: rotate(180deg);
+}
+
+.recept-interval, .complete-interval {
+  display: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 2px 0 0 18px;
+  color: #1a8754;
+}
+.recept-interval.show , .complete-interval.show {
+  display: inline-block;
+}
+
 
 @media only screen and (max-height: 800px){
     

@@ -37,10 +37,10 @@
                     <div class="user-info">
                         <i class="fa-solid fa-user"></i>
                         <div class="user-details">
-                            <p><strong> <span id="user-what">Requester</span> Name:</strong> <span id="user-name">John Marvin Nepomuceno</span></p>
-                            <p><strong>BioID:</strong> <span id="user-bioid">4497</span></p>
-                            <p><strong>Division:</strong> <span id="user-division">Finance Division</span></p>
-                            <p><strong>Section:</strong> <span id="user-section">Accounting Section</span></p>
+                            <p><strong> <span id="user-what">Requester</span> Name:</strong> <span id="user-nameTxt"></span></p>
+                            <p><strong>BioID:</strong> <span id="user-bioid"></span></p>
+                            <p><strong>Division:</strong> <span id="user-division"></span></p>
+                            <p><strong>Section:</strong> <span id="user-section"></span></p>
                         </div>
                     </div>
 

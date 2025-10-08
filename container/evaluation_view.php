@@ -28,26 +28,26 @@
                     <div class="user-info">
                         <i class="fa-solid fa-user"></i>
                         <div class="user-details">
-                            <p><strong> <span id="user-what">Requester</span> Name:</strong> <span id="user-name">John Marvin Nepomuceno</span></p>
-                            <p><strong>BioID:</strong> <span id="user-bioid">4497</span></p>
-                            <p><strong>Division:</strong> <span id="user-division">Finance Division</span></p>
-                            <p><strong>Section:</strong> <span id="user-section">Accounting Section</span></p>
+                            <p><strong> <span id="user-what">Requester</span> Name:</strong> <span id="user-nameTxt"></span></p>
+                            <p><strong>BioID:</strong> <span id="user-bioid"></span></p>
+                            <p><strong>Division:</strong> <span id="user-division"></span></p>
+                            <p><strong>Section:</strong> <span id="user-section"></span></p>
                         </div>
                     </div>
 
                     <!-- Job Order Information -->
                     <div class="job-order-info">
                         <h5 class="info-heading">Job Order Request Information</h5>
-                        <p><strong>Job Order ID:</strong> <span id="job-order-id">JO-2025-001</span></p>
-                        <p><strong>Date Requested:</strong> <span id="date-requested">March 11, 2025</span></p>
-                        <p><strong>Request Type:</strong> <span id="request-type">IT Support</span></p>
+                        <p><strong>Job Order ID:</strong> <span id="job-order-id"></span></p>
+                        <p><strong>Date Requested:</strong> <span id="date-requested"></span></p>
+                        <p><strong>Request Type:</strong> <span id="request-type"></span></p>
                     </div>
                 </div>
 
                 <div class="request-description">
                     <h5 class="info-heading">Request Description</h5>
                     <p id="request-description">
-                        The workstation in the accounting office has encountered a persistent issue where the system fails to load critical accounting software.
+                       
                     </p>
                 </div>
 

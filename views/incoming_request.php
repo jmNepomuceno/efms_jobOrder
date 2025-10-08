@@ -49,14 +49,11 @@
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestCorrectionDate=null, requestCorrection=null, requestJobRemarks=null, assignTo=NULL, assignBy=NULL, assignToBioID=NULL, assignTargetStartDate=NULL, assignTargetEndDate=NULL, processedByID=NULL, requestStartDate=NULL, requestEvaluationDate=NULL, requestCompletedDate=NULL WHERE requestID=196";
+    // $sql = "UPDATE job_order_request SET requestStatus='Pending', processedBy=null, requestCorrectionDate=null, requestCorrection=null, requestJobRemarks=null, assignTo=NULL, assignBy=NULL, assignToBioID=NULL, assignTargetStartDate=NULL, assignTargetEndDate=NULL, processedByID=NULL, requestStartDate=NULL, requestEvaluationDate=NULL, requestCompletedDate=NULL WHERE requestID=198";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
     // echo "<pre>"; print_r($_SESSION); echo "</pre>";
-
-    
-    
 ?>
 
 <!DOCTYPE html>
@@ -127,10 +124,6 @@
 
                 <select class="form-control" id="requestType-select">
                     <option value="" disabled selected>Select Request Type</option>
-                    <option value="plumbing">Plumbing</option>
-                    <option value="electrical">Electrical</option>
-                    <option value="carpentry">Carpentry</option>
-                    <option value="met">MET</option>
                 </select>
 
                 <input type="date" class="form-control" id="dateFrom-input">
@@ -199,6 +192,7 @@
                             <th>DATE REQUESTED</th>
                             <th>UNIT</th>
                             <th>CATEGORY</th>
+                            <th>ACTION</th>
                         </tr>
                     </thead>
 

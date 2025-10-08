@@ -79,6 +79,7 @@ const dataTable_incoming_request = () =>{
                             `<div>${formattedDateHTML}</div>`,
                             `<div><span class="unit-td-span">${response[i].requestCategory}</span></div>`,
                             `<div><span class="category-td-span">${response[i].requestSubCategory}</span></div>`,
+                            `<div class="request-button-td-div"><button class="request-action-button btn btn-secondary">View Request</button></div>`,
                         ]);
                     }  
 
@@ -95,6 +96,7 @@ const dataTable_incoming_request = () =>{
                             { title: "DATE REQUESTED", data:2 },
                             { title: "UNIT", data:3 },
                             { title: "CATEGORY", data:4 },
+                            { title: "ACTION", data:5 },
                         ],
                         columnDefs: [
                             { targets: 0, createdCell: function(td) { $(td).addClass('item-req-no-td'); } },
@@ -102,6 +104,7 @@ const dataTable_incoming_request = () =>{
                             { targets: 2, createdCell: function(td) { $(td).addClass('item-date-td'); } },
                             { targets: 3, createdCell: function(td) { $(td).addClass('item-unit-td'); } },
                             { targets: 4, createdCell: function(td) { $(td).addClass('item-category-td'); } },
+                            { targets: 5, createdCell: function(td) { $(td).addClass('item-action-td'); } },
                         ],
                         "autoWidth": false, // Prevents auto column sizing
                         "paging": false,
@@ -200,12 +203,28 @@ const getTimeDifference = (start, end) => {
 }
 
 const dataTable_my_jobs = (what) =>{ 
-
+    console.log($('#division-select option:selected').text())
     try {
+        const filters = {
+            what: what,
+            job_no: $('#job-no-input').val(),
+            division: $('#division-select option:selected').text().trim() === "Select Division" ? null : $('#division-select option:selected').text().trim(),
+            section: $('#section-select').val(),
+            lastname: $('#lastname-input').val(),
+            firstname: $('#firstname-input').val(),
+            bioID: $('#bioId-input').val() ? parseInt($('#bioId-input').val()) : $('#bioId-input').val(),
+            status: $('#status-select').val(),
+            technician: $('#technician-select').val(),
+            requestType: $('#requestType-select').val(),
+            dateFrom: $('#dateFrom-input').val(),
+            dateTo: $('#dateTo-input').val()
+        };
+        console.log(filters)
+
         $.ajax({
             url: '../../php/incoming_request_php/fetch_myJobs.php',
             method: "POST",
-            data : {what},
+            data : {filters},
             dataType : "json",
             success: function(response) {
                 $('#assign-assess-btn').css('display', 'none'); // cancel-assign-assess-btn
@@ -245,18 +264,21 @@ const dataTable_my_jobs = (what) =>{
                                     <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
                                     <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
                                     <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
-                                    <span class="request-by-exactLocation-td-div"><b>Exact Location:</b> ${response[i].requestBy.exact_location}</
+                                    <span class="request-by-exactLocation-td-div"><b>Exact Location:</b> ${response[i].requestBy.exact_location}</>
                                 </div>`,
                                 `<div class="request-date-td-div">
                                     <span><b>Requested Date:</b> ${response[i].requestDate}</span>
                                     <span>
                                         <b>Reception Date:</b> 
                                         ${response[i].requestStartDate}
+                                        <button class="interval-toggle">▼</button>
                                         <h6 class='recept-interval' style='${interval_style}'>+${recept_interval}</h6>
                                     </span>
                                 </div>`,
                                 `<div><span class="request-category-span">${response[i].requestCategory}</span></div>`,
                                 `<div><span class="request-subcategory-span">${response[i].requestSubCategory}</span></div>`,
+                                `<div class="request-button-td-div"><button class="request-action-button-myJob btn btn-secondary">View Request</button></div>`,
+
                             ])
                         }
 
@@ -269,6 +291,8 @@ const dataTable_my_jobs = (what) =>{
                                     <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
                                     <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
                                     <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
+                                    <span class="request-by-exactLocation-td-div"><b>Exact Location:</b> ${response[i].requestBy.exact_location}</>
+
                                 </div>`,
                                 `<div class="request-date-td-div">
                                     <span><b>Requested Date:</b> ${response[i].requestDate}</span>
@@ -277,6 +301,8 @@ const dataTable_my_jobs = (what) =>{
                                 </div>`,
                                 `<div><span class="category-td-span">${response[i].requestCategory}</span></div>`,
                                 `<div><span class="sub-category-td-span">${response[i].requestSubCategory}</span></div>`,
+                                `<div class="request-button-td-div"><button class="request-action-button-myJob btn btn-secondary">View Request</button></div>`,
+
                             ])
                         }
 
@@ -316,16 +342,23 @@ const dataTable_my_jobs = (what) =>{
                                     <span class="request-by-name-td-div">${response[i].requestBy.name}</span>
                                     <span class="request-by-bioID-td-div"><b>Bio ID:</b> ${response[i].requestBy.bioID}</span>
                                     <span class="request-by-division-td-div"><b>Division:</b> ${response[i].requestBy.division}</span>
+                                    <span class="request-by-exactLocation-td-div"><b>Exact Location:</b> ${response[i].requestBy.exact_location}</>
                                     <span class="request-by-section-td-div"><b>Section:</b> ${response[i].requestBy.section}</span>
                                 </div>`,
                                 `<div class="request-date-td-div">
                                     <span><b>Requested Date:</b> ${response[i].requestDate}</span>
                                     <span><b>Reception Date:</b> ${response[i].requestStartDate}</span>
                                     <span><b>For Evaluation Date:</b> ${response[i].requestEvaluationDate}</span>
-                                    <span><b>Completed Date:</b> ${response[i].requestCompletedDate} <i style='${style}'> (${formattedTimeDiff}) </i> </span>
+                                    <span>
+                                        <b>Completed Date:</b> 
+                                        ${response[i].requestCompletedDate} 
+                                        <button class="interval-complete-toggle">▼</button> 
+                                        <i class="complete-interval" style='${style}'> (${formattedTimeDiff}) </i>
+                                    </span>
                                 </div>`,
                                 `<div><span class="category-td-span">${response[i].requestCategory}</span></div>`,
                                 `<div><span class="sub-category-td-span">${response[i].requestSubCategory}</span></div>`,
+                                `<div class="request-button-td-div"><button class="request-action-button-myJob btn btn-secondary">View Request</button></div>`,
                             ])
                         }
 
@@ -345,6 +378,7 @@ const dataTable_my_jobs = (what) =>{
                                 </div>`,
                                 `<div><span class="category-td-span">${response[i].requestCategory}</span></div>`,
                                 `<div><span class="sub-category-td-span">${response[i].requestSubCategory}</span></div>`,
+                                `<div class="request-button-td-div"><button class="request-action-button-myJob btn btn-secondary">View Request</button></div>`,
                             ])
                         }
                        
@@ -363,6 +397,7 @@ const dataTable_my_jobs = (what) =>{
                             { title: "DATE", data:2 },
                             { title: "UNIT", data:3 },
                             { title: "CATEGORY", data:4 },
+                            { title: "ACTION", data:5 },
                         ],
                         columnDefs: [
                             { targets: 0, createdCell: function(td) { $(td).addClass('item-req-no-td'); } },
@@ -370,6 +405,7 @@ const dataTable_my_jobs = (what) =>{
                             { targets: 2, createdCell: function(td) { $(td).addClass('item-date-td'); } },
                             { targets: 3, createdCell: function(td) { $(td).addClass('item-unit-td'); } },
                             { targets: 4, createdCell: function(td) { $(td).addClass('item-category-td'); } },
+                            { targets: 5, createdCell: function(td) { $(td).addClass('item-action-td'); } },
                         ],
                         "autoWidth": false, // Prevents auto column sizing 
                         "paging": false,
@@ -481,6 +517,85 @@ const convertDate = (rawDate) =>{
     return `${month}/${day}/${year} - ${hours}:${minutes}:${seconds} ${ampm}`;
 }
 
+const _init = () =>{
+    const technicianSelect = $('#technician-select');
+
+    $.ajax({
+        url: '../php/incoming_request_php/fetch_technicians.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (technicians) {
+            technicianSelect.find('option:not(:first)').remove();
+
+            technicians.forEach(tech => {
+                const fullName = `${tech.firstName} ${tech.lastName}`;
+                technicianSelect.append(
+                    `<option value="${tech.techBioID}">${tech.techBioID} - ${fullName} (${tech.techCategory})</option>`
+                );
+            });
+        },
+        error: function (xhr) {
+            console.error('Error loading technicians:', xhr.responseText);
+        }
+    });
+
+
+    const statusSelect = $('#status-select');
+    const requestTypeSelect = $('#requestType-select');
+
+    // 1️⃣ Load all categories first
+    $.ajax({
+        url: '../php/incoming_request_php/fetch_categories.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (categories) {
+            statusSelect.find('option:not(:first)').remove();
+            categories.forEach(cat => {
+                statusSelect.append(
+                    `<option value="${cat.category_code}">${cat.category_description}</option>`
+                );
+            });
+        },
+        error: function (xhr) {
+            console.error('Error loading categories:', xhr.responseText);
+        }
+    });
+
+    // 2️⃣ When user selects a category, fetch subcategories
+    statusSelect.on('change', function () {
+        const selectedCategory = $(this).val();
+
+        // Clear old subcategories
+        requestTypeSelect.find('option:not(:first)').remove();
+
+        if (!selectedCategory) return;
+
+        $.ajax({
+            url: '../php/incoming_request_php/fetch_sub_categories.php',
+            method: 'GET',
+            data: { category_code: selectedCategory },
+            dataType: 'json',
+            success: function (subcategories) {
+                console.log(subcategories)
+                subcategories.forEach(sub => {
+                    requestTypeSelect.append(
+                        `<option value="${sub}">${sub}</option>`
+                    );
+                });
+            },
+            error: function (xhr) {
+                console.error('Error loading subcategories:', xhr.responseText);
+            }
+        });
+    });
+
+    $('#technician-select').select2({
+        placeholder: "Select IMISS Technician",
+        allowClear: true,
+        
+    });
+}
+
 socket.onmessage = function(event) {
     let data = JSON.parse(event.data);
     console.log("Received from WebSocket:", data); // Debugging
@@ -509,16 +624,18 @@ socket.onmessage = function(event) {
 $(document).ready(function(){
     dataTable_incoming_request()
     fetchNotifValue()
+    _init()
 
     // Set interval to fetch data every 10 seconds
     // setInterval(function() {
     //     dataTable_incoming_request();
     // }, 10000); // 10 seconds (10000ms)
 
-    $(document).off('click', '.incoming-req-row-class').on('click', '.incoming-req-row-class', function() {        
+
+    $(document).off('click', '.request-action-button').on('click', '.request-action-button', function() {        
         // fetch data-photo
         console.log(491)
-        const index = $('.incoming-req-row-class').index(this);
+        const index = $('.request-action-button').index(this);
         const data = fetch_requestData[index];
         clicked_requestNo = data.requestNo
         console.log(data)
@@ -563,8 +680,8 @@ $(document).ready(function(){
         request_modal.show();
     });
 
-    $(document).off('click', '.my-job-row-class').on('click', '.my-job-row-class', function() {        
-        const index = $('.my-job-row-class').index(this);
+    $(document).off('click', '.request-action-button-myJob').on('click', '.request-action-button-myJob', function() {        
+        const index = $('.request-action-button-myJob').index(this);
         const data = fetch_techMyJob[index];
         clicked_requestNo_myJob = data.requestNo
         console.log(fetch_techMyJob) 
@@ -652,6 +769,7 @@ $(document).ready(function(){
             console.log(data = {
                 requestNo : clicked_requestNo,
                 assignTo : null,
+                assignToBioID : null,
                 assignStartDate : null,
                 assignEndDate : null,
             })
@@ -662,6 +780,7 @@ $(document).ready(function(){
                     data: {
                         requestNo : clicked_requestNo,
                         assignTo : null,
+                        assignToBioID : 0,
                         assignStartDate : null,
                         assignEndDate : null,
                         
@@ -778,6 +897,16 @@ $(document).ready(function(){
                 //         assignEndDate : $('#target-start-datetime').val(),
                 //     }
                 // )
+
+                console.log(
+                    data = {
+                        requestNo : clicked_requestNo,
+                        assignTo : $('#assign-tech-select').val(),
+                        assignToBioID : $('#assign-tech-select option:selected').data('techbioid'),
+                        assignStartDate : convertDate($('#target-start-datetime').val()),
+                        assignEndDate : convertDate($('#target-end-datetime').val()),
+                    }
+                )
 
                 $.ajax({
                     url: '../php/incoming_request_php/edit_toOnProcess_req.php',
@@ -1016,4 +1145,27 @@ $(document).ready(function(){
             });
         }
     });
+
+    $(document).on('click', '.interval-toggle', function() {
+        const intervalText = $(this).siblings('.recept-interval');
+        intervalText.toggleClass('show');
+        $(this).toggleClass('active');
+    });
+
+    $(document).on('click', '.interval-complete-toggle', function() {
+        console.log('here')
+        const intervalText = $(this).siblings('.complete-interval');
+        intervalText.toggleClass('show');
+        $(this).toggleClass('active');
+    });
+
+    $(document).on('click', '#search-btn', function() {
+        // Re-run the datatable with filters applied
+        dataTable_my_jobs(clicked_sub_nav);
+    });
+
+    // $('.search-div input, .search-div select').on('change keyup', function() {
+    //     // Optional debounce can be added
+    //     dataTable_my_jobs(clicked_sub_nav);
+    // });
 })

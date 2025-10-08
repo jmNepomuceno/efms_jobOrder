@@ -104,8 +104,9 @@ $(document).ready(function(){
         const index = $('.view-request-btn').index(this);
         const data = fetch_viewRequestData[index]
         console.log(data)
+        console.log(data.requestBy.name)
         
-        $('#user-name').text(data.requestBy.name);
+        $('#user-nameTxt').text(data.requestBy.name);
         $('#user-bioid').text(data.requestBy.bioID);
         $('#user-division').text(data.requestBy.division);
         $('#user-section').text(data.requestBy.section);
