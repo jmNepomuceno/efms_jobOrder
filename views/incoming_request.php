@@ -45,7 +45,7 @@
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
-    // $sql = "DELETE FROM job_order_request WHERE requestNo='IU-2025-10-001'";
+    // $sql = "DELETE FROM job_order_request WHERE requestNo='MU-2025-10-001'";
     // $stmt = $pdo->prepare($sql);
     // $stmt->execute();
 
@@ -119,7 +119,7 @@
                 </select>
 
                 <select class="form-control" id="technician-select">
-                    <option value="" disabled selected>Select IMISS Technician</option>
+                    <option value="" disabled selected>Select EFMS Technician</option>
                 </select>
 
                 <select class="form-control" id="requestType-select">

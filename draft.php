@@ -14,11 +14,11 @@
 
     // echo "<pre>"; print_r($job_order_request); echo "</pre>";
 
-    // $webservice = "http://192.168.42.10:8081/EmpPortal.asmx?wsdl";
-    // $param = array("division" => 3);
-    // $soap = new SOAPClient($webservice);
-    // $result = $soap->Departments($param)->DepartmentsResult;
-    // echo "<pre>"; print_r($result); echo "</pre>";
+    $webservice = "http://192.168.42.10:8081/EmpPortal.asmx?wsdl";
+    $param = array("bioID" => 4497);
+    $soap = new SOAPClient($webservice);
+    $result = $soap->GetEmployee($param)->GetEmployeeResult;
+    echo "<pre>"; print_r($result); echo "</pre>";
 
 
     // echo $result->Photo;
@@ -60,10 +60,10 @@
     // Prismatic Pizza : 1 Sugar apple + 1 Violet corn + 3 Bone blossom
 
 
-    $sql = "SELECT requestBy FROM job_order_request";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    // $sql = "SELECT requestBy FROM job_order_request";
+    // $stmt = $pdo->prepare($sql);
+    // $stmt->execute();
+    // $data = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
-    echo "<pre>"; print_r($data); echo "</pre>";
+    // echo "<pre>"; print_r($data); echo "</pre>";
 ?>

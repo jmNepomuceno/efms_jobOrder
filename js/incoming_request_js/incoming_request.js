@@ -696,9 +696,11 @@ $(document).ready(function(){
         $('#request-type').text(data.requestCategory);
     
         $('#request-description').text(data.requestDescription);
+        $('#user-exactLocation').text(data.requestBy.exact_location);
+
 
         $('.modal-title').text("Job Order Technician Assessment Details || " + clicked_sub_nav)
-        $('#user-what').text("Technician")
+        // $('#user-what').text("Technician")
         $('.assessment-section').css('display' , 'none')
         $('.tech-assessment-section').css('display' , 'flex')
         $('.tech-remarks-textarea').val("")
@@ -810,52 +812,73 @@ $(document).ready(function(){
                     url: '../php/incoming_request_php/edit_toEvaluation_req.php',
                     method: "POST",
                     data: {
-                        requestNo : clicked_requestNo_myJob,
-                        requestJobRemarks : $('.tech-remarks-textarea').val()
+                        requestNo: clicked_requestNo_myJob,
+                        requestJobRemarks: $('.tech-remarks-textarea').val()
                     },
-                    dataType : "json",
+                    dataType: "json",
                     success: function(response) {
                         try { 
-                            dataTable_my_jobs("On-Process")
-                            request_modal.hide()
-                            
-                            console.log(response)
+                            // Update table and modal
+                            dataTable_my_jobs("On-Process");
+                            request_modal.hide();
 
-                            if(response.count_yourJob > 0){
-                                $('#your-job-notif-span').text(response.count_yourJob)
-                                $('#your-job-notif-span').css('display' , 'block')
-                            }else{
-                                $('#your-job-notif-span').text(0)
-                                $('#your-job-notif-span').css('display' , 'none')
+                            console.log(response);
+
+                            // ✅ Show success Swal
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Request Updated!',
+                                text: 'The job has been successfully moved to Evaluation.',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+
+                            // Update notification counts
+                            if (response.count_yourJob > 0) {
+                                $('#your-job-notif-span').text(response.count_yourJob).show();
+                            } else {
+                                $('#your-job-notif-span').text(0).hide();
                             }
 
-                            if(response.count_onProcess > 0){
-                                $('#on-process-notif-span').text(response.count_onProcess)
-                                $('#on-process-notif-span').css('display' , 'block')
-                            }else{
-                                $('#on-process-notif-span').text(0)
-                                $('#on-process-notif-span').css('display' , 'none')
+                            if (response.count_onProcess > 0) {
+                                $('#on-process-notif-span').text(response.count_onProcess).show();
+                            } else {
+                                $('#on-process-notif-span').text(0).hide();
                             }
 
-                            if(response.count_evaluation > 0){
-                                $('#for-evaluation-notif-span').text(response.count_evaluation)
-                                $('#for-evaluation-notif-span').css('display' , 'block')
-                            }else{
-                                $('#for-evaluation-notif-span').text(0)
-                                $('#for-evaluation-notif-span').css('display' , 'none')
+                            if (response.count_evaluation > 0) {
+                                $('#for-evaluation-notif-span').text(response.count_evaluation).show();
+                            } else {
+                                $('#for-evaluation-notif-span').text(0).hide();
                             }
 
                         } catch (innerError) {
                             console.error("Error processing response:", innerError);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Processing Error',
+                                text: 'Something went wrong while updating the UI.'
+                            });
                         }
                     },
                     error: function(xhr, status, error) {
                         console.error("AJAX request failed:", error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Update Failed',
+                            text: 'Unable to move request to Evaluation. Please try again.'
+                        });
                     }
                 });
             } catch (ajaxError) {
                 console.error("Unexpected error occurred:", ajaxError);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Unexpected Error',
+                    text: 'An unexpected error occurred. Please refresh and try again.'
+                });
             }
+
         }
         else  if($('#start-assess-btn').text() === 'Send'){
             console.log('here')

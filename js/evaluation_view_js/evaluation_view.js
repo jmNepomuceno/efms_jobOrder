@@ -8,7 +8,7 @@ if (!modal_view_eval_form) {
 }
 
 if (!modal_eval_form) {
-    modal_eval_form = new bootstrap.Modal(document.getElementById('modal-eval-form'));
+    modal_eval_form = new bootstrap.Modal(document.getElementById('modal-eval-form-evaluated'));
 }
 
 function addRefreshButton() {
@@ -112,36 +112,71 @@ socket.onmessage = function(event) {
 // modal_eval_form.show()
 $(document).ready(function(){
     fetch_dataTable() 
+    console.log($('#submit-eval-modal-btn'))
     $(document).off('click', '#submit-modal-btn').on('click', '#submit-modal-btn', function() {        
         try {
             $.ajax({
                 url: '../../php/pending_view_php/cancel_request.php',
-                data : { 
-                    requestNo: clicked_requestNo, 
-                    cancelRequest : $('#cancel-input-id').val() 
-                },
                 method: "POST",
+                data: { 
+                    requestNo: clicked_requestNo, 
+                    cancelRequest: $('#cancel-input-id').val()
+                },
                 success: function(response) {
-                    console.log(response)
+                    console.log(response);
                     try {
-                        if(response === "success"){
-                            modal_cancel_form.hide()
-                            fetch_dataTable()
+                        if (response.trim() === "success") {
+                            modal_cancel_form.hide();
+                            fetch_dataTable();
+
+                            // ✅ Success Swal
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Request Cancelled',
+                                text: 'Your request has been successfully cancelled.',
+                                timer: 2000,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            // ⚠️ If response isn’t “success”
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Cancellation Failed',
+                                text: 'Unable to cancel your request. Please try again.',
+                                confirmButtonText: 'OK'
+                            });
                         }
                     } catch (innerError) {
                         console.error("Error processing response:", innerError);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Processing Error',
+                            text: 'Something went wrong while updating the page.'
+                        });
                     }
                 },
                 error: function(xhr, status, error) {
                     console.error("AJAX request failed:", error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Request Failed',
+                        text: 'Unable to connect to the server. Please try again later.'
+                    });
                 }
             });
         } catch (ajaxError) {
             console.error("Unexpected error occurred:", ajaxError);
+            Swal.fire({
+                icon: 'error',
+                title: 'Unexpected Error',
+                text: 'An unexpected error occurred. Please refresh and try again.'
+            });
         }
+
     });
 
     $(document).off('click', '.view-eval-req-btn').on('click', '.view-eval-req-btn', function() {
+        $('#submit-eval-modal-btn').css('display' , 'block !important')
         const index = $('.view-eval-req-btn').index(this);
         const data = fetch_viewRequestData[index]
         clicked_requestNo = data.requestNo

@@ -87,6 +87,13 @@ if ($pending_count >= 1) {
             $client = new Client("ws://192.168.42.222:8082");
             $client->send(json_encode(["action" => "refreshIncomingTable"]));
             $client->send(json_encode(["action" => "refreshPendingTableUser"]));
+
+            echo "success";
+
+        //     echo json_encode([
+        //     "success" => true,
+        //     "reception_time" => date("Y-m-d H:i:s")
+        // ]);
         } catch (Exception $e) {
             echo "WebSocket error: " . $e->getMessage();
         }   
@@ -100,4 +107,3 @@ if ($pending_count >= 1) {
         echo "error";
     }
 }
-?>

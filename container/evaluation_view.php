@@ -79,7 +79,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal-eval-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+<!-- <div class="modal fade" id="modal-eval-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false"> -->
+<div class="modal fade" id="modal-eval-form-evaluated" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -150,8 +151,8 @@
 
                     <!-- Modal Footer -->
                     <div class="modal-footer custom-footer">
-                        <button id="close-modal-btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit Evaluation</button>
+                        <button id="close-modal-btn" type="button" class="btn btn-secondary yawa-btn" data-bs-dismiss="modal">Close</button>
+                        <button id="submit-eval-modal-btn" type="submit" class="btn btn-primary">Submit Evaluation</button>
                     </div>
                 </form>
             </div>

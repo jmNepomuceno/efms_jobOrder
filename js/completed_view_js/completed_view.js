@@ -1,4 +1,4 @@
-var modal_completed_form, modal_eval_form
+var modal_completed_form, modal_eval_form_completed
 var clicked_requestID;
 var fetch_viewRequestData;
 var clicked_requestNo = 0;
@@ -8,8 +8,8 @@ if (!modal_completed_form) {
     modal_completed_form = new bootstrap.Modal(document.getElementById('modal-view-completed-form'));
 }
 
-if (!modal_eval_form) {
-    modal_eval_form = new bootstrap.Modal(document.getElementById('modal-eval-form'));
+if (!modal_eval_form_completed) {
+    modal_eval_form_completed = new bootstrap.Modal(document.getElementById('modal-eval-form-completed'));
 }
 
 function addRefreshButton() {
@@ -112,6 +112,7 @@ var fetch_dataTable = () =>{
 // modal_eval_form.show()
 $(document).ready(function(){
     fetch_dataTable() 
+    console.log($('#submit-eval-modal-btn'))
 
     $(document).off('click', '.view-completed-req-btn').on('click', '.view-completed-req-btn', function() {
         const index = $('.view-completed-req-btn').index(this);
@@ -158,6 +159,7 @@ $(document).ready(function(){
     })
 
     $(document).off('click', '.view-eval-form-btn').on('click', '.view-eval-form-btn', function() {
+        $('#submit-eval-modal-btn').css('display' , 'none !important')
         const index = $('.view-eval-form-btn').index(this);
         const data = fetch_viewRequestData[index];
         clicked_requestNo = data.requestNo;
@@ -183,7 +185,7 @@ $(document).ready(function(){
         }
     
         // Show the modal
-        modal_eval_form.show();
+        modal_eval_form_completed.show();
     });
     
 })

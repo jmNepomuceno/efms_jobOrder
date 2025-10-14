@@ -92,17 +92,22 @@ function refreshNavBtnStyle() {
     }
 }
 
-function removeAllJS(){
-    $('script[src*="requestForm_function.js"]').remove();
-    $('script[src*="requestForm_traverse.js"]').remove();
-
-    $('script[src*="pending_view.js"]').remove();
+function removeAllJS() {
+    // Remove all view-related JS files
+    $('script[src*="_view_js/"]').remove(); 
+    $('script[src*="request_form_js/"]').remove();
 }
 
-function removeAllCSS(){
+function removeAllCSS() {
+    // Remove all view-related CSS files
+    $('link[href*="_view.css"]').remove();
     $('link[href*="efms_container.css"]').remove();
-    $('link[href*="pending_view.css"]').remove();
 }
+
+function removeAllModals() {
+    $('.modal').remove(); // remove all bootstrap modals from DOM
+}
+
 
 $(document).ready(function(){
     onLoad();
@@ -111,121 +116,58 @@ $(document).ready(function(){
         handleLogin();
     });
     
-    $('#request-form-nav-btn').click(function() {
+    function loadView(buttonId, containerFile, cssFile, jsFiles = []) {
         refreshNavBtnStyle();
-        $(this).css('background-color', '#f2f2f2');  
-    
-        // Load efms_container.php into .main-container
-        $('.main-container').empty();
-        $('.main-container').load('../container/efms_container.php', function(response, status, xhr) {
-            if (status === "success") {
-                removeAllJS()
-                removeAllCSS()
+        $(buttonId).css('background-color', '#f2f2f2');
 
-                let version = new Date().getTime(); // Generates a unique timestamp
-                $('head').append(`<link rel="stylesheet" href="../css/efms_container.css?v=${version}">`);
-                $('body').append(`<script src="../js/request_form_js/requestForm_function.js?v=${version}"><\/script>`);
-                $('body').append(`<script src="../js/request_form_js/requestForm_traverse.js?v=${version}"><\/script>`);
+        $('.main-container').empty().load(`../container/${containerFile}`, function(response, status, xhr) {
+            if (status === "success") {
+                removeAllJS();
+                removeAllCSS();
+
+                let version = new Date().getTime();
+                $('head').append(`<link rel="stylesheet" href="../css/${cssFile}?v=${version}">`);
+                jsFiles.forEach(js => {
+                    $('body').append(`<script src="../js/${js}?v=${version}"><\/script>`);
+                });
             } else {
                 console.error("Failed to load EFMS container:", xhr.statusText);
             }
         });
+    }
+
+    $('#request-form-nav-btn').click(() => 
+        loadView('#request-form-nav-btn', 'efms_container.php', 'efms_container.css', [
+            'request_form_js/requestForm_function.js',
+            'request_form_js/requestForm_traverse.js'
+        ])
+    );
+
+    $('#pending-nav-btn').click(() => 
+        loadView('#pending-nav-btn', 'pending_view.php', 'pending_view.css', ['pending_view_js/pending_view.js'])
+    );
+
+    $('#process-nav-btn').click(() => 
+        loadView('#process-nav-btn', 'onProcess_view.php', 'onProcess_view.css', ['onProcess_view_js/onProcess_view.js'])
+    );
+
+    $('#correction-nav-btn').click(() => 
+        loadView('#correction-nav-btn', 'correction_view.php', 'correction_view.css', ['correction_view_js/correction_view.js'])
+    );
+
+    $('#evaluation-req-nav-btn').click(() => {
+        removeAllModals(); // <--- add this
+        loadView('#evaluation-req-nav-btn', 'evaluation_view.php', 'evaluation_view.css', ['evaluation_view_js/evaluation_view.js'])
+    })
+
+        
+
+    $('#completed-nav-btn').click(() => {
+       removeAllModals();  
+    loadView('#completed-nav-btn', 'completed_view.php', 'completed_view.css', ['completed_view_js/completed_view.js'])
     });
 
-    $('#pending-nav-btn').click(function() {
-        refreshNavBtnStyle();
-        $('#pending-nav-btn').css('background-color', '#f2f2f2');  
 
-        $('.main-container').empty();
-        $('.main-container').load('../container/pending_view.php', function(response, status, xhr) {
-            if (status === "success") {
-                removeAllJS()
-                removeAllCSS()
-
-                let version = new Date().getTime(); // Generates a unique timestamp
-                $('head').append(`<link rel="stylesheet" href="../css/pending_view.css?v=${version}">`);
-                $('body').append(`<script src="../js/pending_view_js/pending_view.js?v=${version}"><\/script>`);
-            } else {
-                console.error("Failed to load EFMS container:", xhr.statusText);
-            }
-        });
-    });
-
-    $('#process-nav-btn').click(function() {
-        refreshNavBtnStyle();
-        $('#process-nav-btn').css('background-color', '#f2f2f2');  
-
-        $('.main-container').empty();
-        $('.main-container').load('../container/onProcess_view.php', function(response, status, xhr) {
-            if (status === "success") {
-                removeAllJS()
-                removeAllCSS()
-
-                let version = new Date().getTime(); // Generates a unique timestamp
-                $('head').append(`<link rel="stylesheet" href="../css/onProcess_view.css?v=${version}">`);
-                $('body').append(`<script src="../js/onProcess_view_js/onProcess_view.js?v=${version}"><\/script>`);
-            } else {
-                console.error("Failed to load EFMS container:", xhr.statusText);
-            }
-        });
-    });
-
-    $('#correction-nav-btn').click(function() {
-        refreshNavBtnStyle();
-        $('#correction-nav-btn').css('background-color', '#f2f2f2');  
-
-        $('.main-container').empty();
-        $('.main-container').load('../container/correction_view.php', function(response, status, xhr) {
-            if (status === "success") {
-                removeAllJS()
-                removeAllCSS()
-
-                let version = new Date().getTime(); // Generates a unique timestamp
-                $('head').append(`<link rel="stylesheet" href="../css/correction_view.css?v=${version}">`);
-                $('body').append(`<script src="../js/correction_view_js/correction_view.js?v=${version}"><\/script>`);
-            } else {
-                console.error("Failed to load EFMS container:", xhr.statusText);
-            }
-        });
-    });
-
-    $('#evaluation-req-nav-btn').click(function() {
-        refreshNavBtnStyle();
-        $('#evaluation-nav-btn').css('background-color', '#f2f2f2');  
-
-        $('.main-container').empty();
-        $('.main-container').load('../container/evaluation_view.php', function(response, status, xhr) {
-            if (status === "success") {
-                removeAllJS()
-                removeAllCSS()
-
-                let version = new Date().getTime(); // Generates a unique timestamp
-                $('head').append(`<link rel="stylesheet" href="../css/evaluation_view.css?v=${version}">`);
-                $('body').append(`<script src="../js/evaluation_view_js/evaluation_view.js?v=${version}"><\/script>`);
-            } else {
-                console.error("Failed to load EFMS container:", xhr.statusText);
-            }
-        });
-    });
-
-    $('#completed-nav-btn').click(function() {
-        refreshNavBtnStyle();
-        $('#completed-nav-btn').css('background-color', '#f2f2f2');  
-
-        $('.main-container').empty();
-        $('.main-container').load('../container/completed_view.php', function(response, status, xhr) {
-            if (status === "success") {
-                removeAllJS()
-                removeAllCSS()
-
-                let version = new Date().getTime(); // Generates a unique timestamp
-                $('head').append(`<link rel="stylesheet" href="../css/completed_view.css?v=${version}">`);
-                $('body').append(`<script src="../js/completed_view_js/completed_view.js?v=${version}"><\/script>`);
-            } else {
-                console.error("Failed to load EFMS container:", xhr.statusText);
-            }
-        });
-    });
 
     $('#return-btn').click(function() {
         window.location.href = "../views/home.php"; 
