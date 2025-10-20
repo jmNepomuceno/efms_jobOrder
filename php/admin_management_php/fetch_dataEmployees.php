@@ -20,7 +20,7 @@ try {
 
     // $newEntries = [];
     // $insert_sql = "INSERT INTO efms_technicians (techBioID, firstName, lastName, middle, employmentStatus, role) 
-    //                VALUES (?, ?, ?, ?, ?)";
+    //                VALUES (?, ?, ?, ?, ?, ?)";
     // $insert_stmt = $pdo->prepare($insert_sql);
 
     // foreach ($data_hris as $row) {

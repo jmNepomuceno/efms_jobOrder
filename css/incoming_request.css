@@ -428,12 +428,43 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr t
 
 body .right-container .table-div .table-container #incoming-req-table tbody tr td .request-button-td-div button{
     width: 100%;
-    height: 50%;
+    height: 50px;
     text-align: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+#incoming-req-table td {
+  vertical-align: top;
+  padding: 10px 12px;
+}
+
+.request-by-td-div span,
+.request-date-td-div span {
+  display: block;
+  line-height: 1.4em;
+  margin-bottom: 3px;
+}
+
+.request-by-td-div {
+  white-space: normal;
+  word-break: break-word;
+}
+
+.request-button-td-div {
+  text-align: center;
+}
+
+.interval-toggle, .interval-complete-toggle {
+  font-size: 0.8rem;
+  background: none;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
 }
 
 .request-date-td-div {
@@ -744,6 +775,10 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr t
 #user-info-modal .modal-body .function-btn #start-assess-btn{
 }
 
+.select2-container{
+    font-size: 0.9rem;
+}
+
 @media only screen and (max-height: 800px){
     .table-div .table-container #incoming-req-table thead tr{
         background: #646b6b;
@@ -780,7 +815,7 @@ body .right-container .table-div .table-container #incoming-req-table tbody tr t
     body .right-container .search-div .top-div #lastname-input,
     body .right-container .search-div .top-div #firstname-input,
     body .right-container .search-div .bottom-div #technician-select{
-        font-size: 0.7rem;
+        font-size: 0.7rem !important;
     }
 
     body .right-container .search-div .bottom-div #bioId-input,

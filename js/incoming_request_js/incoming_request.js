@@ -107,9 +107,9 @@ const dataTable_incoming_request = () =>{
                             { targets: 5, createdCell: function(td) { $(td).addClass('item-action-td'); } },
                         ],
                         "autoWidth": false, // Prevents auto column sizing
-                        "paging": false,
-                        "info": false,
-                        "ordering": false,
+                        // "paging": false,
+                        // "info": false,
+                        // "ordering": false,
                         "stripeClasses": [],
                         "searching": false,
                         
@@ -400,17 +400,17 @@ const dataTable_my_jobs = (what) =>{
                             { title: "ACTION", data:5 },
                         ],
                         columnDefs: [
-                            { targets: 0, createdCell: function(td) { $(td).addClass('item-req-no-td'); } },
-                            { targets: 1, createdCell: function(td) { $(td).addClass('item-name-td'); } , width:"35%"},
-                            { targets: 2, createdCell: function(td) { $(td).addClass('item-date-td'); } },
-                            { targets: 3, createdCell: function(td) { $(td).addClass('item-unit-td'); } },
-                            { targets: 4, createdCell: function(td) { $(td).addClass('item-category-td'); } },
-                            { targets: 5, createdCell: function(td) { $(td).addClass('item-action-td'); } },
+                            { targets: 0, width: "10%", className: "item-req-no-td text-center" },
+                            { targets: 1, width: "28%", className: "item-name-td" },
+                            { targets: 2, width: "27%", className: "item-date-td" },
+                            { targets: 3, width: "10%", className: "item-unit-td text-center" },
+                            { targets: 4, width: "15%", className: "item-category-td text-center" },
+                            { targets: 5, width: "10%", className: "item-action-td text-center" },
                         ],
                         "autoWidth": false, // Prevents auto column sizing 
-                        "paging": false,
-                        "info": false,
-                        "ordering": false,
+                        // "paging": false,
+                        // "info": false,
+                        // "ordering": false,
                         "stripeClasses": [],
                         "searching": false,
                         
@@ -590,9 +590,8 @@ const _init = () =>{
     });
 
     $('#technician-select').select2({
-        placeholder: "Select IMISS Technician",
+        placeholder: "Select EFMS Technician",
         allowClear: true,
-        
     });
 }
 

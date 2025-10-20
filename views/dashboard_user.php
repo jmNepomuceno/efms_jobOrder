@@ -70,6 +70,7 @@
                         </div>
 
                         <button id="filter-date-search-btn" type="button" class="btn btn-secondary">Generate</button>
+                        <button id="filter-date-search-btn" type="button" class="btn btn-secondary">Clear</button> <!-- to generate back to normal or today -->
 
                     </div>
                     

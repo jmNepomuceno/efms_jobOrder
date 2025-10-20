@@ -249,33 +249,33 @@ $(document).ready(function(){
                 method: "POST",
                 success: function(response) {
                     
-                    // try { 
-                    //     $('#refresh-drag-btn').css('opacity', '1')
-                    //     if (response == "No new entries") {
-                    //         $('.loader').css('display', 'block'); 
-                    //         $('.free-agents').css('display', 'none');
-                    //         setTimeout(() => {
-                    //             $('.loader').css('display', 'none'); 
-                    //             $('#modal-notif #modal-title-incoming').text("Notification")
-                    //             $('#modal-notif #modal-body-incoming').text("No new entries")
-                    //             $('.free-agents').css('display', 'flex');
-                    //             modal_notif.show()
-                    //             reset_styling()
+                    try { 
+                        $('#refresh-drag-btn').css('opacity', '1')
+                        if (response == "No new entries") {
+                            $('.loader').css('display', 'block'); 
+                            $('.free-agents').css('display', 'none');
+                            setTimeout(() => {
+                                $('.loader').css('display', 'none'); 
+                                $('#modal-notif #modal-title-incoming').text("Notification")
+                                $('#modal-notif #modal-body-incoming').text("No new entries")
+                                $('.free-agents').css('display', 'flex');
+                                modal_notif.show()
+                                reset_styling()
 
-                    //         }, 2000); 
-                    //     }
-                    //     else if (response != "error") {
-                    //         $('.loader').css('display', 'block'); // Show loader
-                    //         document.querySelector('.free-agents').textContent = ""
-                    //         setTimeout(() => {
-                    //             $('.loader').css('display', 'none'); // Hide loader after 2 seconds
-                    //             document.querySelector('.free-agents').innerHTML = response;
-                    //             $('#refresh-drag-btn').css('opacity', '0.5')
-                    //         }, 2000); 
-                    //     }
-                    // } catch (innerError) {
-                    //     console.error("Error processing response:", innerError);
-                    // }
+                            }, 2000); 
+                        }
+                        else if (response != "error") {
+                            $('.loader').css('display', 'block'); // Show loader
+                            document.querySelector('.free-agents').textContent = ""
+                            setTimeout(() => {
+                                $('.loader').css('display', 'none'); // Hide loader after 2 seconds
+                                document.querySelector('.free-agents').innerHTML = response;
+                                $('#refresh-drag-btn').css('opacity', '0.5')
+                            }, 2000); 
+                        }
+                    } catch (innerError) {
+                        console.error("Error processing response:", innerError);
+                    }
                 },
                 error: function(xhr, status, error) {
                     console.error("AJAX request failed:", error);
