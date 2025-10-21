@@ -11,13 +11,13 @@
 
 
     // select all
-    $sql = "SELECT techBioID FROM efms_technicians WHERE role='admin' OR role='super_admin'";
+    $sql = "SELECT * FROM job_order_request";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $admin_users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     // extract only the techBioID values
-    $admin_users = array_column($admin_users, 'techBioID');
+    // $admin_users = array_column($admin_users, 'techBioID');
 
     echo "<pre>"; print_r($admin_users); echo "</pre>";
 

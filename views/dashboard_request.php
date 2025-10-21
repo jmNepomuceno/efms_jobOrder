@@ -45,18 +45,6 @@
         Hover/Highlight	#5a4038	Sidebar hover or active tab -->
 
         <div class="dashboard-container">
-            <!-- <div class="nav-div">
-                <span class="dashboard-request-nav-span-class active" id="total-request-span">Total Requests</span>
-                <span class="dashboard-request-nav-span-class" id="daily-request-span">Daily Requests</span>
-                <span class="dashboard-request-nav-span-class" id="weekly-request-span">Weekly Requests</span>
-                <span class="dashboard-request-nav-span-class" id="monthly-request-span">Monthly Requests</span>
-                <span class="dashboard-request-nav-span-class" id="category-request-span">By Category</span>
-                <span class="dashboard-request-nav-span-class" id="status-request-span">By Status</span>
-                <span class="dashboard-request-nav-span-class" id="survey-request-span">Survey</span>
-
-                <div class="nav-indicator"></div> 
-            </div> -->
-
             <div class="dashboard-content-div">
                 <div class="request-conent-div">
 

@@ -109,6 +109,10 @@ $(document).ready(function(){
         window.location.href = "../views/admin_management.php";
     });
 
+    $('#adminacc-admin-sub-down-div').click(function(){
+        window.location.href = "../views/admin_account_management.php";
+    });
+
     $('#req-dashboard-sub-down-div').click(function(){
         window.location.href = "../views/dashboard_request.php";
     });

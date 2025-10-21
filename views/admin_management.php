@@ -26,7 +26,6 @@
     }
 
 
-
     // Function to generate draggable span elements
     function generateDraggableSpans($employees, $extraClass = "") {
         $output = "";
