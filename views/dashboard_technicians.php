@@ -34,18 +34,6 @@
 
     <div class="right-container">
         <div class="dashboard-container">
-            <!-- <div class="nav-div">
-                <span class="dashboard-request-nav-span-class active" id="total-request-span">Total Requests</span>
-                <span class="dashboard-request-nav-span-class" id="daily-request-span">Daily Requests</span>
-                <span class="dashboard-request-nav-span-class" id="weekly-request-span">Weekly Requests</span>
-                <span class="dashboard-request-nav-span-class" id="monthly-request-span">Monthly Requests</span>
-                <span class="dashboard-request-nav-span-class" id="category-request-span">By Category</span>
-                <span class="dashboard-request-nav-span-class" id="status-request-span">By Status</span>
-                <span class="dashboard-request-nav-span-class" id="survey-request-span">Survey</span>
-
-                <div class="nav-indicator"></div> 
-            </div> -->
-
             <div class="dashboard-content-div">
                 <div class="request-conent-div">
                     <div class="filter-category-div">
@@ -97,24 +85,18 @@
                     </div>
 
                     <div class="header-div">
-                        <h1>EFMS Requests Dashboard</h1>
+                        <h1>EFMS Technicians Dashboard</h1>
                         <nav class="dashboard-nav">
-                            <span class="active" data-target="section-bar-graph">Request Graph</span>
-                            <span data-target="section-job-summary">Job Order Summary</span>
+                            <span class="active"  data-target="section-job-summary">Job Order Summary</span>
+                            <span data-target="section-bar-graph">Request Graph</span>
                             <span data-target="section-job-orders">Job Orders List</span>
                             <span data-target="section-survey">Satisfaction Survey</span>
                         </nav>
 
                     </div>
 
-
                     <div class="request-graph-div" style="overflow-x: auto;">
-
-                        <h4 id="section-bar-graph">Bar Graph: Completed Requests Over Time</h4>
-                        <canvas id="requestsPerHourChart" width="1500" height="400" ></canvas>
-                        
-                        <div class="hl"></div>
-
+        
                         <h4 id="section-job-summary">Job Order Summary</h4>
                         <div class="request-tally-div">
                             <div class="request-tally-sub-div">
@@ -166,6 +148,90 @@
 
                         <div class="hl"></div>
                         
+                        <div class="dashboard-row">
+                            <div class="chart-card">
+                                <h4>Technician Performance Overview</h4>
+                                <button class="info-btn" 
+                                    data-info="Displays each technician’s total completed and overdue jobs, completion rate, and average completion time — useful for identifying top and low performers.">
+                                    <i class="fas fa-question-circle"></i>
+                                </button>
+
+                                <!-- Scrollable container -->
+                                <div class="scrollable-chart">
+                                    <div id="technician-performance-chart" style="width:100%; min-height:400px;"></div>
+                                </div>
+                            </div>
+
+                            <div class="chart-card">
+                                <h4 id="section-bar-graph">Bar Graph: Completed Requests Over Time</h4>
+                                <button class="info-btn" 
+                                    data-info="Displays the number of completed requests over a selected period, helping track workload trends and technician activity across time.">
+                                    <i class="fas fa-question-circle"></i>
+                                </button>
+                                <canvas id="requestsPerHourChart" width="1500" height="400"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-row">
+                            <div class="chart-card">
+                                <h4>Overdue / Exceeded Jobs</h4>
+                                <button class="info-btn" 
+                                    data-info="Lists technicians with requests that exceeded the expected completion time. Helps identify areas where delays frequently occur.">
+                                    <i class="fas fa-question-circle"></i>
+                                </button>
+
+                                <div class="overdue-table-container">
+                                    <table id="overdueJobsTable" class="overdue-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Technician</th>
+                                                <th>Total Jobs</th>
+                                                <th>Overdue Jobs</th>
+                                                <th>Overdue %</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- JS dynamically populates rows here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="chart-card">
+                                <h4>Average Response Time per Technician</h4>
+                                <button class="info-btn" 
+                                    data-info="Shows the average time each technician takes to complete assigned requests. Lower response times may indicate higher efficiency.">
+                                    <i class="fas fa-question-circle"></i>
+                                </button>
+
+                                <div id="avgResponseTimeChart" style="width: 100%; height: 400px;"></div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-row">
+                            <div class="chart-card">
+                                <h4>Evaluation / Satisfaction Insights</h4>
+                                <button class="info-btn" 
+                                    data-info="Presents the average satisfaction rating per technician based on completed requests. Higher ratings suggest better service quality.">
+                                    <i class="fas fa-question-circle"></i>
+                                </button>
+
+                                <div id="evaluationInsightsChart" style="width:100%; height:400px;"></div>
+                            </div>
+
+                            <div class="chart-card">
+                                <h4>Assignment Activity Overview</h4>
+                                <button class="info-btn" 
+                                    data-info="Visualizes how tasks are delegated within the team. Shows who assigns and who receives requests, helping balance workload and track task distribution.">
+                                    <i class="fas fa-question-circle"></i>
+                                </button>
+
+                                <div id="assignmentFlowChart" style="width:100%; height:450px;"></div>
+                            </div>
+                        </div>
+
+                        <div class="hl"></div>
+                        
                         <h4 id="section-job-orders">Completed Job Orders List</h4>
                         <div class="table-container">
                             <table id="tech-request-dataTable">
@@ -208,6 +274,8 @@
                             </table>
                         </div>
                     </div>
+
+                    
                 </div>
             </div>
         </div>

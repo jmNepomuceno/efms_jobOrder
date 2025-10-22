@@ -27,7 +27,14 @@ const onLoadFetch_total_request = (startDate, endDate, category, subCategory, te
         success: function (response) {
             console.log(response)
             
-            barGraph(response)
+            barGraph(response.daily_stats)
+
+            technicianPerformanceChart(response.technician_summary); // 👈 add this line
+            overdueJobsTable(response.technician_summary); // 👈 add this
+            avgResponseTimeChart(response.technician_summary); // 👈 add this
+            evaluationInsightsChart(response.technician_summary);
+            renderAssignmentFlowChart(response.assignment_flow);
+            
             kpiCard(startDate, endDate, category, subCategory, techBioID);
             techDataTable(startDate, endDate, category, subCategory, techBioID)
             fetchTechEval(startDate, endDate, category, subCategory, techBioID)
@@ -144,6 +151,7 @@ const kpiCard = (startDate, endDate, category, subCategory, techBioID) => {
 }
 
 const barGraph = (response = []) => {
+    console.log(response)
     // Prepare chart data
     const labels = response.map(item => item.req_date);
     const onTimeData = response.map(item => parseInt(item.on_time));
@@ -367,6 +375,336 @@ const fetchTechEval = (startDate, endDate, category, subCategory, techBioID) => 
     });
 };
 
+const technicianPerformanceChart = (response) => {
+    const technicianNames = [];
+    const completedJobs = [];
+    const completionRates = [];
+    const overdueJobs = [];
+    const avgTimes = [];
+
+    response.forEach(item => {
+        technicianNames.push(item.tech_name || 'Unknown');
+        completedJobs.push(item.completed || 0);
+        completionRates.push(item.completion_rate || 0);
+        overdueJobs.push(item.exceeded || 0);
+        avgTimes.push(item.avg_time_hours || 0);
+    });
+
+    const dynamicHeight = Math.max(400, technicianNames.length * 90); // 50px per bar
+
+    const options = {
+        series: [
+            { name: 'Completed Jobs', data: completedJobs },
+            { name: 'Overdue Jobs', data: overdueJobs },
+            { name: 'Completion Rate (%)', data: completionRates },
+            { name: 'Avg Time (hrs)', data: avgTimes }
+        ],
+        chart: {
+            type: 'bar',
+            height: dynamicHeight,
+            stacked: false,
+            toolbar: { show: true }
+        },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                borderRadius: 6,
+                barHeight: '65%',
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: val => val.toFixed(1)
+        },
+        stroke: {
+            show: true,
+            width: 1,
+            colors: ['#fff']
+        },
+        xaxis: {
+            categories: technicianNames,
+            title: { text: 'Technician Performance' }
+        },
+        fill: { opacity: 0.8 },
+        colors: ['#1E90FF', '#E74C3C', '#2ECC71', '#F4D03F'],
+        legend: { position: 'top', horizontalAlign: 'center' },
+        tooltip: {
+            y: { formatter: val => (typeof val === 'number' ? val.toFixed(2) : val) }
+        }
+    };
+
+    if (window.techPerformanceChartInstance) {
+        window.techPerformanceChartInstance.destroy();
+    }
+
+    window.techPerformanceChartInstance = new ApexCharts(
+        document.querySelector("#technician-performance-chart"),
+        options
+    );
+    window.techPerformanceChartInstance.render();
+};
+
+const overdueJobsTable = (response) => {
+    const tableBody = document.querySelector('#overdueJobsTable tbody');
+    if (!tableBody) return;
+
+    tableBody.innerHTML = ''; // Clear old rows
+
+    response.forEach(item => {
+        const tech = item.tech_name || 'Unknown';
+        const total = item.total_jobs || 0;
+        const overdue = item.exceeded || 0;
+        const percent = total > 0 ? ((overdue / total) * 100).toFixed(1) : '0.0';
+
+        const row = `
+            <tr>
+                <td>${tech}</td>
+                <td>${total}</td>
+                <td>${overdue}</td>
+                <td>${percent}%</td>
+            </tr>
+        `;
+        tableBody.insertAdjacentHTML('beforeend', row);
+    });
+};
+
+const avgResponseTimeChart = (response) => {
+    const technicianNames = [];
+    const avgTimes = [];
+
+    response.forEach(item => {
+        technicianNames.push(item.tech_name || 'Unknown');
+        avgTimes.push(item.avg_time_hours || 0);
+    });
+
+    const options = {
+        series: [{
+            name: 'Average Response Time (hrs)',
+            data: avgTimes
+        }],
+        chart: {
+            type: 'line',
+            height: 400,
+            toolbar: { show: true },
+            zoom: { enabled: true }
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 3
+        },
+        markers: {
+            size: 5,
+            colors: ['#fff'],
+            strokeColors: '#1E90FF',
+            strokeWidth: 2
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: val => val.toFixed(2)
+        },
+        xaxis: {
+            categories: technicianNames,
+            title: { text: 'Technicians' },
+            labels: { rotate: -45, style: { fontSize: '12px' } }
+        },
+        yaxis: {
+            title: { text: 'Avg Time (hrs)' },
+            min: 0
+        },
+        colors: ['#1E90FF'],
+        tooltip: {
+            y: {
+                formatter: function (val) {
+                    return val.toFixed(2) + ' hrs';
+                }
+            }
+        },
+        title: {
+            text: 'Average Response Time per Technician',
+            align: 'center'
+        }
+    };
+
+    // Destroy existing chart if present
+    if (window.avgResponseTimeChartInstance) {
+        window.avgResponseTimeChartInstance.destroy();
+    }
+
+    window.avgResponseTimeChartInstance = new ApexCharts(
+        document.querySelector("#avgResponseTimeChart"),
+        options
+    );
+    window.avgResponseTimeChartInstance.render();
+};
+
+const evaluationInsightsChart = (response) => {
+    const technicianNames = [];
+    const ratings = [];
+
+    response.forEach(item => {
+        technicianNames.push(item.tech_name || 'Unknown');
+        ratings.push(item.avg_rating ? parseFloat(item.avg_rating) : 0);
+    });
+
+    const options = {
+        series: [{
+            name: 'Average Rating',
+            data: ratings
+        }],
+        chart: {
+            type: 'bar',
+            height: 450,
+            toolbar: { show: true }
+        },
+        title: {
+            text: 'Evaluation / Satisfaction Insights',
+            align: 'center',
+            style: { fontSize: '18px', fontWeight: 'bold' }
+        },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                borderRadius: 6,
+                distributed: true,
+                dataLabels: { position: 'right' }
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: (val) => val.toFixed(2),
+            style: { colors: ['#333'], fontSize: '13px' }
+        },
+        xaxis: {
+            categories: technicianNames,
+            title: {
+                text: 'Average Rating (1–5)',
+                style: { fontSize: '14px', fontWeight: 600 }
+            },
+            labels: {
+                style: { fontSize: '12px' },
+                formatter: (val) => val.toFixed(0)
+            },
+            min: 0,
+            max: 5,
+            tickAmount: 5
+        },
+        yaxis: {
+            labels: {
+                style: { fontSize: '13px' }
+            }
+        },
+        colors: [
+            '#2ECC71', '#3498DB', '#F1C40F', '#E67E22',
+            '#9B59B6', '#1ABC9C', '#E74C3C', '#34495E'
+        ],
+        tooltip: {
+            y: {
+                formatter: (val) => `${val.toFixed(2)} / 5.00`
+            }
+        },
+        grid: {
+            borderColor: '#e0e0e0',
+            strokeDashArray: 4
+        },
+        legend: { show: false }
+    };
+
+    // Destroy previous instance if exists
+    if (window.evaluationInsightsChartInstance) {
+        window.evaluationInsightsChartInstance.destroy();
+    }
+
+    window.evaluationInsightsChartInstance = new ApexCharts(
+        document.querySelector("#evaluationInsightsChart"),
+        options
+    );
+    window.evaluationInsightsChartInstance.render();
+};
+
+const renderAssignmentFlowChart = (data) => {
+    const container = document.querySelector("#assignmentFlowChart");
+    if (!container) return;
+
+    if (!data || data.length === 0) {
+        container.innerHTML = "<p style='text-align:center; color:gray;'>No assignment data available.</p>";
+        return;
+    }
+
+    const assignByCount = {};
+    const assignToCount = {};
+
+    data.forEach(item => {
+        const assignBy = item.assign_by?.trim();
+        const assignTo = item.assign_to?.trim();
+        const count = parseInt(item.total_assigned);
+
+        if (assignBy) assignByCount[assignBy] = (assignByCount[assignBy] || 0) + count;
+        if (assignTo) assignToCount[assignTo] = (assignToCount[assignTo] || 0) + count;
+    });
+
+    // Merge all unique names
+    const allPeople = Array.from(new Set([...Object.keys(assignByCount), ...Object.keys(assignToCount)]));
+    const assignedByData = allPeople.map(name => assignByCount[name] || 0);
+    const assignedToData = allPeople.map(name => assignToCount[name] || 0);
+
+    const options = {
+        series: [
+            { name: 'Requests Assigned By', data: assignedByData },
+            { name: 'Requests Assigned To', data: assignedToData }
+        ],
+        chart: {
+            type: 'bar',
+            height: 450,
+            stacked: false,
+            toolbar: { show: false }
+        },
+        title: {
+            text: 'Assignment Activity Overview',
+            align: 'center',
+            style: { fontSize: '18px', fontWeight: 'bold' }
+        },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                borderRadius: 6
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: (val) => val > 0 ? val : '',
+            style: { fontSize: '13px', colors: ['#333'] }
+        },
+        xaxis: {
+            categories: allPeople,
+            title: {
+                text: 'Number of Requests',
+                style: { fontSize: '14px', fontWeight: 600 }
+            }
+        },
+        colors: ['#1ABC9C', '#3498DB'],
+        tooltip: {
+            y: { formatter: (val) => `${val} request${val > 1 ? 's' : ''}` }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'center',
+            fontSize: '13px'
+        },
+        grid: {
+            borderColor: '#e0e0e0',
+            strokeDashArray: 4
+        }
+    };
+
+    if (window.assignmentFlowChartInstance) {
+        window.assignmentFlowChartInstance.destroy();
+    }
+
+    window.assignmentFlowChartInstance = new ApexCharts(container, options);
+    window.assignmentFlowChartInstance.render();
+};
+
+
 const fetchNotifValue = () =>{
     $.ajax({
         url: '../php/incoming_request_php/fetch_notifValue.php',
@@ -428,6 +766,7 @@ const fetchNotifValue = () =>{
         }
     });
 }
+
 
 socket.onmessage = function(event) {
     let data = JSON.parse(event.data);
@@ -649,6 +988,28 @@ $(document).ready(function () {
                     block: 'start'
                 });
             }
+        });
+    });
+
+
+    const infoButtons = document.querySelectorAll('.info-btn');
+    const tooltip = document.createElement('div');
+    tooltip.className = 'chart-tooltip';
+    document.body.appendChild(tooltip);
+
+    infoButtons.forEach(btn => {
+        btn.addEventListener('mouseenter', (e) => {
+            tooltip.textContent = btn.dataset.info;
+            tooltip.style.display = 'block';
+            tooltip.style.left = `${e.pageX + 10}px`;
+            tooltip.style.top = `${e.pageY + 10}px`;
+        });
+        btn.addEventListener('mousemove', (e) => {
+            tooltip.style.left = `${e.pageX + 10}px`;
+            tooltip.style.top = `${e.pageY + 10}px`;
+        });
+        btn.addEventListener('mouseleave', () => {
+            tooltip.style.display = 'none';
         });
     });
 

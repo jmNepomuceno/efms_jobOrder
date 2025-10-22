@@ -83,8 +83,7 @@
 
                     <!-- HEADER -->
                     <h1>EFMS Requests Dashboard</h1>
-
-
+                    
 
                     <!-- ROW 1: SUMMARY CARDS -->
                     <div class="request-summary-row">
@@ -126,11 +125,17 @@
                         <div class="chart-card">
                             <!-- a bar chart showing how many job orders or requests were logged at each hour of the day. -->
                             <h4>Requests per hour</h4>
+                            <button class="info-btn" data-info="Shows how many job orders were logged at each hour of the day, helping identify peak request times.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <div class="canvas-class" id="barGraph"></div>
                         </div>
                         <div class="chart-card">
                             <!-- a pie chart showing the percentage or count of requests in each status -->
                             <h4>Request status distribution</h4>
+                            <button class="info-btn" data-info="Displays the proportion of requests by their current status (e.g., Completed, Pending, On-Process).">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <div class="canvas-class" id="pieChart"></div>
                         </div>
                     </div>
@@ -139,10 +144,16 @@
                     <div class="dashboard-row">
                         <div class="chart-card">
                             <h4>Requests Trend Over Time</h4>
+                            <button class="info-btn" data-info="Tracks how requests are submitted over time — helps identify patterns, spikes, or declines in activity.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <canvas id="requestsOverTimeChart"></canvas>
                         </div>
                         <div class="chart-card">
                             <h4>Status Breakdown</h4>
+                            <button class="info-btn" data-info="Compares how many requests fall under each status category for the selected date range.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <canvas id="requestStatusBreakdownChart"></canvas>
                         </div>
                     </div>
@@ -151,10 +162,16 @@
                     <div class="dashboard-row">
                         <div class="chart-card">
                             <h4>Requests by Unit</h4>
+                            <button class="info-btn" data-info="Visualizes how many requests each technical unit (EU, MU, IU) handled.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <canvas id="requestsByCategoryChart"></canvas>
                         </div>
                         <div class="chart-card">
                             <h4>Average Completion Time per Unit</h4>
+                            <button class="info-btn" data-info="Shows the average time it takes each unit to complete a job order — shorter bars mean faster response.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <canvas id="avgCompletionTimeChart"></canvas>
                         </div>
                     </div>
@@ -163,10 +180,16 @@
                     <div class="dashboard-row">
                         <div class="chart-card">
                             <h4>Average Satisfaction Ratings</h4>
+                            <button class="info-btn" data-info="Displays the average ratings from evaluation forms to gauge user satisfaction with each service aspect.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <canvas id="evaluationRadarChart"></canvas>
                         </div>
                         <div class="chart-card">
                             <h4>Top 5 Most Common Request Descriptions</h4>
+                            <button class="info-btn" data-info="Lists the most frequently reported issues — helps identify recurring maintenance concerns.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <canvas id="topRequestsChart"></canvas>
                         </div>
                     </div>
@@ -175,11 +198,17 @@
                     <div class="dashboard-row">
                         <div class="chart-card">
                             <h4>Requests by Division / Department</h4>
+                            <button class="info-btn" data-info="Shows how many job orders were logged by each division or department, helping identify which areas generate the most requests.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <canvas id="requestsByDivisionChart"></canvas>
                         </div>
 
                         <div class="chart-card">
                             <h4>Recent Job Orders</h4>
+                            <button class="info-btn" data-info="Shows the latest requests received, including their category, subcategory, and current status.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
                             <table id="recentRequestsTable">
                                 <thead>
                                     <tr>
