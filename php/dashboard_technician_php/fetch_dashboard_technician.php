@@ -9,8 +9,8 @@ $category = $_POST['category'] ?? "ALL";
 $subCategory = !empty($_POST['subCategory']) ? $_POST['subCategory'] : "none";
 
 // 🔧 Override for testing
-// $startDate = '2025-05-21';
-// $endDate = '2025-10-21';
+$startDate = '2025-05-21';
+$endDate = '2025-10-21';
 
 $startDateFormatted = date('m/d/Y', strtotime($startDate));
 $endDateFormatted = date('m/d/Y', strtotime($endDate));

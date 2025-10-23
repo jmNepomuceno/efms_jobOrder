@@ -18,8 +18,8 @@ if (!empty($_POST['endDate'])) {
 }
 
 // 🧠 Override for testing — remove later
-// $startDate = '2025-06-21';
-// $endDate = '2025-10-21';
+$startDate = '2025-06-21';
+$endDate = '2025-10-21';
 
 $category = $_POST['category'] ?? "ALL";
 $subCategory = !empty($_POST['subCategory']) ? $_POST['subCategory'] : "none";
