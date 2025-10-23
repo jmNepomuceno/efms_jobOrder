@@ -43,6 +43,7 @@
         <div class="dashboard-container">
             <div class="dashboard-content-div">
                 <div class="request-conent-div">
+
                     <div class="double-date-div">
                         <div class="start-date-div">
                             <span id="start-date-span">Select Start Date: </span>
@@ -75,26 +76,66 @@
                     
                     <h1>Requests Per Division: </h1>
                     
-                    <div class="request-graph-div">
-                        <div class="kpi-division">
-                            <div class="total-request-div">
-                                <span>Total Request</span>
-                                <span id="total-request-value"></span>
-                            </div>
-
-                            <div class="top-request-div">
-                                <span>Top Requestor</span>
-                                <span id="top-request-value"></span>
-                            </div>
+                    <div class="dashboard-row">
+                        <div class="chart-card">
+                            <h4>Top Requesting Divisions / Sections</h4>
+                            <button class="info-btn" data-info="Shows which sections or divisions have made the most requests over the selected period. Useful for identifying areas with the highest activity.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                            <div id="top-requesting-sections-chart" style="width:100%; min-height:400px;"></div>
                         </div>
 
-
-                        <div class="pie-div">
-                            <div id="requestCategory3DPie"></div>
-                            <div id="requestCategory3DPie-Sub"></div>
+                        <div class="chart-card">
+                            <h4>Request Volume Trend (Over Time by Users)</h4>
+                            <button class="info-btn" 
+                                data-info="Shows how many requests were submitted over time by users. Helps track peaks in activity or workload patterns.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                            <div id="request-volume-trend-chart" style="width:100%; min-height:400px;"></div>
                         </div>
-                        
                     </div>
+
+                    <div class="dashboard-row">
+                        <div class="chart-card">
+                            <h4>Average Evaluation Rating per Division</h4>
+                            <button class="info-btn" 
+                                data-info="Displays the average evaluation score per division based on user feedback (questions Q1–Q5). Helps identify divisions with the highest service satisfaction.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                            <div id="average-rating-per-division-chart" style="width:100%; min-height:400px;"></div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h4>Average Completion Time by Division</h4>
+                            <button class="info-btn" data-info="Shows the average number of hours taken to complete requests in each division. Helps identify which divisions have faster or slower turnaround times.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                            <div id="average-completion-time-chart" style="width:100%; min-height:400px;"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="dashboard-row">
+                        <div class="chart-card">
+                            <h4>Top 5 Requestors (Most Active Users)</h4>
+                            <button class="info-btn" 
+                                data-info="Displays the users who have made the most job order requests within the selected period. Helps identify the most active requestors.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                            <div id="top-requestors-chart" style="width:100%; min-height:400px;"></div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h4>Cancelled or Rejected Requests (Trend)</h4>
+                            <button class="info-btn" 
+                                data-info="Displays the trend of requests that were either cancelled or rejected over time. Helps track fluctuations in unsuccessful job order requests.">
+                                <i class="fas fa-question-circle"></i>
+                            </button>
+                            <div id="cancelled-rejected-trend-chart" style="width:100%; min-height:400px;"></div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>

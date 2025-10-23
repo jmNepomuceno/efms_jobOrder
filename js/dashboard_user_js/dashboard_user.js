@@ -1,114 +1,5 @@
 let requestsPerHourChartInstance; // Declare globally
 
-function render3DPieChart(data) {
-  Highcharts.chart('requestCategory3DPie', {
-      chart: {
-          type: 'pie',
-          borderRadius: "10px",
-          padding: "10px",
-          options3d: {
-              enabled: true,
-              alpha: 45,
-              beta: 0
-          },
-      },
-      title: {
-          text: 'Request Unit Distribution',
-          style: {
-              color: '#2e1d18',
-              fontSize: '1.2rem',
-              textTransform: 'uppercase',
-          }
-      },
-      accessibility: {
-          point: {
-              valueSuffix: '%'
-          }
-      },
-      tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-          backgroundColor: '#3a2620',
-          style: {
-              color: '#ffffff'
-          }
-      },
-      plotOptions: {
-          pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              depth: 40,
-              dataLabels: {
-                  enabled: true,
-                  format: '{point.name}: {point.y}%',
-                  style: {
-                      color: '#2e1d18',
-                      textOutline: 'none'
-                  }
-              }
-          }
-      },
-      series: [{
-          name: 'Requests',
-          colorByPoint: true,
-          data: data
-      }]
-  });
-}
-
-function render3DPieChartSub(data) {
-  Highcharts.chart('requestCategory3DPie-Sub', {
-      chart: {
-          type: 'pie',
-          borderRadius: "10px",
-          padding: "10px",
-          options3d: {
-              enabled: true,
-              alpha: 45,
-              beta: 0
-          },
-      },
-      title: {
-          text: 'Request Category Distribution',
-          style: {
-              color: '#2e1d18',
-              fontSize: '1.2rem',
-              textTransform: 'uppercase',
-          }
-      },
-      accessibility: {
-          point: {
-              valueSuffix: '%'
-          }
-      },
-      tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
-          backgroundColor: '#3a2620',
-          style: {
-              color: '#ffffff'
-          }
-      },
-      plotOptions: {
-          pie: {
-              allowPointSelect: true,
-              cursor: 'pointer',
-              depth: 40,
-              dataLabels: {
-                  enabled: true,
-                  format: '{point.name}: {point.y}%',
-                  style: {
-                      color: '#2e1d18',
-                      textOutline: 'none'
-                  }
-              }
-          }
-      },
-      series: [{
-          name: 'Requests',
-          colorByPoint: true,
-          data: data
-      }]
-  });
-}
 
 const onLoadFetch_total_request = (startDate, endDate, division, section) => {
     console.log("Start Date: ", startDate);
@@ -119,33 +10,379 @@ const onLoadFetch_total_request = (startDate, endDate, division, section) => {
     $.ajax({
         url: '../../php/dashboard_user_php/fetch_user_request.php',
         method: 'POST',
-        data: {
-        startDate, endDate, division, section
-        },
+        data: { startDate, endDate, division, section },
         dataType: 'json',
         success: function (response) {
             console.log("AJAX Response: ", response);
 
-            $('#total-request-value').text(response.totalRequestsForSection ?? 0);
-            
-            if (response.topSectionInDivision && response.topSectionInDivision.section) {
-                $('#top-request-value').text(
-                    `${response.topSectionInDivision.section}`
-                );
+            $('#total-request-value').text(response.totalRequests ?? 0);
+
+            if (response.topSection) {
+                $('#top-request-value').text(`${response.topSection}`);
             } else {
                 $('#top-request-value').text('No top section data');
             }
 
-            if (Array.isArray(response.categoryPie)) render3DPieChart(response.categoryPie);
-            if (Array.isArray(response.subCategoryPie)) render3DPieChartSub(response.subCategoryPie);
+            // ✅ Fix: use correct property name
+            if (Array.isArray(response.topRequestingDivisionsSections)) {
+                renderTopRequestingSectionsChart(response.topRequestingDivisionsSections);
+            } else {
+                console.warn("No topRequestingDivisionsSections data found.");
+            }
+
+            if (Array.isArray(response.requestVolumeTrend)) {
+                renderRequestVolumeTrendChart(response.requestVolumeTrend);
+            } else {
+                console.warn("No requestVolumeTrend data found.");
+            }
+
+            if (Array.isArray(response.averageRatingPerDivision)) {
+                renderAverageRatingPerDivisionChart(response.averageRatingPerDivision);
+            }
+
+            renderAverageCompletionTimeChart(response.averageCompletionByDivision);
+            renderTopRequestorsChart(response.topRequestors); // 👈 Add this
+            renderCancelledRejectedTrendChart(response.cancelledRejectedTrend); // 👈 Added here
         },
         error: function (err) {
             console.error('AJAX error:', err);
         }
     });
+};
+
+onLoadFetch_total_request(null, null, null, null); // Initial call
+
+function renderRequestVolumeTrendChart(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn("No data for Request Volume Trend chart");
+        return;
+    }
+
+    // Format data for chart
+    const dates = data.map(item => item.request_day);
+    const requestCounts = data.map(item => item.total_requests);
+
+    const options = {
+        chart: {
+            type: 'line',
+            height: 400,
+            toolbar: { show: false },
+            zoom: { enabled: false }
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 3
+        },
+        series: [{
+            name: 'Requests',
+            data: requestCounts
+        }],
+        xaxis: {
+            categories: dates,
+            title: { text: 'Date' },
+            labels: { rotate: -45 }
+        },
+        yaxis: {
+            title: { text: 'Total Requests' },
+            min: 0
+        },
+        colors: ['#1cc88a'],
+        dataLabels: {
+            enabled: false
+        },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: val => `${val} requests`
+            }
+        }
+    };
+
+    const chartElement = document.querySelector("#request-volume-trend-chart");
+    if (chartElement) {
+        const chart = new ApexCharts(chartElement, options);
+        chart.render();
+    } else {
+        console.error("Chart element not found: #request-volume-trend-chart");
+    }
 }
 
-onLoadFetch_total_request(null, null, null, null); // Initial call with null values to fetch all data
+function renderAverageRatingPerDivisionChart(data) {
+    const divisions = data.map(item => item.division || 'Unknown');
+    const ratings = data.map(item => parseFloat(item.avg_rating));
+
+    const options = {
+        chart: {
+            type: 'bar',
+            height: 350,
+            toolbar: { show: false }
+        },
+        title: {
+            text: 'Average Evaluation Rating per Division',
+            align: 'center',
+            style: { fontSize: '16px', fontWeight: 600 }
+        },
+        plotOptions: {
+            bar: {
+                horizontal: true,
+                borderRadius: 6,
+                distributed: true
+            }
+        },
+        colors: ['#00C49F', '#0088FE', '#FFBB28', '#FF8042', '#4CAF50', '#AB47BC'],
+        dataLabels: {
+            enabled: true,
+            formatter: val => val + ' ★',
+            style: { colors: ['#333'] }
+        },
+        xaxis: {
+            categories: divisions,
+            title: {
+                text: 'Average Rating (out of 5)'
+            },
+            min: 0,
+            max: 5
+        },
+        tooltip: {
+            y: {
+                formatter: val => val + ' ★'
+            }
+        },
+        series: [{
+            name: 'Average Rating',
+            data: ratings
+        }]
+    };
+
+    const chart = new ApexCharts(document.querySelector("#average-rating-per-division-chart"), options);
+    chart.render();
+}
+
+function renderAverageCompletionTimeChart(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn("No data for Average Completion Time chart");
+        return;
+    }
+
+    const divisions = data.map(item => item.division || 'Unknown');
+    const avgHours = data.map(item => parseFloat(item.avg_hours));
+
+    const options = {
+        chart: {
+            type: 'bar',
+            height: 400,
+            toolbar: { show: false }
+        },
+        series: [{
+            name: 'Average Completion Time (hours)',
+            data: avgHours
+        }],
+        xaxis: {
+            categories: divisions,
+            title: { text: 'Division' },
+            labels: { rotate: -45 }
+        },
+        yaxis: {
+            title: { text: 'Hours' },
+            min: 0
+        },
+        colors: ['#f6c23e'],
+        dataLabels: { enabled: false },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: val => `${val.toFixed(2)} hours`
+            }
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                horizontal: false
+            }
+        }
+    };
+
+    const chartEl = document.querySelector("#average-completion-time-chart");
+    if (chartEl) {
+        const chart = new ApexCharts(chartEl, options);
+        chart.render();
+    } else {
+        console.error("Chart element not found: #average-completion-time-chart");
+    }
+}
+
+function renderTopRequestorsChart(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn("No data for Top Requestors chart");
+        return;
+    }
+
+    const names = data.map(item => item.requestor_name || 'Unknown');
+    const counts = data.map(item => parseInt(item.total_requests));
+
+    const options = {
+        chart: {
+            type: 'bar',
+            height: 400,
+            toolbar: { show: false }
+        },
+        series: [{
+            name: 'Total Requests',
+            data: counts
+        }],
+        xaxis: {
+            categories: names,
+            title: { text: 'Requestor Name' },
+            labels: { rotate: -45 }
+        },
+        yaxis: {
+            title: { text: 'Number of Requests' },
+            min: 0
+        },
+        colors: ['#36b9cc'],
+        plotOptions: {
+            bar: {
+                borderRadius: 4,
+                horizontal: true
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            style: {
+                colors: ['#fff']
+            },
+            formatter: val => `${val}`
+        },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: val => `${val} requests`
+            }
+        }
+    };
+
+    const chartEl = document.querySelector("#top-requestors-chart");
+    if (chartEl) {
+        const chart = new ApexCharts(chartEl, options);
+        chart.render();
+    } else {
+        console.error("Chart element not found: #top-requestors-chart");
+    }
+}
+
+function renderCancelledRejectedTrendChart(data) {
+    if (!Array.isArray(data) || data.length === 0) {
+        console.warn("No data for Cancelled/Rejected Requests chart");
+        return;
+    }
+
+    const dates = data.map(item => item.request_day);
+    const totals = data.map(item => parseInt(item.total_requests));
+
+    const options = {
+        chart: {
+            type: 'area',
+            height: 400,
+            toolbar: { show: false },
+            zoom: { enabled: false }
+        },
+        stroke: {
+            curve: 'smooth',
+            width: 3
+        },
+        series: [{
+            name: 'Cancelled/Rejected Requests',
+            data: totals
+        }],
+        xaxis: {
+            categories: dates,
+            title: { text: 'Date' },
+            labels: { rotate: -45 }
+        },
+        yaxis: {
+            title: { text: 'Number of Requests' },
+            min: 0
+        },
+        colors: ['#e74a3b'],
+        dataLabels: { enabled: false },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: val => `${val} requests`
+            }
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shadeIntensity: 1,
+                opacityFrom: 0.5,
+                opacityTo: 0.1,
+                stops: [0, 100]
+            }
+        }
+    };
+
+    const chartEl = document.querySelector("#cancelled-rejected-trend-chart");
+    if (chartEl) {
+        const chart = new ApexCharts(chartEl, options);
+        chart.render();
+    } else {
+        console.error("Chart element not found: #cancelled-rejected-trend-chart");
+    }
+}
+
+
+
+function renderTopRequestingSectionsChart(data) {
+    const sectionNames = data.map(item => item.section);
+    const requestCounts = data.map(item => item.total_requests);
+
+    const options = {
+        chart: {
+            type: 'bar',
+            height: 400,
+            toolbar: { show: false }
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 6,
+                horizontal: true
+            }
+        },
+        dataLabels: {
+            enabled: true
+        },
+        colors: ['#4e73df'],
+        series: [{
+            name: 'Total Requests',
+            data: requestCounts
+        }],
+        xaxis: {
+            categories: sectionNames,
+            title: { text: 'Requests' }
+        },
+        yaxis: {
+            title: { text: 'Sections' }
+        },
+        tooltip: {
+            theme: 'dark',
+            y: {
+                formatter: (val) => `${val} requests`
+            }
+        }
+    };
+
+    const chartElement = document.querySelector("#top-requesting-sections-chart");
+    if (chartElement) {
+        const chart = new ApexCharts(chartElement, options);
+        chart.render();
+    } else {
+        console.error("Chart element not found: #top-requesting-sections-chart");
+    }
+}
+
+
+
 
 const fetchNotifValue = () =>{
     $.ajax({
@@ -227,8 +464,6 @@ socket.onmessage = function(event) {
 // Initial move to the first active tab on load
 $(document).ready(function () {
     fetchNotifValue()
-    render3DPieChart(data = [])
-    render3DPieChartSub(data = [])
 
     let divisionSelect = document.getElementById("division-select");
     let sectionSelect = document.getElementById("section-select");

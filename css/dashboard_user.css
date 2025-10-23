@@ -71,123 +71,66 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-}
 
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div,
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div{
-    width: 100%;
-    height: 50px;
-    /* border:1px solid white; */
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap:10px;
-    margin-top:30px;
-}
-
-
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div button{
-    
-}
-
-
-
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div .start-date-div,
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div, .end-date-div{
-    /* border:1px solid red; */
-    width: auto;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    /* gap:10px; */
-
-    /* background: #2e1d18; */
-    border-radius: 10px;
-    padding:15px;
-
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div .start-date-div,
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div{
-    margin-left:20px;
+    padding:25px;
+    overflow-y: scroll;
 }
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div h1{
-    /* color:white; */
-    color:#2e1d18;
     padding:0;
     margin:0;
-    margin-top:50px;
+
+    font-size: 3rem !important;
+    font-weight: bold;
+    color: #2e1d18;
+    text-align: center;
+
     width: 100%;
-    /* border:1px solid white; */
-    margin-left:20px;
-    font-weight: 600;
+    text-align: center;
+    margin-bottom:2rem;
+
 }
 
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div span,
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div span, .end-date-div span{
-    color:#2e1d18;
-    font-weight: 600;
-    font-size: 1rem;
-    font-weight: 600;
-}
-
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .single-date-div input,
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .start-date-div input, .end-date-div input{
-    padding: 5px 10px 5px 10px;
-    font-family: "Roboto Mono",monospace;
-    color:#2e1d18;
-    font-size: 1rem;
-    border: none;
-    outline: none;
-    /* border-radius: 5px; */
-    font-weight: 600;
-    background: none;
-    border-bottom:1px solid white;
-    display:flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: flex-end;
-    /* border:1px solid red; */
-}
-
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div button{
-    background: #2e1d18;
-}
-
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .division-div,
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .section-div{
-    width: auto;
-    height: 50px;
+/* DATE FILTERS */
+.double-date-div {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
     align-items: center;
-
-    border-radius: 10px;
-    padding:5px 15px 5px 15px;
-
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
 }
 
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .division-div select,
-body .right-container .dashboard-container .dashboard-content-div .request-conent-div .double-date-div .section-div select{
-    width: auto;
-    height: 100%;
-    /* background: #2e1d18; */
-    color:#2e1d18;
-    font-size: 1rem;
+.double-date-div input[type="date"]{
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+#division-select, #section-select{
+    padding: 0.65rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;  
+}
+
+.double-date-div div span{
     font-weight: 600;
-    /* padding:5px; */
-    border:none;
-    outline:none;
-    cursor: pointer;
 }
+
+.double-date-div .btn {
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 6px;
+    background: #291915;
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.double-date-div .btn:hover {
+    background: #334155;
+}
+
 
 
 body .right-container .dashboard-container .dashboard-content-div .request-conent-div .request-graph-div{
@@ -283,6 +226,164 @@ body .right-container .dashboard-container .dashboard-content-div .request-conen
     padding: 5px;
     cursor: pointer;
     border-radius: 3px;
+}
+
+.dashboard-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom:2rem;
+}
+
+.chart-card {
+    flex: 1 1 48%;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+
+    height: 450px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 450px;
+    max-height: 450px;
+    overflow: hidden;
+
+    position:relative;
+}
+
+.chart-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chart-card h4 {
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    color: #111827;
+    font-weight: 600;
+}
+
+.chart-card canvas {
+    width: 100%;
+    height: 300px;
+}
+
+.canvas-class {
+    width: 100%;
+    height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+canvas{
+    height: 90% !important;
+}
+
+.chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.info-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.2s ease;
+
+    position:absolute;
+    top:3%;
+    right:5%;
+}
+
+.info-btn:hover {
+    color: #007bff;
+}
+
+
+.chart-tooltip {
+    position: absolute;
+    display: none;
+    background: #333;
+    color: #fff;
+    font-size: 0.85rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    max-width: 250px;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.scrollable-chart {
+    width: 100%;
+    height: 400px;            /* fixed visible height */
+    overflow-y: auto;         /* enable vertical scroll */
+    overflow-x: hidden;       /* prevent horizontal scroll */
+    padding-right: 8px;       /* space for scrollbar */
+}
+
+/* Optional: make the scrollbar look cleaner */
+.scrollable-chart::-webkit-scrollbar {
+    width: 6px;
+}
+.scrollable-chart::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 6px;
+}
+.scrollable-chart::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+.overdue-table-container {
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.overdue-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    color: #333;
+}
+
+.overdue-table thead {
+    background-color: #f8d7da; /* light red header */
+    color: #721c24;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.overdue-table th,
+.overdue-table td {
+    text-align: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.overdue-table tbody tr:hover {
+    background-color: #fceaea;
+}
+
+.overdue-table tbody td:nth-child(3) {
+    color: #e74c3c; /* red for overdue count */
+    font-weight: bold;
+}
+
+.overdue-table tbody td:nth-child(4) {
+    color: #b03a2e;
 }
 
 @media only screen and (max-height: 800px){
